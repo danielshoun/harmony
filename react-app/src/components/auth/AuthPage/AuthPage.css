@@ -1,0 +1,42 @@
+.auth-page-home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+}
+
+.auth-page-hero-container {
+  display: block;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+.auth-page-hero-image {
+  background-image: url("https://discord.com/assets/3e0acf6d69894a5d20deb7c513cd1412.svg");
+  background-size: cover;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-banner-content {
+  text-align: center;
+  color: #fff;
+}
+
+.hero-search-bar {
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  padding: 8px;
+  max-width: 560px;
+  width: 100%;
+  margin: auto auto 16px;
+  margin-top: 16px;
+  color: #2e3338;
+}
+
+.hero-search-bar:focus {
+  outline: none;
+}
