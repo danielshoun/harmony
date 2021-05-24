@@ -6,7 +6,7 @@ class Channel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(100))
-    server_id = db.Column(db.Integer, nullable=False)
+    server_id = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable=False)
 
     server = db.relationship('Server', back_populates='channels')
     messages = db.relationship('Message', back_populates='channel')
