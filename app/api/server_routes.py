@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 
-from app.models import Server, db, Channel
+from app.models import Server, db, Channel, User
 from app.forms import NewServerForm
+from app.models.server import memberships
 
 server_routes = Blueprint('servers', __name__)
 
@@ -15,15 +16,16 @@ def get_all_servers():
 
 
 @server_routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def create_server():
     data = request.json
     server = Server(
         name=data['name'],
         picture_url=data['picture_url'],
-        owner_id=1,
+        owner_id=current_user.id,
         invite_url=''
     )
+    server.members.append(User.query.get(current_user.id))
     db.session.add(server)
     db.session.commit()
     server.invite_url = str(server.id)
@@ -44,24 +46,40 @@ def create_server():
     #     )
 
 
+@server_routes.route('/<int:id>')
+@login_required
+def get_server(id):
+    return Server.query.get(id).to_dict()
+
+
 @server_routes.route('/<int:id>', methods=['DELETE'])
-# @login_required
+@login_required
 def delete_server(id):
     server = Server.query.get(id)
-    if server.owner_id != 1:  # current_user.id:
+    if server.owner_id != current_user.id:
         return {'errors': 'Unauthorized'}
     db.session.delete(server)
     db.session.commit()
     return {'message': 'Deleted!'}
 
 
-@server_routes.route('/<int:id>/join')
-# @login_required
+@server_routes.route('/<int:id>/join', methods=['POST'])
+@login_required
 def join_server(id):
-    pass
+    server = Server.query.get(id)
+    server.members.append(User.query.get(current_user.id))
+    # server.members.append(User.query.get(1))
+    db.session.add(server)
+    db.session.commit()
+    return server.to_dict()
 
 
-@server_routes.route('/<int:id>/leave')
-# @login_required
+@server_routes.route('/<int:id>/leave', methods=['DELETE'])
+@login_required
 def leave_server(id):
-    pass
+    server = Server.query.get(id)
+    server.members.append(User.query.get(current_user.id))
+    # server.members.remove(User.query.get(1))
+    db.session.add(server)
+    db.session.commit()
+    return server.to_dict()

@@ -27,5 +27,6 @@ class Server(db.Model):
             "pictureUrl": self.picture_url,
             "owner": self.owner.to_dict(),
             "inviteUrl": self.invite_url,
-            "channels": [channel.to_dict() for channel in self.channels]
+            "channels": [channel.to_dict() for channel in self.channels],
+            "members": [member.to_dict() for member in self.members]
         }
