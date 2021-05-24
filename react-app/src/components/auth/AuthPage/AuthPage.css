@@ -7,13 +7,13 @@
 .auth-page-hero-container {
   display: block;
   border-radius: 8px;
-  width: 100%;
-  margin-bottom: 32px;
+  min-height: 200px;
+  margin: 16px 16px 32px 16px;
+  overflow: hidden;
 }
 .auth-page-hero-image {
   background-image: url("https://discord.com/assets/3e0acf6d69894a5d20deb7c513cd1412.svg");
   background-size: cover;
-  min-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,6 +22,7 @@
 .hero-banner-content {
   text-align: center;
   color: #fff;
+  padding: 128px;
 }
 
 .hero-search-bar {
@@ -43,11 +44,12 @@
 .auth-page-servers-container {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
 .server-card {
   height: 200px;
-  min-width: 200px;
+  width: 200px;
   color: #fff;
   background-color: rgb(41, 43, 47);
   margin: 16px;
@@ -72,8 +74,19 @@
   font-size: 16px;
 }
 
-.server-owner {
+.server-owner,
+.server-count {
   font-size: 14px;
   margin-top: 4px;
   color: rgb(185, 187, 190);
+}
+
+.server-count {
+  margin-top: 16px;
+}
+
+.join-button {
+  margin-top: 16px;
+  padding: 4px 16px;
+  font-weight: bold;
 }
