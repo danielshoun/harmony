@@ -1,0 +1,99 @@
+.welcome-header {
+    background-color: #7289da;
+    color: white;
+    text-align: center;
+    padding: 16px;
+}
+
+.welcome-header > h1 {
+    margin: 0;
+}
+
+.header-logo {
+    font-size: 128px;
+    margin-top: 16px;
+}
+
+.welcome-subheader {
+    margin-top: 16px;
+}
+
+.buttons-container {
+    margin-top: 32px;
+}
+
+.header-button {
+    margin: 0 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    padding: 8px;
+    width: 64px;
+}
+
+.header-button-large {
+    width: 128px;
+}
+
+.info-container {
+    display: flex;
+    flex-flow: row wrap;
+    color: white;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.info-card {
+    width: 300px;
+    text-align: center;
+    margin: 0 32px;
+}
+
+.card-description {
+    text-align: left;
+}
+
+.about-container > h2{
+    color: white;
+    text-align: center;
+    margin-top: 64px;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.dev-info-container {
+    display: flex;
+    margin: 32px 0;
+}
+
+.dev-image {
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.dev-about-content {
+    margin-left: 32px;
+    max-width: 75%;
+    color: white;
+}
+
+.about-link {
+    text-decoration: none;
+    color: #00b0f4;
+}
+
+.left-link {
+    margin-right: 16px;
+    border-right: 1px solid #36393f;
+}
+
+.dev-about-content > h3 {
+    margin: 0;
+}
