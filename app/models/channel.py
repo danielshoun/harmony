@@ -9,7 +9,7 @@ class Channel(db.Model):
     server_id = db.Column(db.Integer, db.ForeignKey('servers.id'), nullable=False)
 
     server = db.relationship('Server', back_populates='channels')
-    messages = db.relationship('Message', back_populates='channel')
+    messages = db.relationship('ChannelMessage', back_populates='channel')
 
     def to_dict(self):
         return {
