@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
 import './SideBar.css'
 import {useSelector, useDispatch} from "react-redux";
-import {fetchMemberServers} from '../../../store/Servers'
+import {fetchMemberServers} from '../../../store/Servers';
+import {useHistory} from 'react-router';
 
 const SideBar = () => {
     const user = useSelector((state) => state.session.user);
     const servers = useSelector((state) => state.servers)
     const dispatch = useDispatch()
+    const history = useHistory();
     // const [servers, setServers] = useState([]);
     const [activeServer, setActiveServer] = useState(null)
 
@@ -30,6 +32,14 @@ const SideBar = () => {
     function handleActive(server) {
         setActiveServer(server);
         //TODO: logic for going to a server's page can go here.
+        if(server === "discover"){
+            
+            history.push("/")
+        }
+        else{
+
+            history.push(`/servers/${server.id}`)
+        }
     }
 
     return (
@@ -45,7 +55,7 @@ const SideBar = () => {
                     <i className="fas fa-compass"/>
                 </div>
             </div>
-            {servers.map(server => {
+            {servers.userServers.map(server => {
                 return (
                     <div className={`side-bar-icon${activeServer === server ? " active-server" : ""}`} onClick={() => handleActive(server)}>
                         {server.imageUrl ? <img src={server.imageUrl} alt={server.name}/> : <div>{server.name[0]}</div>}

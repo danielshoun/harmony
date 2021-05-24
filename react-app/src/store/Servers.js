@@ -17,12 +17,12 @@ export const fetchMemberServers = () => async (dispatch) => {
     }
 }
 
-const initalState = []
+const initalState = {userServers: [], allServers: []}
 
 export default function reducer(state = initalState, action){
     switch(action.type){
         case GET_SERVERS:
-            return action.servers
+            return {userServers: action.servers, allServers: [...state.allServers]}
         default:
             return state
     }
