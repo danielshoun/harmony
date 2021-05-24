@@ -15,6 +15,15 @@ def get_all_servers():
     return {'servers': [server.to_dict() for server in servers]}
 
 
+@server_routes.route('/member')
+# @login_required
+def get_member_server():
+    servers = Server.query.join(memberships).filter(
+        memberships.columns.user_id == 1)
+
+    return jsonify([server.to_dict() for server in servers])
+
+
 @server_routes.route('/', methods=['POST'])
 @login_required
 def create_server():
@@ -50,6 +59,8 @@ def create_server():
 @login_required
 def get_server(id):
     return Server.query.get(id).to_dict()
+
+
 
 
 @server_routes.route('/<int:id>', methods=['DELETE'])

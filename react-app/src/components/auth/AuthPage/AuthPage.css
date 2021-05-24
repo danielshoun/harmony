@@ -1,0 +1,106 @@
+.auth-page-home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-page-hero-container {
+  display: block;
+  border-radius: 8px;
+  min-height: 200px;
+  margin: 16px 16px 32px 16px;
+  overflow: hidden;
+}
+.auth-page-hero-image {
+  background-image: url("https://discord.com/assets/3e0acf6d69894a5d20deb7c513cd1412.svg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-banner-content {
+  text-align: center;
+  color: #fff;
+  padding: 128px;
+}
+
+.search-container {
+  display: flex;
+  max-width: 560px;
+  background-color: white;
+  border-radius: 8px;
+  margin: 16px auto;
+}
+
+.hero-search-bar {
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  padding: 8px;
+  max-width: 560px;
+  width: 100%;
+  color: #2e3338;
+}
+
+.hero-search-bar:focus {
+  outline: none;
+}
+
+.search-button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.auth-page-servers-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.server-card {
+  height: 200px;
+  width: 200px;
+  color: #fff;
+  background-color: rgb(41, 43, 47);
+  margin: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.server-image {
+  background-color: rgb(114, 137, 218);
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  font-size: 32px;
+  border-radius: 50%;
+  margin: 8px;
+}
+
+.server-name {
+  font-size: 16px;
+}
+
+.server-owner,
+.server-count {
+  font-size: 14px;
+  margin-top: 4px;
+  color: rgb(185, 187, 190);
+}
+
+.server-count {
+  margin-top: 16px;
+}
+
+.join-button {
+  margin-top: 16px;
+  padding: 4px 16px;
+  font-weight: bold;
+}
