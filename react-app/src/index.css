@@ -19,3 +19,7 @@ html {
 .button-primary:hover {
     opacity: 100%;
 }
+
+.main-content {
+    margin-left: 96px;
+}

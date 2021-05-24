@@ -25,6 +25,14 @@
   padding: 128px;
 }
 
+.search-container {
+  display: flex;
+  max-width: 560px;
+  background-color: white;
+  border-radius: 8px;
+  margin: 16px auto;
+}
+
 .hero-search-bar {
   font-size: 16px;
   border-radius: 8px;
@@ -32,13 +40,19 @@
   padding: 8px;
   max-width: 560px;
   width: 100%;
-  margin: auto auto 16px;
-  margin-top: 16px;
   color: #2e3338;
 }
 
 .hero-search-bar:focus {
   outline: none;
+}
+
+.search-button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
 }
 
 .auth-page-servers-container {
@@ -60,7 +74,7 @@
 }
 
 .server-image {
-  background-color: coral;
+  background-color: rgb(114, 137, 218);
   width: 48px;
   height: 48px;
   line-height: 48px;

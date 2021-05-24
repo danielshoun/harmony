@@ -28,11 +28,17 @@ const AuthPage = () => {
             <div>
               From gaming, to music, to learning, there's a place for you.
             </div>
-            <input
-              className="hero-search-bar"
-              placeholder="Explore communities"
-              type="text"
-            />
+            <div className='search-container'>
+              <input
+                  className="hero-search-bar"
+                  placeholder="Explore communities"
+                  type="text"
+              />
+              <button className="search-button">
+                <i className="fas fa-search"/>
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
