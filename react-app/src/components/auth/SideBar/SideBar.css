@@ -1,39 +1,39 @@
 .side-bar {
-    height: 100%;
-    width: 80px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: rgb(41, 43, 47);
-    overflow-x: hidden;
+  height: 100%;
+  width: 80px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(32, 34, 37);
+  overflow-x: hidden;
 }
 
 .side-bar-icon {
-    height: 48px;
-    width: 48px;
-    margin: 16px auto;
-    text-align: center;
-    line-height: 48px;
-    background-color: rgb(54, 57, 63);
-    transition: background-color 0.2s ease, border-radius 0.2s ease;
+  height: 48px;
+  width: 48px;
+  margin: 16px auto;
+  text-align: center;
+  line-height: 48px;
+  background-color: rgb(54, 57, 63);
+  transition: background-color 0.2s ease, border-radius 0.2s ease;
 
-border-radius: 50%;
-    color: white;
-    font-size: 24px;
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
 }
 
 .side-bar-icon:hover {
-    background-color: rgb(114, 137, 218);
-    cursor: pointer;
+  background-color: rgb(114, 137, 218);
+  cursor: pointer;
 }
 
 .active-server {
-    background-color: rgb(114, 137, 218);
-    border-radius: 16px;
+  background-color: rgb(114, 137, 218);
+  border-radius: 16px;
 }
 
 .default-icons {
-    border-bottom: 1px rgb(70, 71, 75) solid;
-    margin: 8px;
+  border-bottom: 1px rgb(70, 71, 75) solid;
+  margin: 8px;
 }
