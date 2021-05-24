@@ -2,7 +2,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: red;
 }
 
 .auth-page-hero-container {
@@ -39,4 +38,42 @@
 
 .hero-search-bar:focus {
   outline: none;
+}
+
+.auth-page-servers-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.server-card {
+  height: 200px;
+  min-width: 200px;
+  color: #fff;
+  background-color: rgb(41, 43, 47);
+  margin: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.server-image {
+  background-color: coral;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  font-size: 32px;
+  border-radius: 50%;
+  margin: 8px;
+}
+
+.server-name {
+  font-size: 16px;
+}
+
+.server-owner {
+  font-size: 14px;
+  margin-top: 4px;
+  color: rgb(185, 187, 190);
 }

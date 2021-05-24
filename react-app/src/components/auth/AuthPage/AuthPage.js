@@ -1,7 +1,24 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./AuthPage.css";
 
 const AuthPage = () => {
+  const [servers, setServers] = useState([])
+
+  useEffect(() => {
+    const tempServers = [
+      {id: 1, name: 'Test Server 2', ownerName: 'Demo User', imageUrl: null},
+      {id: 2, name: 'Test Server 3', ownerName: 'Demo User', imageUrl: null},
+      {id: 3, name: 'Test Server 1', ownerName: 'Demo User', imageUrl: null},
+      {id: 4, name: 'Test Server 4', ownerName: 'Demo User', imageUrl: null},
+      {id: 5, name: 'Test Server 5', ownerName: 'Demo User', imageUrl: null},
+      {id: 6, name: 'Test Server 6', ownerName: 'Demo User', imageUrl: null},
+      {id: 7, name: 'Test Server 7', ownerName: 'Demo User', imageUrl: null},
+      {id: 8, name: 'Test Server 8', ownerName: 'Demo User', imageUrl: null},
+    ]
+
+    setServers(tempServers)
+  }, [])
+
   return (
     <div className="auth-page-home">
       <div className="auth-page-hero-container">
@@ -15,29 +32,20 @@ const AuthPage = () => {
               className="hero-search-bar"
               placeholder="Explore communities"
               type="text"
-            ></input>
+            />
           </div>
         </div>
       </div>
       <div className="auth-page-servers-container">
-        <div className="servers-list-row">
-          <div className="server-row-container">Server 1</div>
-          <div className="server-row-container">Server 2</div>
-          <div className="server-row-container">Server 3</div>
-          <div className="server-row-container">Server 4</div>
-        </div>
-        <div className="servers-list-row">
-          <div className="server-row-container">Server 1</div>
-          <div className="server-row-container">Server 2</div>
-          <div className="server-row-container">Server 3</div>
-          <div className="server-row-container">Server 4</div>
-        </div>
-        <div className="servers-list-row">
-          <div className="server-row-container">Server 1</div>
-          <div className="server-row-container">Server 2</div>
-          <div className="server-row-container">Server 3</div>
-          <div className="server-row-container">Server 4</div>
-        </div>
+        {servers.map(server => {
+          return (
+              <div className="server-card" key={server.id}>
+                {server.imageUrl ? <img className="server-image" src={server.imageUrl} alt={server.name}/> : <div className="server-image">{server.name[0]}</div>}
+                <div className="server-name">{server.name}</div>
+                <div className="server-owner">{server.ownerName}</div>
+              </div>
+          )
+        })}
       </div>
     </div>
   );
