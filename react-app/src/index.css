@@ -1,25 +1,29 @@
 /* TODO Add site wide styles */
 
 html {
-    background-color: rgb(54, 57, 63);
-    font-family: 'Noto Sans', sans-serif;
-    box-sizing: border-box;
+  background-color: rgb(54, 57, 63);
+  font-family: "Noto Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
 }
 
 .button-primary {
-    background-color: rgb(59, 165, 92);
-    border: none;
-    color: white;
-    padding: 4px;
-    border-radius: 8px;
-    opacity: 80%;
-    transition: opacity 0.1s ease;
+  background-color: rgb(59, 165, 92);
+  border: none;
+  color: white;
+  padding: 4px;
+  border-radius: 8px;
+  opacity: 80%;
+  transition: opacity 0.1s ease;
 }
 
 .button-primary:hover {
-    opacity: 100%;
+  opacity: 100%;
 }
 
 .main-content {
-    margin-left: 96px;
+  margin-left: 96px;
 }

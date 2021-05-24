@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import LoginForm from "./components/auth/LoginForm";
+import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import AuthPage from "./components/auth/AuthPage/AuthPage";
 import NavBar from "./components/NavBar";
@@ -29,15 +29,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && <SideBar/>}
-      <div className="main-content">
-        <Switch>
-          <Route path="/login" exact={true}>
-            <LoginForm />
-          </Route>
-          <Route path="/sign-up" exact={true}>
-            <SignUpForm />
-          </Route>
+      {user && <SideBar />}
+      <Switch>
+        <Route path="/login" exact={true}>
+          <LoginForm />
+        </Route>
+        <Route path="/sign-up" exact={true}>
+          <SignUpForm />
+        </Route>
+        <div className="main-content">
           <ProtectedRoute path="/users" exact={true}>
             <UsersList />
           </ProtectedRoute>
@@ -47,8 +47,8 @@ function App() {
           <ProtectedRoute path="/" exact={true}>
             <AuthPage />
           </ProtectedRoute>
-        </Switch>
-      </div>
+        </div>
+      </Switch>
     </BrowserRouter>
   );
 }
