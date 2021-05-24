@@ -13,7 +13,7 @@ class Server(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     picture_url = db.Column(db.String(500))
-    owner_id = db.Column(db.Integer, nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     invite_url = db.Column(db.String(10), nullable=False)
 
     owner = db.relationship('User', back_populates='servers_owned')
