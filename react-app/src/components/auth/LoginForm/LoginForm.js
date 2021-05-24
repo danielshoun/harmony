@@ -18,8 +18,10 @@ const LoginForm = () => {
       setErrors(data.errors);
     }
   };
-  const LoginDemo = () => {
-    // Logic for demo User
+  const LoginDemo = async () => {
+    setEmail("demo@aa.io")
+    setPassword("password")
+    const data = await dispatch(login("demo@aa.io", "password"))
   };
   const updateEmail = (e) => {
     setEmail(e.target.value);

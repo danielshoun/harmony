@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import WelcomePage from "./components/WelcomePage";
 import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import AuthPage from "./components/auth/AuthPage/AuthPage";
@@ -29,8 +30,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && <SideBar />}
+      {user && !window.location.href.includes("welcome") && <SideBar />}
       <Switch>
+        <Route path="/welcome" exact={true}>
+          <WelcomePage />
+        </Route>
         <Route path="/login" exact={true}>
           <LoginForm />
         </Route>
