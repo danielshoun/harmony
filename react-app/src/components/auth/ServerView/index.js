@@ -19,7 +19,7 @@ const ServerView = () => {
     }, [dispatch])
 
     return(
-        <div>
+        <div className='server-view'>
             {server && <ChannelsBar server={server}/>}
         </div>
     )

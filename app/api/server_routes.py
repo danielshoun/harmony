@@ -12,11 +12,11 @@ server_routes = Blueprint('servers', __name__)
 @login_required
 def get_all_servers():
     servers = Server.query.all()
-    return {'servers': [server.to_dict() for server in servers]}
+    return jsonify([server.to_dict() for server in servers])
 
 
 @server_routes.route('/member')
-# @login_required
+@login_required
 def get_member_server():
     servers = Server.query.join(memberships).filter(
         memberships.columns.user_id == 1)
