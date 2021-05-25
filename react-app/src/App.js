@@ -8,7 +8,7 @@ import AuthPage from "./components/auth/AuthPage/AuthPage";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
-import User from "./components/User";
+import User from "./components/UserProfile/UserProfile";
 import { authenticate } from "./store/session";
 import SideBar from "./components/auth/SideBar";
 import ServerView from "./components/auth/ServerView";
