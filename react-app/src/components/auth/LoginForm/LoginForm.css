@@ -15,7 +15,7 @@
 .login-form-contents {
   box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
   height: 370px;
-  width: 480px;
+  width: 416px;
   padding: 32px;
   border-radius: 5px;
   background-color: #36393f;
@@ -38,7 +38,7 @@
   background-color: rgba(0, 0, 0, 0.1);
   border: #1e1e24 solid thin;
   color: white;
-  height: 30px;
+  height: 18px;
   padding: 10px;
   transition: border 0.2s ease;
 }
@@ -79,7 +79,8 @@
   margin-top: 18px;
   border: none;
   border-radius: 3px;
-  padding: 10px 0;
+  padding: 2px 16px;
+  height: 40px;
   color: white;
   font-weight: bold;
   background-color: #7289da;
@@ -96,7 +97,8 @@
   margin-top: 18px;
   border: none;
   border-radius: 3px;
-  padding: 10px 0;
+  padding: 2px 16px;
+  height: 40px;
   color: white;
   font-weight: bold;
   background-color: rgb(59, 165, 92);
