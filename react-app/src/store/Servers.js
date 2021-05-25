@@ -25,16 +25,16 @@ const removeServer = (server) => ({
 })
 
 
-// const joinServer = (serverId) => ({
-//     type: JOIN_SERVER,
-//     server
-// })
+const joinServer = (serverId) => ({
+    type: JOIN_SERVER,
+    serverId
+})
 
 
-// const leaveServer = (serverId) => ({
-//     type: LEAVE_SERVER,
-//     serverId
-// })
+const leaveServer = (serverId) => ({
+    type: LEAVE_SERVER,
+    serverId
+})
 
 
 export const fetchMemberServers = () => async (dispatch) => {
@@ -79,6 +79,30 @@ export const deleteServer = (server) => async (dispatch) => {
 }
 
 
+export const serverJoin = (serverId) => (dispatch) => {
+    const res = await fetch(`api/servers/${serverId}/join`, {
+        method: 'POST'
+    })
+
+    if (res.ok) {
+        server = await res.json()
+        dispatch(joinServer(server))
+    }
+}
+
+
+export const serverLeave = (serverId) => (dispatch) => {
+    const res = await fetch(`api/servers/${serverId}/leave`, {
+        method: 'DELETE'
+    })
+
+    if (res.ok) {
+        server = await res.json()
+        dispatch(leaveServer(server))
+    }
+}
+
+
 const initalState = {userServers: [], allServers: []}
 
 export default function reducer(state = initalState, action){
@@ -94,10 +118,16 @@ export default function reducer(state = initalState, action){
         case REMOVE_SERVER:{
             const userIndex = state.userServers.indexOf(action.server)
             const allIndex = state.allServers.indexOf(action.server)
-            const userServers = [state.userServers.slice(0, userIndex), state.userServers.slice(userIndex + 1)]
-            const allServers = [state.userServers.slice(0, allIndex), state.userServers.slice(allIndex + 1)]
-            const newState = { userServers, allServers }
-            return newState
+            const userServers = [...state.userServers.slice(0, userIndex), ...state.userServers.slice(userIndex + 1)]
+            const allServers = [...state.userServers.slice(0, allIndex), ...state.userServers.slice(allIndex + 1)]
+            return { userServers, allServers }
+        }
+        case JOIN_SERVER:
+            return {userServers: [...state.userServers, action.server], allServers: [...state.allServers]}
+        case LEAVE_SERVER:{
+            const userIndex = state.userServers.indexOf(action.server)
+            const userServers = [...state.userServers.slice(0, userIndex), ...state.userServers.slice(userIndex + 1)]
+            return {userServers, allServers: [...state.allServers]}
         }
         default:
             return state
