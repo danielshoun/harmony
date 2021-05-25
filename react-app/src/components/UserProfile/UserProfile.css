@@ -25,24 +25,6 @@
   align-items: center;
 }
 
-.user-pic-edit-btn {
-  background-color: rgb(79, 84, 92);
-  border: none;
-  color: white;
-  border-radius: 3px;
-  opacity: 0.9;
-  transition: opacity 0.2s ease;
-  font-size: 14px;
-  height: 28px;
-  margin-left: 20px;
-  padding: 2px 16px;
-}
-
-.user-pic-edit-btn:hover {
-  cursor: pointer;
-  opacity: 1;
-}
-
 .user-profile-icon {
   background-color: aqua;
   height: 80px;
@@ -66,7 +48,7 @@
   font-size: 12px;
   text-overflow: ellipsis;
   transition: 0.3s ease;
-  background-color: rgb(56, 56, 56);
+  background-color: rgb(46, 46, 46);
 }
 
 .overlay:hover {
@@ -107,7 +89,7 @@
   border: none;
   color: white;
   border-radius: 3px;
-  opacity: 0.9;
+  opacity: 0.8;
   transition: opacity 0.2s ease;
   font-size: 14px;
   height: 28px;
@@ -123,6 +105,7 @@
   margin-bottom: 4px;
   color: #8e9297;
   font-size: 12px;
+  font-weight: bold;
 }
 
 .user-info {

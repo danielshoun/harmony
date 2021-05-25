@@ -28,6 +28,16 @@ function User() {
     return null;
   }
 
+  const editUserName = async () => {
+    //Logic Needed
+  };
+  const editEmail = async () => {
+    //Logic Needed
+  };
+  const editImage = async () => {
+    //Logic Needed
+  };
+
   return (
     <div className="account-profile-container">
       <h1>My Account</h1>
@@ -40,12 +50,17 @@ function User() {
               <div>{user.username[0]}</div>
             )}
             <div class="overlay">
-              <div>CHANGE</div>
+              <div
+                onClick={() => {
+                  editImage();
+                }}
+              >
+                CHANGE
+              </div>
             </div>
           </div>
           <div className="user-profile-name">{user.username}</div>
           <div className="user-profile-name-id">#{user.id}</div>
-          <button className="user-pic-edit-btn">Edit</button>
         </div>
         <div className="user-profile-details">
           <div className="user-edit-bar">
@@ -53,14 +68,18 @@ function User() {
               <label className="user-labels">USERNAME</label>
               <div className="user-info">{user.username}</div>
             </div>
-            <button className="user-edit-btn">Edit</button>
+            <button onClick={() => editUserName()} className="user-edit-btn">
+              Edit
+            </button>
           </div>
           <div className="user-edit-bar">
             <div>
               <label className="user-labels">EMAIL</label>
               <div className="user-info">{user.email}</div>
             </div>
-            <button className="user-edit-btn">Edit</button>
+            <button onClick={() => editEmail()} className="user-edit-btn">
+              Edit
+            </button>
           </div>
 
           <button onClick={() => logOut()} className="account-logout-btn">
