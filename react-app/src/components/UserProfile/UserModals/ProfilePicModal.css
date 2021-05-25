@@ -1,0 +1,30 @@
+.edit-prof-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+.edit-profile-icon {
+  background-color: rgb(82, 82, 82);
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  font-size: 48px;
+  color: white;
+  text-align: center;
+  line-height: 80px;
+  overflow: hidden;
+}
+
+.edit-server-image {
+  margin-top: 20px;
+  margin-left: 60px;
+  color: white;
+}
+
+.edit-prof-pic {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}

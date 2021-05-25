@@ -1,7 +1,7 @@
 .account-profile-container {
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  margin-left: 25px;
 }
 
 .account-profile-container > h1 {
@@ -26,7 +26,7 @@
 }
 
 .user-profile-icon {
-  background-color: aqua;
+  background-color: rgb(82, 82, 82);
   height: 80px;
   width: 80px;
   border-radius: 50%;

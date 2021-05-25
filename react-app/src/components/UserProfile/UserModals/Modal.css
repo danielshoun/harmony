@@ -1,0 +1,92 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  position: absolute;
+  background-color: rgb(54, 57, 63);
+  border-radius: 5px;
+  width: 400px;
+  height: 275px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+}
+
+.edit-header {
+  color: white;
+  font-weight: bolder;
+  font-size: 24px;
+  text-align: center;
+}
+
+.edit-text {
+  color: rgb(185, 187, 190);
+  text-align: center;
+}
+
+.edit-input-field {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: #1e1e24 solid thin;
+  color: white;
+  height: 18px;
+  padding: 10px;
+  transition: border 0.2s ease;
+}
+
+.edit-input-field:hover {
+  border: #040405 solid thin;
+}
+
+.edit-input-field:focus {
+  outline: none;
+  border: #00b0f4 solid thin;
+}
+
+.edit-label {
+  color: #8e9297;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.submit-div {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  border-top: solid rgb(85, 85, 85) thin;
+}
+.submit-edit-btn {
+  margin-top: 20px;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 16px;
+  height: 40px;
+  color: white;
+  font-weight: bold;
+  background-color: #7289da;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.submit-edit-btn:hover {
+  opacity: 1;
+  cursor: pointer;
+}
