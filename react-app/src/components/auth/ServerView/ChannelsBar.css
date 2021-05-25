@@ -32,6 +32,30 @@
   flex: 1;
 }
 
+.settings-button {
+  position: relative;
+  opacity: 0.8;
+  transition: transform 0.2s ease-out, stroke-dasharray 0.2s ease-out,
+    -webkit-transform 0.2s ease-out;
+  margin-left: 4px;
+  top: 3px
+}
+
+.settings-button-active {
+  transform: translate3d(0, -2px, 0) rotate(-90deg);
+}
+
+.settings-button > g > path {
+    stroke-width: 2px;
+    stroke-dasharray: 7;
+    stroke-dashoffset: 1;
+    transition: stroke-dasharray .2s ease;
+}
+
+.settings-button-active > g > path {
+    stroke-dasharray: 0;
+}
+
 .channels-bar {
   color: #8e9297;
   padding-top: 16px;
@@ -46,6 +70,7 @@
   border-radius: 4px;
   flex-direction: row;
   align-items: center;
+  border-radius: 4px;
 }
 
 .channel:hover {
@@ -106,4 +131,70 @@
 .profile-settings:hover {
   color: #dcddde;
   background-color: rgba(79, 84, 92, 0.32);
+}
+
+.server-settings-container {
+    position: absolute;
+    left: 82px;
+    top: 56px;
+}
+
+.server-settings {
+    transition: transform .12s ease-out,opacity .12s ease-out;
+    transform: scale(1);
+    opacity: 1;
+    transform-origin: top center;
+}
+
+.server-settings-menu {
+    width: 220px;
+    box-sizing: border-box;
+    display: flex;
+    height: auto;
+    cursor: default;
+    max-height: calc(100vh - 32px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.24);
+    background: #18191c;
+    border-radius: 4px;
+    flex-direction: column;
+}
+
+.server-settings-menu-item {
+    font-size: 14px;
+    color: #b9bbbe;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 8px;
+    font-weight: 500;
+}
+
+.server-settings-menu-item:hover {
+    background-color: #4e5d94;
+    color: #fff;
+    cursor: pointer;
+}
+
+.leave-server {
+    color: #ed4245;
+}
+
+.leave-server:hover {
+    background-color: #ed4245;
+    color: #fff;
+    cursor: pointer;
+}
+
+.menu-item-icon {
+    flex: 0 0 auto;
+    margin-left: 8px;
+    display: flex;
+}
+
+.menu-item-icon > svg {
+    height: 18px;
+    width: 18px;
+    align-self: center;
 }

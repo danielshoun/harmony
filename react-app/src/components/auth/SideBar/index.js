@@ -42,7 +42,7 @@ const SideBar = () => {
             history.push(`/servers/${server.id}/${server.channels[0].id}`);
         }
     }
-  }
+
     return (
         <div className="side-bar">
             <div className="default-icons">
@@ -70,7 +70,7 @@ const SideBar = () => {
                 <i className="fas fa-plus"/>
             </div>
         </div>
-    );
+    )
 };
 
 export default SideBar;

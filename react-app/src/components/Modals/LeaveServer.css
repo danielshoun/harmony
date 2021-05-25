@@ -1,0 +1,87 @@
+.leave-server-container {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  width: 440px;
+  max-height: 660px;
+  min-height: 200px;
+}
+
+.leave-server-header {
+  flex: 0 0 auto;
+  padding: 16px;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+.leave-server-header > span {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.leave-server-body {
+  padding-right: 8px;
+  position: relative;
+  z-index: 0;
+  border-radius: 5px 5px 0 0;
+  padding-left: 16px;
+  padding-bottom: 20px;
+  flex: 1 1 auto;
+  font-size: 14px;
+}
+
+.leave-server-buttons {
+  flex: 0 0 auto;
+  background-color: #2f3136;
+  padding: 16px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.leave-button {
+  color: #fff;
+  background-color: #ed4245;
+  width: auto;
+  height: 38px;
+  min-width: 96px;
+  min-height: 38px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 2px 16px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.leave-button:hover {
+    background-color: #d53b3e;
+}
+
+.cancel-button {
+  color: #fff;
+  background: none;
+  width: auto;
+  height: 38px;
+  min-width: 96px;
+  min-height: 38px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 2px 16px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.cancel-button:hover {
+    text-decoration: underline;
+}

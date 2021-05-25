@@ -38,12 +38,39 @@ function ChatContainer({ server }) {
         </div>
       </div>
       <div className="chat-area">
-        <div className="chat-messages">Hello</div>
+        <div className="chat-messages-container">
+          <div className="chat-messages"></div>
+          <form action="" className="send-message-form">
+            <textarea
+              name=""
+              id=""
+              placeholder={`Message #${channel.name}`}
+              rows="1"
+              contentEditable="true"
+            ></textarea>
+          </form>
+        </div>
         {showMembers && (
           <div className="members-list-container">
             <div className="members-list">
               <div>
-                <span className="members-group">Online</span>
+                <span className="members-group">All</span>
+                <div className="member-container">
+                  {server.members.map((member) => (
+                    <div className="member-info">
+                      <div className="profile-pic">
+                        <img
+                          src={
+                            member.image_url ||
+                            "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div className="member-name">{member.username}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
