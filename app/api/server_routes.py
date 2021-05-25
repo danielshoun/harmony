@@ -21,7 +21,7 @@ def get_all_servers():
 @login_required
 def get_member_server():
     servers = Server.query.join(memberships).filter(
-        memberships.columns.user_id == 1)
+        memberships.columns.user_id == current_user.id)
 
     return jsonify([server.to_dict() for server in servers])
 

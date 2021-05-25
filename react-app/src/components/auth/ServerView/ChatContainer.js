@@ -1,15 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { io } from 'socket.io-client';
 import { useParams } from "react-router-dom";
 import "./ChatContainer.css";
 
+let socket;
+
 function ChatContainer({ server }) {
+  const user = useSelector((state) => state.session.user);
   const { channelId } = useParams();
   const channel = server.channels.find(
     (channel) => channel.id === parseInt(channelId)
   );
-
+  const [messages, setMessages] = useState([])
   const [showMembers, setShowMembers] = useState(true);
+  const [chatInput, setChatInput] = useState('')
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`/api/messages/${channel.id}`)
+      if(res.ok) {
+        const data = await res.json();
+        setMessages(data)
+      }
+    }
+    fetchData()
+  }, [channel])
+
+  useEffect(() => {
+    socket = io();
+
+    socket.emit("join", {channel_id: channel.id})
+
+    socket.on("message", (chat) => {
+      setMessages(messages => [...messages, chat])
+    })
+
+    return (() => {
+      socket.disconnect();
+    })
+  }, [channel])
+
+  function sendChat(e) {
+    e.preventDefault();
+    socket.emit("chat", {
+      sender_id: user.id,
+      channel_id: channel.id,
+      body: chatInput
+    })
+    setChatInput("")
+  }
 
   return (
     <div className="chat-container">
@@ -39,15 +79,21 @@ function ChatContainer({ server }) {
       </div>
       <div className="chat-area">
         <div className="chat-messages-container">
-          <div className="chat-messages"></div>
-          <form action="" className="send-message-form">
-            <textarea
+          <div className="chat-messages">
+            {messages.map((message, i) => {
+              return (<div key={i}>{`${message.sender.username}: ${message.body}`}</div>)
+            })}
+          </div>
+          <form action="" className="send-message-form" onSubmit={sendChat}>
+            <input
               name=""
               id=""
               placeholder={`Message #${channel.name}`}
-              rows="1"
+              // rows="1"
               contentEditable="true"
-            ></textarea>
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+            />
           </form>
         </div>
         {showMembers && (
