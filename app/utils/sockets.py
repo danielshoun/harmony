@@ -21,14 +21,10 @@ def on_join(data):
     id = data['channel_id']
     room = str(data['channel_id'])
     join_room(room)
-    messages = ChannelMessage.query.filter(ChannelMessage.channel_id == id).all()
-
-    # send(jsonify([message.to_dict() for message in messages]), to=room)
 
 
 @socketio.on('chat')
 def channel_chat(data):
-    # print(data['message'])
     new_message = ChannelMessage(
         sender_id=data['sender_id'],
         channel_id=data['channel_id'],

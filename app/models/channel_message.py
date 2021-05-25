@@ -18,5 +18,5 @@ class ChannelMessage(db.Model):
             "body": self.body,
             "channel_id": self.channel_id,
             "sender": self.sender.to_dict(),
-            "created_at": self.created_at
+            "created_at": self.created_at.isoformat()
         }
