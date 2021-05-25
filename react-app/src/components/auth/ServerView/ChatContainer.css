@@ -54,55 +54,107 @@
 }
 
 .toolbar-member-button > svg {
-    fill: #fff;
+  fill: #fff;
 }
 
 .toolbar-member-button > svg:hover {
-    fill: #dcddde;
-    cursor: pointer;
+  fill: #dcddde;
+  cursor: pointer;
 }
 
 .chat-area {
-    min-width: 0;
-    min-height: 0;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
-    align-items: stretch;
-    position: relative;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: stretch;
+  position: relative;
 }
 
-.chat-messages {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    min-height: 0;
-    flex: 1 1 auto;
+.chat-messages-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
 }
 
 .members-list-container {
-    min-width: 240px;
-    display: flex;
-    position: relative;
+  min-width: 240px;
+  display: flex;
+  position: relative;
 }
 
 .members-list {
-    width: 240px;
-    padding: 0 0 20px;
-    flex: 0 0 auto;
-    height: auto;
-    background-color: #2f3136;
+  width: 240px;
+  padding: 0 0 20px;
+  flex: 0 0 auto;
+  height: auto;
+  background-color: #2f3136;
 }
 
 .members-group {
-    padding: 24px 8px 0 16px;
-    height: 40px;
-    white-space: nowrap;
-    line-height: 16px;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.25px;
-    color: #8e9297;
+  padding: 24px 8px 0 16px;
+  height: 40px;
+  white-space: nowrap;
+  line-height: 16px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.25px;
+  color: #8e9297;
+}
+
+.member-container {
+  max-width: 224px;
+  margin-left: 8px;
+  padding: 1px 0;
+}
+
+.member-info {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  height: 42px;
+  padding: 0 8px;
+}
+
+.member-info:hover {
+  background-color: rgba(79, 84, 92, 0.16);
+}
+
+.member-name {
+  color: #8e9297;
+}
+
+.chat-messages {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  z-index: 0;
+}
+
+.send-message-form {
+  flex-shrink: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+
+.send-message-form > textarea {
+  background-color: #40444b;
+  width: 100%;
+  resize: none;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  padding: 11px 0;
+  padding-left: 8px;
+  font-family: "Noto Sans", sans-serif;
+  color: #fff;
+  font-size: 14px;
+  height: auto;
 }

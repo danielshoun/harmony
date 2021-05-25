@@ -1,23 +1,143 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Modal from "react-modal";
 import "./ChannelsBar.css";
+import LeaveServer from "../../Modals/LeaveServer";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#36393f",
+    border: "none",
+    padding: "0",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+  },
+};
+
+Modal.setAppElement("#root");
 
 const ChannelsBar = ({ server }) => {
   const user = useSelector((state) => state.session.user);
   const channels = server.channels;
   const history = useHistory();
   const [activeChannel, setActiveChannel] = useState(channels[0]);
+  const [showServerSettings, setShowServerSettings] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal(e) {
+    e.stopPropagation();
+    setIsOpen(false);
+  }
 
   const handleActive = (channel) => {
     setActiveChannel(channel);
-    history.push(`/servers/${server.id}/${channel.id}`)
+    history.push(`/servers/${server.id}/${channel.id}`);
   };
 
   return (
-    <div className="sidebar">
-      <div className="server-header">
+    <div id="sidebar" className="sidebar">
+      <div
+        className="server-header"
+        onClick={() => setShowServerSettings(!showServerSettings)}
+      >
         <h1>{server.name}</h1>
+        <svg
+          width="18"
+          height="18"
+          className={
+            showServerSettings === false
+              ? "settings-button"
+              : "settings-button settings-button-active"
+          }
+        >
+          <g fill="none">
+            <path d="M0 0h18v18H0"></path>
+            <path
+              stroke="currentColor"
+              d="M4.5 4.5l9 9"
+              stroke-linecap="round"
+            ></path>
+            <path
+              stroke="currentColor"
+              d="M13.5 4.5l-9 9"
+              stroke-linecap="round"
+            ></path>
+          </g>
+        </svg>
+        {showServerSettings && (
+          <div className="server-settings-container">
+            <div className="server-settings">
+              <div className="server-settings-menu">
+                <div className="server-settings-menu-item">
+                  <div>Invite User</div>
+                  <div class="menu-item-icon">
+                    <svg
+                      aria-hidden="false"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M19.738 10H22V14H19.739C19.498 14.931 19.1 15.798 18.565 16.564L20 18L18 20L16.565 18.564C15.797 19.099 14.932 19.498 14 19.738V22H10V19.738C9.069 19.498 8.203 19.099 7.436 18.564L6 20L4 18L5.436 16.564C4.901 15.799 4.502 14.932 4.262 14H2V10H4.262C4.502 9.068 4.9 8.202 5.436 7.436L4 6L6 4L7.436 5.436C8.202 4.9 9.068 4.502 10 4.262V2H14V4.261C14.932 4.502 15.797 4.9 16.565 5.435L18 3.999L20 5.999L18.564 7.436C19.099 8.202 19.498 9.069 19.738 10ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div className="server-settings-menu-item">
+                  <div>Create Channel</div>
+                  <div class="menu-item-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24">
+                      <path
+                        fill="currentColor"
+                        d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  className="server-settings-menu-item leave-server"
+                  onClick={openModal}
+                >
+                  <div>Leave Server</div>
+                  <div class="menu-item-icon">
+                    <svg
+                      class="icon-LYJorE"
+                      aria-hidden="false"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z"
+                      ></path>
+                    </svg>
+                    <Modal
+                      isOpen={modalIsOpen}
+                      onRequestClose={closeModal}
+                      style={customStyles}
+                    >
+                      <LeaveServer server={server} closeModal={closeModal} />
+                    </Modal>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div className="channels-bar">
         {channels.map((channel) => {
@@ -45,18 +165,22 @@ const ChannelsBar = ({ server }) => {
           <div className="profile-pic">
             <img
               src={
-                user.picture ||
+                user.image_url ||
                 "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
               }
               alt=""
             />
           </div>
           <div className="profile-name">{user.username}</div>
-          <div className="profile-settings" onClick={() => history.push(`/users/${user.id}`)}>
+          <div
+            className="profile-settings"
+            onClick={() => history.push(`/users/${user.id}`)}
+          >
             <svg aria-hidden="false" width="20" height="20" viewBox="0 0 24 24">
               <path
-              fill="currentColor"
-              d="M19.738 10H22V14H19.739C19.498 14.931 19.1 15.798 18.565 16.564L20 18L18 20L16.565 18.564C15.797 19.099 14.932 19.498 14 19.738V22H10V19.738C9.069 19.498 8.203 19.099 7.436 18.564L6 20L4 18L5.436 16.564C4.901 15.799 4.502 14.932 4.262 14H2V10H4.262C4.502 9.068 4.9 8.202 5.436 7.436L4 6L6 4L7.436 5.436C8.202 4.9 9.068 4.502 10 4.262V2H14V4.261C14.932 4.502 15.797 4.9 16.565 5.435L18 3.999L20 5.999L18.564 7.436C19.099 8.202 19.498 9.069 19.738 10ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"></path>
+                fill="currentColor"
+                d="M19.738 10H22V14H19.739C19.498 14.931 19.1 15.798 18.565 16.564L20 18L18 20L16.565 18.564C15.797 19.099 14.932 19.498 14 19.738V22H10V19.738C9.069 19.498 8.203 19.099 7.436 18.564L6 20L4 18L5.436 16.564C4.901 15.799 4.502 14.932 4.262 14H2V10H4.262C4.502 9.068 4.9 8.202 5.436 7.436L4 6L6 4L7.436 5.436C8.202 4.9 9.068 4.502 10 4.262V2H14V4.261C14.932 4.502 15.797 4.9 16.565 5.435L18 3.999L20 5.999L18.564 7.436C19.099 8.202 19.498 9.069 19.738 10ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+              ></path>
             </svg>
           </div>
         </div>
