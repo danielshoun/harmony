@@ -1,0 +1,19 @@
+.channels-bar{
+    background-color: #2f3136;
+    color: #8e9297;
+}
+
+.channel:hover{
+    background-color: rgba(79, 84, 92, .16);
+    color: #dcddde;
+}
+
+.active-channel{
+    background-color: rgba(79, 84, 92, .24);
+    color: #fff;
+}
+
+.server-header{
+    color: #fff;
+    border-bottom: solid 1px rgba(0, 0, 0, .3);
+}

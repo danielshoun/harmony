@@ -1,30 +1,45 @@
 import React, {useEffect, useState} from "react";
 import './SideBar.css'
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {fetchMemberServers} from '../../../store/Servers';
+import {useHistory} from 'react-router';
 
 const SideBar = () => {
     const user = useSelector((state) => state.session.user);
-    const [servers, setServers] = useState([]);
+    const servers = useSelector((state) => state.servers)
+    const dispatch = useDispatch()
+    const history = useHistory();
+    // const [servers, setServers] = useState([]);
     const [activeServer, setActiveServer] = useState(null)
 
     useEffect(() => {
-        const tempServers = [
-            {id: 1, name: 'Test Server 2', ownerName: 'Demo User', userCount: 100, imageUrl: null},
-            {id: 2, name: 'Test Server 3', ownerName: 'Demo User', userCount: 50, imageUrl: null},
-            {id: 3, name: 'Test Server 1', ownerName: 'Demo User', userCount: 200, imageUrl: null},
-            {id: 4, name: 'Test Server 4', ownerName: 'Demo User', userCount: 300, imageUrl: null},
-            {id: 5, name: 'Test Server 5', ownerName: 'Demo User', userCount: 40, imageUrl: null},
-            {id: 6, name: 'Test Server 6', ownerName: 'Demo User', userCount: 1, imageUrl: null},
-            {id: 7, name: 'Test Server 7', ownerName: 'Demo User', userCount: 10, imageUrl: null},
-            {id: 8, name: 'Test Server 8', ownerName: 'Demo User', userCount: 25, imageUrl: null},
-        ]
+        // const tempServers = [
+        //     {id: 1, name: 'Test Server 2', ownerName: 'Demo User', userCount: 100, imageUrl: null},
+        //     {id: 2, name: 'Test Server 3', ownerName: 'Demo User', userCount: 50, imageUrl: null},
+        //     {id: 3, name: 'Test Server 1', ownerName: 'Demo User', userCount: 200, imageUrl: null},
+        //     {id: 4, name: 'Test Server 4', ownerName: 'Demo User', userCount: 300, imageUrl: null},
+        //     {id: 5, name: 'Test Server 5', ownerName: 'Demo User', userCount: 40, imageUrl: null},
+        //     {id: 6, name: 'Test Server 6', ownerName: 'Demo User', userCount: 1, imageUrl: null},
+        //     {id: 7, name: 'Test Server 7', ownerName: 'Demo User', userCount: 10, imageUrl: null},
+        //     {id: 8, name: 'Test Server 8', ownerName: 'Demo User', userCount: 25, imageUrl: null},
+        // ]
 
-        setServers(tempServers)
-    }, [])
+        // setServers(tempServers)
+
+        dispatch(fetchMemberServers())
+    }, [dispatch])
 
     function handleActive(server) {
         setActiveServer(server);
         //TODO: logic for going to a server's page can go here.
+        if(server === "discover"){
+            
+            history.push("/")
+        }
+        else{
+
+            history.push(`/servers/${server.id}`)
+        }
     }
 
     return (
@@ -40,7 +55,7 @@ const SideBar = () => {
                     <i className="fas fa-compass"/>
                 </div>
             </div>
-            {servers.map(server => {
+            {servers.userServers.map(server => {
                 return (
                     <div className={`side-bar-icon${activeServer === server ? " active-server" : ""}`} onClick={() => handleActive(server)}>
                         {server.imageUrl ? <img src={server.imageUrl} alt={server.name}/> : <div>{server.name[0]}</div>}

@@ -15,6 +15,6 @@ class ChannelMessage(db.Model):
         return {
             "id": self.id,
             "body": self.body,
-            "channel": self.channel.to_dict(),
+            "channel_id": self.channel_id,
             "sender": self.sender.to_dict()
         }

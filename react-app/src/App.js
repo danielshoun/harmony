@@ -11,6 +11,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./store/session";
 import SideBar from "./components/auth/SideBar";
+import ServerView from "./components/auth/ServerView";
 
 function App() {
   const user = useSelector((state) => state.session.user);
@@ -50,6 +51,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path="/" exact={true}>
             <AuthPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/servers/:serverId">
+            <ServerView />
           </ProtectedRoute>
         </div>
       </Switch>

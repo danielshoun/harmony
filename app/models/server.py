@@ -17,7 +17,7 @@ class Server(db.Model):
     invite_url = db.Column(db.String(10), nullable=False)
 
     owner = db.relationship('User', back_populates='servers_owned')
-    channels = db.relationship('Channel', back_populates='server')
+    channels = db.relationship('Channel', cascade='all, delete-orphan', back_populates='server')
     members = db.relationship('User', secondary=memberships, back_populates='servers_joined')
 
     def to_dict(self):
@@ -27,5 +27,6 @@ class Server(db.Model):
             "pictureUrl": self.picture_url,
             "owner": self.owner.to_dict(),
             "inviteUrl": self.invite_url,
-            "channels": [channel.to_dict() for channel in self.channels]
+            "channels": [channel.to_dict() for channel in self.channels],
+            "members": [member.to_dict() for member in self.members]
         }
