@@ -129,7 +129,7 @@
   color: #8e9297;
 }
 
-.chat-messages {
+.message-container {
   flex: 1 1 auto;
   min-height: 0;
   min-width: 0;
@@ -144,7 +144,7 @@
   margin-bottom: 24px;
 }
 
-.send-message-form > textarea {
+.send-message-form > input {
   background-color: #40444b;
   width: 100%;
   resize: none;
@@ -157,4 +157,29 @@
   color: #fff;
   font-size: 14px;
   height: auto;
+}
+
+.message{
+  color: white;
+  padding: 5px;
+
+}
+
+.message:hover{
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.message-username{
+  font-weight: bold;
+}
+
+.message-body{
+  color: lightgray;
+}
+
+.message-time{
+  font-size: small;
+  margin-left: 16px;
+  color: rgb(155, 155, 155);
+  font-weight: lighter;
 }
