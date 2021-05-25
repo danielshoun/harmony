@@ -29,6 +29,7 @@
     background-color: white;
     padding: 8px;
     width: 64px;
+    cursor: pointer;
 }
 
 .header-button-large {

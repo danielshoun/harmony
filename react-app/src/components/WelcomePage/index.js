@@ -1,5 +1,5 @@
 import React from "react";
-import {useHistory} from "react-router-dom";
+import {useHistory, Redirect} from "react-router-dom";
 import './WelcomePage.css'
 import {login} from "../../store/session";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ const WelcomePage = () => {
                 <i className="fas fa-peace header-logo"/>
                 <div className="welcome-subheader">The peaceful chat app for you and your friends.</div>
                 <div className='buttons-container'>
-                    {user ? <button className="header-button header-button-large">Go To App</button> :
+                    {user ? <button className="header-button header-button-large" onClick={() => history.push("/")}>Go To App</button> :
                     <>
                         <button className="header-button" onClick={() => history.push("/login")}>Login</button>
                         <button className="header-button" onClick={() => history.push("/sign-up")}>Sign Up</button>
