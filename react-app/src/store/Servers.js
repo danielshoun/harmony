@@ -21,7 +21,7 @@ const addServer = (server) => ({
 
 const removeServer = (server) => ({
     type: REMOVE_SERVER,
-    serverId
+    server
 })
 
 
@@ -79,25 +79,25 @@ export const deleteServer = (server) => async (dispatch) => {
 }
 
 
-export const serverJoin = (serverId) => (dispatch) => {
+export const serverJoin = (serverId) => async (dispatch) => {
     const res = await fetch(`api/servers/${serverId}/join`, {
         method: 'POST'
     })
 
     if (res.ok) {
-        server = await res.json()
+        const server = await res.json()
         dispatch(joinServer(server))
     }
 }
 
 
-export const serverLeave = (serverId) => (dispatch) => {
+export const serverLeave = (serverId) => async (dispatch) => {
     const res = await fetch(`api/servers/${serverId}/leave`, {
         method: 'DELETE'
     })
 
     if (res.ok) {
-        server = await res.json()
+        const server = await res.json()
         dispatch(leaveServer(server))
     }
 }
