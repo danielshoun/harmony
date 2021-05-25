@@ -43,7 +43,7 @@ function ChatContainer({ server }) {
 
   function sendChat(e) {
     e.preventDefault();
-    socket.emit("chat", {
+    socket.emit("public_chat", {
       sender_id: user.id,
       channel_id: channel.id,
       body: chatInput

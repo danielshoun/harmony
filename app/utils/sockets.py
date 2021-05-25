@@ -23,7 +23,7 @@ def on_join(data):
     join_room(room)
 
 
-@socketio.on('chat')
+@socketio.on('public_chat')
 def channel_chat(data):
     new_message = ChannelMessage(
         sender_id=data['sender_id'],
