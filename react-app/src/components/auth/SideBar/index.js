@@ -61,7 +61,7 @@ const SideBar = () => {
             {servers.userServers.map(server => {
                 return (
                     <div className={`side-bar-icon${activeServer === server ? " active-server" : ""}`} onClick={() => handleActive(server)}>
-                        {server.imageUrl ? <img src={server.imageUrl} alt={server.name}/> : <div>{server.name[0]}</div>}
+                        {server.image_url ? <img src={server.image_url} alt={server.name}/> : <div>{server.name[0]}</div>}
                     </div>
                 )
             })}

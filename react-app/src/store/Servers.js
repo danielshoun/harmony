@@ -25,15 +25,15 @@ const removeServer = (server) => ({
 })
 
 
-const joinServer = (serverId) => ({
+const joinServer = (server) => ({
     type: JOIN_SERVER,
-    serverId
+    server
 })
 
 
-const leaveServer = (serverId) => ({
+const leaveServer = (server) => ({
     type: LEAVE_SERVER,
-    serverId
+    server
 })
 
 
@@ -87,6 +87,7 @@ export const serverJoin = (serverId) => async (dispatch) => {
 
     if (res.ok) {
         const server = await res.json()
+        console.log(server);
         dispatch(joinServer(server))
     }
 }
