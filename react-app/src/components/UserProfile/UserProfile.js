@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import UsernameModal from "./UserModals/UsernameModal";
 import EmailModal from "./UserModals/EmailModal";
+import ProfilePicModal from "./UserModals/ProfilePicModal";
 import "./UserProfile.css";
 import "./UserModals/Modal.css";
 
@@ -115,6 +116,17 @@ function User() {
           />
           <div className="modal-content">
             <EmailModal />
+          </div>
+        </div>
+      )}
+      {showPicModal && (
+        <div className="modal">
+          <div
+            className="modal-background"
+            onClick={() => setPicModal(false)}
+          />
+          <div className="modal-content">
+            <ProfilePicModal currUser={user} />
           </div>
         </div>
       )}
