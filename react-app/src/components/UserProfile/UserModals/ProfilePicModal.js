@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import "./ProfilePicModal.css";
 
 function ProfilePicModal(currUser) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [profileUrl, setProfileUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const user = currUser.currUser;
+
   const uploadImage = async (e) => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
@@ -20,6 +24,17 @@ function ProfilePicModal(currUser) {
       setProfileUrl(data.url);
       setImageLoading(false);
     }
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    const newUser = {
+      username: user.username,
+      email: user.email,
+      picture_url: profileUrl,
+    };
+    console.log(newUser);
+    // history.go(0);
   };
 
   return (
@@ -47,7 +62,11 @@ function ProfilePicModal(currUser) {
       </div>
 
       <div className="submit-div">
-        <button disabled={imageLoading} className="submit-edit-btn">
+        <button
+          disabled={imageLoading}
+          onClick={(e) => handleCreate(e)}
+          className="submit-edit-btn"
+        >
           {imageLoading ? "Uploading..." : "Done"}
         </button>
       </div>
