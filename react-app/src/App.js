@@ -31,7 +31,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && !window.location.href.includes("welcome") && <SideBar />}
       <Switch>
         <Route path="/welcome" exact={true}>
           <WelcomePage />
@@ -43,6 +42,9 @@ function App() {
           <SignUpForm />
         </Route>
         <div className="main-content">
+          <ProtectedRoute path="/">
+            <SideBar />
+          </ProtectedRoute>
           <ProtectedRoute path="/users" exact={true}>
             <UsersList />
           </ProtectedRoute>
@@ -52,7 +54,7 @@ function App() {
           <ProtectedRoute path="/" exact={true}>
             <AuthPage />
           </ProtectedRoute>
-          <ProtectedRoute path="/servers/:serverId">
+          <ProtectedRoute path="/servers/:serverId/:channelId">
             <ServerView />
           </ProtectedRoute>
         </div>
