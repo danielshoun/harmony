@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import UsernameModal from "./UserModals/UsernameModal";
+import EmailModal from "./UserModals/EmailModal";
 import "./UserProfile.css";
 import "./UserModals/Modal.css";
 
@@ -34,17 +35,6 @@ function User() {
     return null;
   }
 
-  const editUserName = async () => {
-    //Logic Needed
-  };
-  const editEmail = async () => {
-    //Logic Needed
-  };
-  const editImage = async () => {
-    //Logic Needed
-  };
-  console.log(showNameModal);
-
   return (
     <>
       <div className="account-profile-container">
@@ -64,7 +54,7 @@ function User() {
               <div class="overlay">
                 <div
                   onClick={() => {
-                    editImage();
+                    setPicModal(true);
                   }}
                 >
                   CHANGE
@@ -92,7 +82,10 @@ function User() {
                 <label className="user-labels">EMAIL</label>
                 <div className="user-info">{user.email}</div>
               </div>
-              <button onClick={() => editEmail()} className="user-edit-btn">
+              <button
+                onClick={() => setEmailModal(true)}
+                className="user-edit-btn"
+              >
                 Edit
               </button>
             </div>
@@ -111,6 +104,17 @@ function User() {
           />
           <div className="modal-content">
             <UsernameModal />
+          </div>
+        </div>
+      )}
+      {showEmailModal && (
+        <div className="modal">
+          <div
+            className="modal-background"
+            onClick={() => setEmailModal(false)}
+          />
+          <div className="modal-content">
+            <EmailModal />
           </div>
         </div>
       )}
