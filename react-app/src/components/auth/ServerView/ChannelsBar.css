@@ -1,19 +1,109 @@
-.channels-bar{
-    background-color: #2f3136;
-    color: #8e9297;
+.sidebar {
+  flex-direction: column;
+  min-height: 0;
+  width: 240px;
+  flex: 0 0 auto;
+  background-color: #2f3136;
+  height: 100%;
 }
 
-.channel:hover{
-    background-color: rgba(79, 84, 92, .16);
-    color: #dcddde;
+.server-header {
+  color: #fff;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  font-weight: 500;
+  padding: 0 16px;
+  height: 48px;
+  align-items: center;
 }
 
-.active-channel{
-    background-color: rgba(79, 84, 92, .24);
-    color: #fff;
+.server-header:hover {
+  background-color: rgba(79, 84, 92, 0.32);
 }
 
-.server-header{
-    color: #fff;
-    border-bottom: solid 1px rgba(0, 0, 0, .3);
+.server-header > h1 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 1;
+}
+
+.channels-bar {
+  color: #8e9297;
+  padding-top: 16px;
+  height: calc(100% - 48px - 52px - 16px);
+}
+
+.channel {
+  display: flex;
+  box-sizing: border-box;
+  padding: 4px 8px;
+  margin: 0 8px;
+  border-radius: 4px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.channel:hover {
+  background-color: rgba(79, 84, 92, 0.16);
+  color: #dcddde;
+}
+
+.active-channel {
+  background-color: rgba(79, 84, 92, 0.24);
+  color: #fff;
+}
+
+.active-channel > svg {
+  color: #8e9297;
+  padding-right: 4px;
+}
+
+.profile-footer {
+  flex: 0 0 auto;
+  background-color: #292b2f;
+  z-index: 1;
+}
+
+.profile-info {
+  height: 52px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  margin-bottom: 1px;
+}
+
+.profile-pic {
+  margin-right: 8px;
+  width: 32px;
+  height: 32px;
+}
+
+.profile-pic > img {
+  width: 100%;
+  border-radius: 100%;
+}
+
+.profile-name {
+  color: #fff;
+  line-height: 18px;
+  font-weight: 600;
+  font-size: 14px;
+  flex-grow: 1;
+}
+
+.profile-settings {
+  color: #b9bbbe;
+  padding: 4px;
+}
+
+.profile-settings:hover {
+  color: #dcddde;
+  background-color: rgba(79, 84, 92, 0.32);
 }

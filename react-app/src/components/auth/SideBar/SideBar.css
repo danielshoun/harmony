@@ -1,12 +1,10 @@
 .side-bar {
-  height: 100%;
-  width: 80px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
+  width: 72px;
+  position: relative;
   background-color: rgb(32, 34, 37);
   overflow-x: hidden;
+  flex-shrink: 0;
+  flex-direction: column;
 }
 
 .side-bar-icon {
