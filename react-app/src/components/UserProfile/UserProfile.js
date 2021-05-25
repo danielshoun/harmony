@@ -45,9 +45,13 @@ function User() {
         <div className="user-profile-header">
           <div className="user-profile-icon">
             {user.pictureUrl ? (
-              <img src={user.pictureUrl} alt={user.username} />
+              <img
+                className="user-prof-pic"
+                src={user.pictureUrl}
+                alt={user.username}
+              />
             ) : (
-              <div>{user.username[0]}</div>
+              <div className="user-profile-icon">{user.username[0]}</div>
             )}
             <div class="overlay">
               <div

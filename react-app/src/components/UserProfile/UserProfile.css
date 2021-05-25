@@ -34,8 +34,14 @@
   color: white;
   text-align: center;
   line-height: 80px;
+  overflow: hidden;
 }
 
+.user-prof-pic {
+  height: 80px;
+  width: auto;
+  border-radius: 50%;
+}
 .overlay {
   position: absolute;
   overflow: hidden;
