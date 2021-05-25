@@ -4,6 +4,8 @@ from flask_login import login_required, current_user
 from app.models import Server, db, Channel, User
 from app.forms import NewServerForm
 from app.models.server import memberships
+# from app.utils import aws
+from app.utils.aws import allowed_file, get_unique_filename, upload_file_to_s3
 
 server_routes = Blueprint('servers', __name__)
 
@@ -28,9 +30,10 @@ def get_member_server():
 @login_required
 def create_server():
     data = request.json
+
     server = Server(
         name=data['name'],
-        picture_url=data['picture_url'],
+        picture_url=data['url'] if data['url'] else '',
         owner_id=current_user.id,
         invite_url=''
     )
@@ -59,8 +62,6 @@ def create_server():
 @login_required
 def get_server(id):
     return Server.query.get(id).to_dict()
-
-
 
 
 @server_routes.route('/<int:id>', methods=['DELETE'])

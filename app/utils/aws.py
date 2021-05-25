@@ -15,7 +15,7 @@ S3_LOCATION = f"http://{BUCKET_NAME}.s3.amazonaws.com"
 
 
 def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1).lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_unique_filename(filename):
     ext = filename.rsplit(".", 1)[1].lower()

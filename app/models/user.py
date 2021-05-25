@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
   username = db.Column(db.String(40), nullable = False, unique = True)
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
+  image_url = db.Column(db.String(500))
   servers_owned = db.relationship('Server', back_populates='owner')
   servers_joined = db.relationship('Server', secondary=memberships, back_populates='members')
   dms_sent = db.relationship('PrivateMessage', back_populates='sender', foreign_keys=[PrivateMessage.sender_id])
