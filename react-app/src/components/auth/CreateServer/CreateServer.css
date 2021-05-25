@@ -12,6 +12,10 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.create-server-container  h3 {
+    margin-top: 0;
+}
+
 .create-server-field {
     display: flex;
     flex-direction: column;
