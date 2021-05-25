@@ -29,54 +29,48 @@ const SideBar = () => {
     dispatch(fetchMemberServers());
   }, [dispatch]);
 
-  function handleActive(server) {
-    setActiveServer(server);
-    //TODO: logic for going to a server's page can go here.
-    if (server === "discover") {
-      history.push("/");
-    } else {
-      history.push(`/servers/${server.id}/${server.channels[0].id}`);
+    function handleActive(server) {
+        setActiveServer(server);
+        //TODO: logic for going to a server's page can go here.
+        if(server === "discover"){
+            history.push("/")
+        }
+        else if (server === "create") {
+            history.push("/servers/create")
+        }
+        else{
+            history.push(`/servers/${server.id}/${server.channels[0].id}`);
+        }
     }
   }
-
-  return (
-    <div className="side-bar">
-      <div className="default-icons">
-        <div className="side-bar-icon">
-          {user.pictureUrl ? (
-            <img src={user.pictureUrl} alt={user.username} />
-          ) : (
-            <i className="fas fa-user" />
-          )}
+    return (
+        <div className="side-bar">
+            <div className="default-icons">
+                <div className="side-bar-icon">
+                    {user.pictureUrl ? <img src={user.pictureUrl} alt={user.username}/> : <i className="fas fa-user"/>}
+                </div>
+                <div
+                    className={`side-bar-icon bottom-default-icon${activeServer === "discover" ? " active-server" : ""}`}
+                    onClick={() => handleActive("discover")}
+                >
+                    <i className="fas fa-compass"/>
+                </div>
+            </div>
+            {servers.userServers.map(server => {
+                return (
+                    <div key={`server-${server.id}`} className={`side-bar-icon${activeServer === server ? " active-server" : ""}`} onClick={() => handleActive(server)}>
+                        {server.image_url ? <img src={server.image_url} alt={server.name}/> : <div>{server.name[0]}</div>}
+                    </div>
+                )
+            })}
+            <div
+                className={`side-bar-icon bottom-default-icon${activeServer === "create" ? " active-server" : ""}`}
+                onClick={() => handleActive("create")}
+            >
+                <i className="fas fa-plus"/>
+            </div>
         </div>
-        <div
-          className={`side-bar-icon bottom-default-icon${
-            activeServer === "discover" ? " active-server" : ""
-          }`}
-          onClick={() => handleActive("discover")}
-        >
-          <i className="fas fa-compass" />
-        </div>
-      </div>
-      {servers.userServers.map((server) => {
-        return (
-          <div
-            key={`server-${server.id}`}
-            className={`side-bar-icon${
-              activeServer === server ? " active-server" : ""
-            }`}
-            onClick={() => handleActive(server)}
-          >
-            {server.imageUrl ? (
-              <img src={server.imageUrl} alt={server.name} />
-            ) : (
-              <div>{server.name[0]}</div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
+    );
 };
 
 export default SideBar;
