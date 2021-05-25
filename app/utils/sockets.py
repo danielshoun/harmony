@@ -1,7 +1,10 @@
+from flask import jsonify
 from flask_socketio import SocketIO, join_room, leave_room, send
+from flask_login import current_user
+import datetime
 import os
 
-from app.models import ChannelMessage, db
+from app.models import ChannelMessage, db, Channel
 
 if os.environ.get('FLASK_ENV') == 'production':
     origins = [
@@ -15,9 +18,12 @@ socketio = SocketIO(cors_allowed_origins=origins)
 
 @socketio.on('join')
 def on_join(data):
-    room = data['channel_id']
+    id = data['channel_id']
+    room = str(data['channel_id'])
     join_room(room)
-    send('test join')
+    messages = ChannelMessage.query.filter(ChannelMessage.channel_id == id).all()
+
+    # send(jsonify([message.to_dict() for message in messages]), to=room)
 
 
 @socketio.on('chat')
@@ -26,7 +32,8 @@ def channel_chat(data):
     new_message = ChannelMessage(
         sender_id=data['sender_id'],
         channel_id=data['channel_id'],
-        body=data['body']
+        body=data['body'],
+        created_at=datetime.datetime.utcnow()
     )
     db.session.add(new_message)
     db.session.commit()
