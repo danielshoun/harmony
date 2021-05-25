@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./AuthPage.css";
 import { fetchMemberServers } from '../../../store/Servers'
+import { serverJoin } from '../../../store/Servers';
 
 
 const AuthPage = () => {
@@ -55,7 +56,10 @@ const AuthPage = () => {
                 <div className="server-name">{server.name}</div>
                 <div className="server-owner">{server.ownerName}</div>
                 <div className="server-count">{server.members.length} users</div>
-                <button className="button-primary join-button">Join</button>
+                {servers.userServers.map(server => server.id).includes(server.id) ? <div className="joined-text">Joined</div> :
+                    <button className="button-primary join-button"
+                            onClick={() => dispatch(serverJoin(server.id))}>Join</button>
+                }
               </div>
           )
         })}

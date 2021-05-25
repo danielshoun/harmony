@@ -33,8 +33,11 @@ const SideBar = () => {
         setActiveServer(server);
         //TODO: logic for going to a server's page can go here.
         if(server === "discover"){
-            
+
             history.push("/")
+        }
+        else if (server === "create") {
+            history.push("/servers/create")
         }
         else{
 
@@ -58,11 +61,16 @@ const SideBar = () => {
             {servers.userServers.map(server => {
                 return (
                     <div className={`side-bar-icon${activeServer === server ? " active-server" : ""}`} onClick={() => handleActive(server)}>
-                        {server.imageUrl ? <img src={server.imageUrl} alt={server.name}/> : <div>{server.name[0]}</div>}
+                        {server.image_url ? <img src={server.image_url} alt={server.name}/> : <div>{server.name[0]}</div>}
                     </div>
                 )
             })}
-
+            <div
+                className={`side-bar-icon bottom-default-icon${activeServer === "create" ? " active-server" : ""}`}
+                onClick={() => handleActive("create")}
+            >
+                <i className="fas fa-plus"/>
+            </div>
         </div>
     )
 }

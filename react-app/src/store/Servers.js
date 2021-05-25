@@ -25,15 +25,15 @@ const removeServer = (server) => ({
 })
 
 
-const joinServer = (serverId) => ({
+const joinServer = (server) => ({
     type: JOIN_SERVER,
-    serverId
+    server
 })
 
 
-const leaveServer = (serverId) => ({
+const leaveServer = (server) => ({
     type: LEAVE_SERVER,
-    serverId
+    server
 })
 
 
@@ -52,24 +52,25 @@ export const fetchMemberServers = () => async (dispatch) => {
 
 
 export const createAServer = (server) => async (dispatch) => {
-    const res = await fetch('api/servers/', {
+    const res = await fetch('/api/servers/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({'name': server.name, 'picture_url': server.picture_url})
+        body: JSON.stringify({'name': server.name, 'url': server.picture_url})
     })
 
     if(res.ok){
         const newServer = await res.json()
 
         dispatch(addServer(newServer))
+        return newServer;
     }
 }
 
 
 export const deleteServer = (server) => async (dispatch) => {
-    const res = await fetch(`api/servers/${server.id}`, {
+    const res = await fetch(`/api/servers/${server.id}`, {
         method: 'DELETE',
     })
 
@@ -80,19 +81,20 @@ export const deleteServer = (server) => async (dispatch) => {
 
 
 export const serverJoin = (serverId) => async (dispatch) => {
-    const res = await fetch(`api/servers/${serverId}/join`, {
+    const res = await fetch(`/api/servers/${serverId}/join`, {
         method: 'POST'
     })
 
     if (res.ok) {
         const server = await res.json()
+        console.log(server);
         dispatch(joinServer(server))
     }
 }
 
 
 export const serverLeave = (serverId) => async (dispatch) => {
-    const res = await fetch(`api/servers/${serverId}/leave`, {
+    const res = await fetch(`/api/servers/${serverId}/leave`, {
         method: 'DELETE'
     })
 
