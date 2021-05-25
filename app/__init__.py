@@ -11,12 +11,16 @@ from .api.auth_routes import auth_routes
 from .api.server_routes import server_routes
 from .api.channel_routes import channel_routes
 from .api.image_routes import image_routes
+from .api.message_routes import message_routes
+from .api.dm_routes import dm_routes
+from .utils.sockets import socketio
 
 from .seeds import seed_commands
 
 from .config import Config
 
 app = Flask(__name__)
+
 
 # Setup login manager
 login = LoginManager(app)
@@ -37,9 +41,12 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(server_routes, url_prefix='/api/servers')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(image_routes, url_prefix='/api/images')
+app.register_blueprint(message_routes, url_prefix='/api/messages')
+app.register_blueprint(dm_routes, url_prefix='/api/dms')
 db.init_app(app)
 Migrate(app, db)
 
+socketio.init_app(app)
 # Application Security
 CORS(app)
 
@@ -48,6 +55,7 @@ CORS(app)
 # Therefore, we need to make sure that in production any 
 # request made over http is redirected to https.
 # Well.........
+
 
 @app.before_request
 def https_redirect():
@@ -77,3 +85,7 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
+
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
