@@ -18,8 +18,14 @@ socketio = SocketIO(cors_allowed_origins=origins)
 
 @socketio.on('join')
 def on_join(data):
-    id = data['channel_id']
-    room = str(data['channel_id'])
+    type = data['type']
+    room = None
+    if type == 'private':
+        pass
+        # do stuff
+    else:
+        id = data['channel_id']
+        room = str(f'channel_{data["channel_id"]}')
     join_room(room)
 
 
