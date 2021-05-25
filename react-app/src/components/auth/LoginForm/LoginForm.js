@@ -19,9 +19,9 @@ const LoginForm = () => {
     }
   };
   const LoginDemo = async () => {
-    setEmail("demo@aa.io")
-    setPassword("password")
-    const data = await dispatch(login("demo@aa.io", "password"))
+    setEmail("demo@aa.io");
+    setPassword("password");
+    const data = await dispatch(login("demo@aa.io", "password"));
   };
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -65,17 +65,18 @@ const LoginForm = () => {
                 value={password}
                 onChange={updatePassword}
               />
-              <Link className="register-link" to="/sign-up">
-                <div className="login-page-redirect">
-                  Don't have an account? Register now!
-                </div>
-              </Link>
+
               <button className="login-btn" type="submit">
                 Login
               </button>
               <button className="demo-btn" onClick={() => LoginDemo()}>
                 Demo
               </button>
+              <Link className="register-link" to="/sign-up">
+                <div className="login-page-redirect">
+                  Don't have an account? Register now!
+                </div>
+              </Link>
             </div>
           </form>
         </div>
