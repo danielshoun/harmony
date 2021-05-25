@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import LoginForm from "./components/auth/LoginForm";
+import WelcomePage from "./components/WelcomePage";
+import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import AuthPage from "./components/auth/AuthPage/AuthPage";
 import NavBar from "./components/NavBar";
@@ -30,15 +31,18 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && <SideBar/>}
-      <div className="main-content">
-        <Switch>
-          <Route path="/login" exact={true}>
-            <LoginForm />
-          </Route>
-          <Route path="/sign-up" exact={true}>
-            <SignUpForm />
-          </Route>
+      {user && !window.location.href.includes("welcome") && <SideBar />}
+      <Switch>
+        <Route path="/welcome" exact={true}>
+          <WelcomePage />
+        </Route>
+        <Route path="/login" exact={true}>
+          <LoginForm />
+        </Route>
+        <Route path="/sign-up" exact={true}>
+          <SignUpForm />
+        </Route>
+        <div className="main-content">
           <ProtectedRoute path="/users" exact={true}>
             <UsersList />
           </ProtectedRoute>
@@ -51,8 +55,8 @@ function App() {
           <ProtectedRoute path="/servers/:serverId">
             <ServerView />
           </ProtectedRoute>
-        </Switch>
-      </div>
+        </div>
+      </Switch>
     </BrowserRouter>
   );
 }
