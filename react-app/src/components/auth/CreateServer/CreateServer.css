@@ -1,0 +1,67 @@
+.create-server-container {
+    height: 370px;
+    width: 416px;
+    margin: 128px auto;
+    border: #1e1e24 1px solid;
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.create-server-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.server-name-input {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: #1e1e24 solid thin;
+    color: white;
+    height: 18px;
+    padding: 10px;
+    transition: border 0.2s ease;
+}
+
+.server-name-input:hover {
+    border: #040405 solid thin;
+}
+
+.server-name-input:focus {
+    outline: none;
+    border: #00b0f4 solid thin;
+}
+
+.server-image-input {
+    margin-top: 16px;
+}
+
+.create-server-label {
+    color: #8e9297;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.create-btn {
+    margin-top: 18px;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 16px;
+    height: 40px;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    background-color: #7289da;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.create-btn:hover {
+    opacity: 1;
+    cursor: pointer;
+}

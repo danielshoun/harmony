@@ -35,4 +35,4 @@ def upload_file_to_s3(file, acl="public-read"):
         )
     except Exception as e:
         return {"errors": str(e)}
-    return {"url": f"{S3_LOCATION}{file.filename}"}
+    return {"url": f"{S3_LOCATION}/{file.filename}"}

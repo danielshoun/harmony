@@ -9,7 +9,7 @@ image_routes = Blueprint('images', __name__)
 @image_routes.route('/', methods=['POST'])
 def add_image():
     if 'image' not in request.files:
-        return {'errors': 'bad needed'}
+        return {'errors': 'image needed'}
 
     image = request.files['image']
 
@@ -23,4 +23,5 @@ def add_image():
         return upload, 400
 
     url = upload['url']
+    print(url)
     return {'url': url}
