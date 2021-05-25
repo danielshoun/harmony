@@ -1,7 +1,7 @@
 .account-profile-container {
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  margin-left: 25px;
 }
 
 .account-profile-container > h1 {
