@@ -30,7 +30,7 @@ function ChatContainer({ server }) {
   useEffect(() => {
     socket = io();
 
-    socket.emit("join", {channel_id: channel.id})
+    socket.emit("join", {type: "public", channel_id: channel.id})
 
     socket.on("message", (chat) => {
       setMessages(messages => [...messages, chat])

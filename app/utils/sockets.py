@@ -40,7 +40,7 @@ def channel_chat(data):
     db.session.add(new_message)
     db.session.commit()
 
-    send(new_message.to_dict(), to=str(data['channel_id']))
+    send(new_message.to_dict(), to=f'channel_{data["channel_id"]}')
 
 
 @socketio.on('connect')
