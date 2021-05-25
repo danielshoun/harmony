@@ -1,0 +1,139 @@
+.account-profile-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.account-profile-container > h1 {
+  color: white;
+  font-size: 24px;
+}
+
+.account-details-box {
+  border-radius: 8px;
+  width: 660px;
+  height: 330px;
+  padding: 16px;
+  background-color: #2f3136;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile-header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.user-profile-icon {
+  background-color: aqua;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  font-size: 48px;
+  color: white;
+  text-align: center;
+  line-height: 80px;
+  overflow: hidden;
+}
+
+.user-prof-pic {
+  height: 80px;
+  width: auto;
+  border-radius: 50%;
+}
+.overlay {
+  position: absolute;
+  overflow: hidden;
+  top: 82px;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  font-weight: bold;
+  opacity: 0;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  transition: 0.3s ease;
+  background-color: rgb(46, 46, 46);
+}
+
+.overlay:hover {
+  opacity: 0.75;
+  cursor: pointer;
+}
+.user-profile-name {
+  line-height: 80px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.user-profile-name-id {
+  line-height: 81px;
+  color: #b9bbbe;
+  font-size: 16px;
+}
+
+.user-profile-details {
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  height: 200px;
+  background-color: #36393f;
+}
+
+.user-edit-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-edit-btn {
+  background-color: rgb(79, 84, 92);
+  border: none;
+  color: white;
+  border-radius: 3px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  font-size: 14px;
+  height: 28px;
+  padding: 2px 16px;
+}
+
+.user-edit-btn:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.user-labels {
+  margin-bottom: 4px;
+  color: #8e9297;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.user-info {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.account-logout-btn {
+  margin-top: 60px;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 16px;
+  height: 24px;
+  color: white;
+  background-color: #ed4245;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  font-size: 16px;
+}
+
+.account-logout-btn:hover {
+  opacity: 1;
+  cursor: pointer;
+}
