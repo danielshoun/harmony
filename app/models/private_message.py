@@ -20,6 +20,6 @@ class PrivateMessage(db.Model):
             "body": self.body,
             "sender": self.sender.to_dict(),
             "recipient": self.recipient.to_dict(),
-            "created_at": self.created_at,
+            "created_at": self.created_at.isoformat(),
             "conversation_id": self.conversation_id
         }
