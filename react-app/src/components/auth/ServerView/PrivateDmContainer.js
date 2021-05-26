@@ -50,6 +50,7 @@ function PrivateDmContainer() {
 
   useEffect(() => {
     socket = io();
+    console.log(conversations)
 
     socket.emit("join", {
       type: "private",
@@ -57,6 +58,7 @@ function PrivateDmContainer() {
     });
 
     setjoinedRoom(true);
+    console.log(joinedRoom)
 
     socket.on("message", (chat) => {
       setMessages((messages) => [...messages, chat]);
@@ -65,7 +67,7 @@ function PrivateDmContainer() {
     return () => {
       socket.disconnect();
     };
-  }, [recipientId]);
+  }, [recipientId, conversations]);
 
   function sendChat(e) {
     e.preventDefault();
@@ -85,6 +87,17 @@ function PrivateDmContainer() {
           {message.sender_id}:{message.body}
         </div>
       ))}
+      <form action="" className="send-message-form" onSubmit={sendChat}>
+        <input
+          name=""
+          id=""
+          placeholder={`Message #${user.username}`}
+          // rows="1"
+          contentEditable="true"
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
+        />
+      </form>
     </div>
   );
 }
