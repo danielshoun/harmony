@@ -19,7 +19,6 @@ socketio = SocketIO(cors_allowed_origins=origins)
 @socketio.on('join')
 def on_join(data):
     message_type = data["type"]
-    print("THIS IS TYPE")
     room = None
     if message_type == 'private':
         room = str(f'conversation_{data["conversation_id"]}')
@@ -43,11 +42,10 @@ def channel_chat(data):
 
 @socketio.on("private_chat")
 def private_chat(data):
-
     if not Conversation.query.get(data["conversation_id"]):
         db.session.add(Conversation(
-            user_1=data['sender_id'],
-            user_2=data['recipient_id'],
+            user_1_id=data['sender_id'],
+            user_2_id=data['recipient_id'],
         ))
         db.session.commit()
 
