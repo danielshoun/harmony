@@ -74,6 +74,20 @@ def delete_server(id):
     db.session.commit()
     return {'message': 'Deleted!'}
 
+@server_routes.route("/<int:id>", methods=['PUT'])
+@login_required
+def edit_server(id):
+    data = request.json
+
+    server = Server.query.get(id)
+    if server.owner_id != current_user.id:
+        return {'errors': "Unauthorized"}
+
+    server.name = data['name']
+    server.picture_url = data['url'] if data['url'] else ''
+    db.session.add(server)
+    db.session.commit()
+    return server.to_dict()
 
 @server_routes.route('/<int:id>/join', methods=['POST'])
 @login_required

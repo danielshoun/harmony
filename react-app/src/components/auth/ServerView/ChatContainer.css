@@ -165,11 +165,11 @@
   color: white;
   padding: 8px;
   display: flex;
-
+  position: relative;
 }
 
 .subsequent-message {
-  padding: 0px 8px;
+  padding: 0 8px;
 }
 
 .message:hover{
@@ -194,4 +194,20 @@
   margin-left: 8px;
   color: rgb(155, 155, 155);
   font-weight: lighter;
+}
+
+.options-container {
+  position: absolute;
+  top: 4px;
+  right: 16px;
+  color: rgb(155, 155, 155);
+}
+
+.message-edit-icon {
+  margin-right: 8px;
+}
+
+.message-edit-icon,
+.message-delete-icon {
+  cursor: pointer;
 }

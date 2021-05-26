@@ -35,3 +35,9 @@
   border-bottom: 1px rgb(70, 71, 75) solid;
   margin: 8px;
 }
+
+.side-bar-image {
+  height: inherit;
+  width: inherit;
+  border-radius: inherit;
+}
