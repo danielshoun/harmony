@@ -3,6 +3,7 @@ const ADD_SERVER = 'servers/ADD_SERVER'
 const REMOVE_SERVER = 'servers/REMOVE_SERVER'
 const JOIN_SERVER = 'servers/JOIN_SERVER'
 const LEAVE_SERVER = 'servers/LEAVE_SERVER'
+const ADD_CHANNEL = 'servers/ADD_CHANNEL'
 
 const getServers = (servers, allServers) => {
     return {
@@ -35,6 +36,11 @@ const leaveServer = (server) => ({
     type: LEAVE_SERVER,
     server
 })
+
+const addChannel = (channel) => ({
+    type: ADD_CHANNEL,
+    channel,
+});
 
 
 export const fetchMemberServers = () => async (dispatch) => {
@@ -78,6 +84,25 @@ export const deleteServer = (server) => async (dispatch) => {
         dispatch(removeServer(server))
     }
 }
+
+export const createChannel = (channel) => async (dispatch) => {
+    const res = await fetch("/api/channels/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: channel.name,
+            description: channel.description,
+            server_id: channel.server_id,
+        }),
+    });
+    if (res.ok) {
+        const channel = await res.json();
+        dispatch(addChannel(channel));
+        return channel;
+    }
+};
 
 
 export const serverJoin = (serverId) => async (dispatch) => {
@@ -127,10 +152,20 @@ export default function reducer(state = initalState, action){
         case JOIN_SERVER:
             return {userServers: [...state.userServers, action.server], allServers: [...state.allServers]}
         case LEAVE_SERVER:{
-            const userIndex = state.userServers.indexOf(action.server)
+            const userIndex = state.userServers.indexOf(state.userServers.find(server => server.id === action.server.id))
+            console.log(`removing server at index ${userIndex} from sidebar`)
             const userServers = [...state.userServers.slice(0, userIndex), ...state.userServers.slice(userIndex + 1)]
             return {userServers, allServers: [...state.allServers]}
         }
+        case ADD_CHANNEL:
+            const newState = {userServers: [...state.userServers], allServers: [...state.allServers]};
+            const userServersIndex = state.userServers.findIndex(server => server.id === action.channel.server_id);
+            const allServersIndex = state.allServers.findIndex(server => server.id === action.channel.server_id);
+            const userServer = newState.userServers[userServersIndex]
+            userServer.channels.push(action.channel)
+            const allServer = newState.allServers[allServersIndex]
+            allServer.channels.push(action.channel)
+            return newState;
         default:
             return state
     }

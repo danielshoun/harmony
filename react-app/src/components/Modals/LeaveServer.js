@@ -1,7 +1,20 @@
 import React from "react";
 import "./LeaveServer.css";
+import {useDispatch} from "react-redux";
+import {serverLeave} from "../../store/Servers";
+import {useHistory} from 'react-router-dom';
 
 function LeaveServer({ server, closeModal }) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleLeave = (e) => {
+        dispatch(serverLeave(server.id));
+        closeModal(e);
+        history.push('/')
+    }
+
+
   return (
     <div className="leave-server-container">
       <div className="leave-server-header">
@@ -15,7 +28,7 @@ function LeaveServer({ server, closeModal }) {
         </span>
       </div>
       <div className="leave-server-buttons">
-        <button className="leave-button">
+        <button className="leave-button" onClick={handleLeave}>
           <div>Leave Server</div>
         </button>
         <button className="cancel-button" onClick={closeModal}>Cancel</button>

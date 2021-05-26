@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 function EmailModal() {
   const [email, setEmail] = useState("");
@@ -13,6 +12,7 @@ function EmailModal() {
         type="email"
         name="email"
         onChange={(e) => setEmail(e.target.value)}
+        value={email}
       ></input>
       <div className="submit-div">
         <button className="submit-edit-btn">Done</button>

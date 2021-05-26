@@ -18,24 +18,21 @@ class User(db.Model, UserMixin):
   dms_sent = db.relationship('PrivateMessage', back_populates='sender', foreign_keys=[PrivateMessage.sender_id])
   dms_received = db.relationship('PrivateMessage', back_populates='recipient', foreign_keys=[PrivateMessage.recipient_id])
 
-
   @property
   def password(self):
     return self.hashed_password
-
 
   @password.setter
   def password(self, password):
     self.hashed_password = generate_password_hash(password)
 
-
   def check_password(self, password):
     return check_password_hash(self.password, password)
-
 
   def to_dict(self):
     return {
       "id": self.id,
       "username": self.username,
-      "email": self.email
+      "email": self.email,
+      "image_url": self.image_url
     }
