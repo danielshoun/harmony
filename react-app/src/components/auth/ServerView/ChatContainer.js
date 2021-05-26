@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import "./ChatContainer.css";
+import Message from "./Message";
 
 let socket;
 
@@ -95,64 +96,14 @@ function ChatContainer({ server }) {
       <div className="chat-area">
         <div className="chat-messages-container">
           <div className="message-container" ref={messageContainerRef}>
-            {messages.map((message, i) => {
-              const messageDateObj = new Date(message.created_at);
-              const today = new Date();
-              let timeString;
-              let hours = messageDateObj.getHours();
-              let minutes = messageDateObj.getMinutes();
-              let ampm = hours >= 12 ? "PM" : "AM";
-              hours = hours % 12;
-              hours = hours ? hours : 12;
-              minutes = minutes < 10 ? `0${minutes}` : minutes;
-              if (
-                messageDateObj.getDate() === today.getDate() &&
-                messageDateObj.getMonth() === today.getMonth() &&
-                messageDateObj.getFullYear() === today.getFullYear()
-              ) {
-                timeString = `${hours}:${minutes} ${ampm}`;
-              } else {
-                timeString = `${messageDateObj.getMonth() + 1}/${
-                  messageDateObj.getDate() + 1
-                }/${messageDateObj.getFullYear()}, ${hours}:${minutes} ${ampm}`;
-              }
-
-              if (i === 0 || message.sender.id !== messages[i - 1].sender.id) {
-                return (
-                  <div className="message" key={i}>
-                    <div className="message-image-container">
-                      <div className="profile-pic">
-                        <img
-                          className="profile-pic"
-                          src={
-                            message.sender.image_url ||
-                            "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
-                          }
-                          alt={message.sender.username}
-                        />
-                      </div>
-                    </div>
-                    <div className="message-text-container">
-                      <div className="message-username">
-                        {`${message.sender.username}`}
-                        <span className="message-time">{timeString}</span>
-                      </div>
-                      <div className="message-body">{`${message.body}`}</div>
-                    </div>
-                  </div>
-                );
-              }
-              return (
-                <div className="message subsequent-message" key={i}>
-                  <div className="message-image-container">
-                    <div className="profile-pic" />
-                  </div>
-                  <div className="message-text-container">
-                    <div className="message-body">{`${message.body}`}</div>
-                  </div>
-                </div>
-              );
-            })}
+            {messages.map((message, i) => (
+                <Message
+                    key={i}
+                    message={message}
+                    messages={messages}
+                    i={i}
+                />
+            ))}
           </div>
           <form action="" className="send-message-form" onSubmit={sendChat}>
             <input
