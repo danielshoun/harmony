@@ -78,6 +78,20 @@
   color: #dcddde;
 }
 
+.channel-name {
+  flex: 1 1 auto;
+}
+
+.channel-settings {
+  display: flex;
+  align-items: center;
+  color: #b9bbbe;
+}
+
+.channel-settings:hover {
+  color: #dcddde;
+}
+
 .active-channel {
   background-color: rgba(79, 84, 92, 0.24);
   color: #fff;
@@ -197,4 +211,10 @@
     height: 18px;
     width: 18px;
     align-self: center;
+}
+
+.channel-settings-container {
+  position: absolute;
+  left: 82px;
+  top: 56px;
 }
