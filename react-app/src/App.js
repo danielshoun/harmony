@@ -16,6 +16,7 @@ import ServerBaseRedirect from "./components/auth/ServerView/ServerBaseRedirect"
 import {fetchMemberServers} from "./store/Servers";
 import CreateServer from "./components/auth/CreateServer";
 import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
+import UsersBar from "./components/auth/ServerView/UsersBar";
 
 function App() {
   const user = useSelector((state) => state.session.user);
@@ -41,46 +42,48 @@ function App() {
   }
 
   return (
-      <BrowserRouter>
-        <Switch>
-          <Route path="/welcome" exact={true}>
-            <WelcomePage />
-          </Route>
-          <Route path="/login" exact={true}>
-            <LoginForm />
-          </Route>
-          <Route path="/sign-up" exact={true}>
-            <SignUpForm />
-          </Route>
-          <div className="main-content">
-            <ProtectedRoute path="/">
-              <SideBar />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users" exact={true}>
-              <UsersList />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users/:userId" exact={true}>
-              <User />
-            </ProtectedRoute>
-            <ProtectedRoute path="/users/:userId/dms"></ProtectedRoute>
-            <ProtectedRoute path="/users/:userId/dms/:recipientId">
-              <PrivateDmContainer />
-            </ProtectedRoute>
-            <ProtectedRoute path="/" exact={true}>
-              <AuthPage />
-            </ProtectedRoute>
-            <ProtectedRoute path="/invitation/:serverId">
-              <Invitation />
-            </ProtectedRoute>
-            <ProtectedRoute path="/servers/:serverId/:channelId">
-              <ServerView />
-            </ProtectedRoute>
-            <ProtectedRoute path="/servers/:serverId">
-              <ServerBaseRedirect />
-            </ProtectedRoute>
-          </div>
-        </Switch>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/welcome" exact={true}>
+          <WelcomePage />
+        </Route>
+        <Route path="/login" exact={true}>
+          <LoginForm />
+        </Route>
+        <Route path="/sign-up" exact={true}>
+          <SignUpForm />
+        </Route>
+        <div className="main-content">
+          <ProtectedRoute path="/">
+            <SideBar />
+          </ProtectedRoute>
+          <ProtectedRoute path="/users" exact={true}>
+            <UsersList />
+          </ProtectedRoute>
+          <ProtectedRoute path="/users/:userId" exact={true}>
+            <User />
+          </ProtectedRoute>
+          <ProtectedRoute path="/users/:userId/dms">
+            <UsersBar />
+          </ProtectedRoute>
+          <ProtectedRoute path="/users/:userId/dms/:recipientId">
+            <PrivateDmContainer />
+          </ProtectedRoute>
+          <ProtectedRoute path="/" exact={true}>
+            <AuthPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/invitation/:serverId">
+            <Invitation />
+          </ProtectedRoute>
+          <ProtectedRoute path="/servers/:serverId/:channelId">
+            <ServerView />
+          </ProtectedRoute>
+          <ProtectedRoute path="/servers/:serverId">
+            <ServerBaseRedirect />
+          </ProtectedRoute>
+        </div>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

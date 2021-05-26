@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -13,7 +13,11 @@ function PrivateDmContainer() {
   const [joinedRoom, setjoinedRoom] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [chatInput, setChatInput] = useState("");
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
+  const messageContainerRef = useRef(null);
+  const [initialMessages, setInitialMessages] = useState(true);
+  const [otherUser, setOtherUser] = useState('')
+
 
   useEffect(() => {
     async function fetchData() {
@@ -21,11 +25,11 @@ function PrivateDmContainer() {
       if (res.ok) {
         const data = await res.json();
         setMessages(data);
-        console.log(data);
+        // console.log(data);
       }
     }
     fetchData();
-  }, []);
+  }, [recipientId]);
 
   useEffect(() => {
     async function fetchDMs() {
@@ -40,33 +44,36 @@ function PrivateDmContainer() {
             (conv.user_2.id === user.id &&
               conv.user_1.id === parseInt(recipientId))
         );
+        // console.log(convo[0])
+        if (convo[0].user_1.id === parseInt(recipientId)) setOtherUser(convo[0].user_1.username)
+        else setOtherUser(convo[0].user_2.username)
 
         setConversations(convo);
-        setLoaded(true)
-        console.log(loaded)
+        setLoaded(true);
+        console.log(loaded);
       }
     }
     fetchDMs();
-  }, []);
+  }, [recipientId]);
 
   //   console.log(conversations);
 
   useEffect(() => {
     socket = io();
-    console.log(conversations)
+    // console.log(conversations);
 
     // console.log(conversations[0].id)
-    if(loaded){
-      console.log('are we loaded', loaded)
+    if (loaded) {
+      console.log("are we loaded", loaded);
       socket.emit("join", {
         type: "private",
-        conversation_id: conversations[0] ? conversations[0].id : '',
-        recipient_id: recipientId
+        conversation_id: conversations[0] ? conversations[0].id : "",
+        recipient_id: recipientId,
       });
-      
+
       setjoinedRoom(true);
       // console.log(joinedRoom)
-  
+
       socket.on("message", (chat) => {
         setMessages((messages) => [...messages, chat]);
       });
@@ -75,8 +82,22 @@ function PrivateDmContainer() {
         socket.disconnect();
       };
     }
-
   }, [recipientId, conversations, loaded]);
+
+
+  useEffect(() => {
+    if (
+      messages.length > 0 &&
+      (initialMessages || messages[messages.length - 1].sender.id === user.id)
+    ) {
+      messageContainerRef.current.scroll({
+        top: messageContainerRef.current.scrollHeight,
+        behavior: "auto",
+      });
+      setInitialMessages(false);
+    }
+  }, [messageContainerRef, messages, initialMessages, user]);
+  
 
   function sendChat(e) {
     e.preventDefault();
@@ -90,24 +111,91 @@ function PrivateDmContainer() {
   }
 
   return (
-    <div>
-      {messages.map((message) => (
-        <div>
-          {message.sender_id}:{message.body}
+    <div className="chat-container">
+      <div className="channel-header">
+        <div className="channel-title">
+          <svg x="0" y="0" class="icon-22AiRD" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12C2 17.515 6.486 22 12 22C14.039 22 15.993 21.398 17.652 20.259L16.521 18.611C15.195 19.519 13.633 20 12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12V12.782C20 14.17 19.402 15 18.4 15L18.398 15.018C18.338 15.005 18.273 15 18.209 15H18C17.437 15 16.6 14.182 16.6 13.631V12C16.6 9.464 14.537 7.4 12 7.4C9.463 7.4 7.4 9.463 7.4 12C7.4 14.537 9.463 16.6 12 16.6C13.234 16.6 14.35 16.106 15.177 15.313C15.826 16.269 16.93 17 18 17L18.002 16.981C18.064 16.994 18.129 17 18.195 17H18.4C20.552 17 22 15.306 22 12.782V12C22 6.486 17.514 2 12 2ZM12 14.599C10.566 14.599 9.4 13.433 9.4 11.999C9.4 10.565 10.566 9.399 12 9.399C13.434 9.399 14.6 10.565 14.6 11.999C14.6 13.433 13.434 14.599 12 14.599Z"></path></svg>
+          <span>{otherUser}</span>
         </div>
-      ))}
-      <form action="" className="send-message-form" onSubmit={sendChat}>
-        <input
-          name=""
-          id=""
-          placeholder={`Message #${user.username}`}
-          // rows="1"
-          contentEditable="true"
-          value={chatInput}
-          onChange={(e) => setChatInput(e.target.value)}
-        />
-      </form>
+        <div className="chat-toolbar">
+        </div>
+      </div>
+      <div className="chat-area">
+        <div className="chat-messages-container">
+          <div className="message-container" ref={messageContainerRef}>
+            {messages.map((message, i) => {
+              const messageDateObj = new Date(message.created_at);
+              const today = new Date();
+              let timeString;
+              let hours = messageDateObj.getHours();
+              let minutes = messageDateObj.getMinutes();
+              let ampm = hours >= 12 ? "PM" : "AM";
+              hours = hours % 12;
+              hours = hours ? hours : 12;
+              minutes = minutes < 10 ? `0${minutes}` : minutes;
+              if (
+                messageDateObj.getDate() === today.getDate() &&
+                messageDateObj.getMonth() === today.getMonth() &&
+                messageDateObj.getFullYear() === today.getFullYear()
+              ) {
+                timeString = `${hours}:${minutes} ${ampm}`;
+              } else {
+                timeString = `${messageDateObj.getMonth() + 1}/${messageDateObj.getDate() + 1
+                  }/${messageDateObj.getFullYear()}, ${hours}:${minutes} ${ampm}`;
+              }
+
+              if (i === 0 || message.sender.id !== messages[i - 1].sender.id) {
+                return (
+                  <div className="message" key={i}>
+                    <div className="message-image-container">
+                      <div className="profile-pic">
+                        <img
+                          className="profile-pic"
+                          src={
+                            message.sender.image_url ||
+                            "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
+                          }
+                          alt={message.sender.username}
+                        />
+                      </div>
+                    </div>
+                    <div className="message-text-container">
+                      <div className="message-username">
+                        {`${message.sender.username}`}
+                        <span className="message-time">{timeString}</span>
+                      </div>
+                      <div className="message-body">{`${message.body}`}</div>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div className="message subsequent-message" key={i}>
+                  <div className="message-image-container">
+                    <div className="profile-pic" />
+                  </div>
+                  <div className="message-text-container">
+                    <div className="message-body">{`${message.body}`}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <form action="" className="send-message-form" onSubmit={sendChat}>
+            <input
+              name=""
+              id=""
+              placeholder={`Message #${user.username}`}
+              // rows="1"
+              contentEditable="true"
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+            />
+          </form>
+        </div>
+
+      </div>
     </div>
-  );
+  )
 }
 export default PrivateDmContainer;
