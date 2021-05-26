@@ -21,6 +21,9 @@ def on_join(data):
     message_type = data["type"]
     room = None
     if message_type == 'private':
+        if data["conversation_id"]:
+            conversation = Conversation.query.get(data["conversation_id"])
+
         room = str(f'conversation_{data["conversation_id"]}')
     else:
         room = str(f'channel_{data["channel_id"]}')
@@ -42,13 +45,6 @@ def channel_chat(data):
 
 @socketio.on("private_chat")
 def private_chat(data):
-    if not Conversation.query.get(data["conversation_id"]):
-        db.session.add(Conversation(
-            user_1_id=data['sender_id'],
-            user_2_id=data['recipient_id'],
-        ))
-        db.session.commit()
-
     new_message = PrivateMessage(
         sender_id=data['sender_id'],
         recipient_id=data['recipient_id'],

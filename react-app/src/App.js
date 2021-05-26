@@ -13,6 +13,7 @@ import { authenticate } from "./store/session";
 import SideBar from "./components/auth/SideBar";
 import ServerView from "./components/auth/ServerView";
 import CreateServer from "./components/auth/CreateServer";
+import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
 
 function App() {
   const user = useSelector((state) => state.session.user);
@@ -52,11 +53,15 @@ function App() {
           <ProtectedRoute path="/users/:userId" exact={true}>
             <User />
           </ProtectedRoute>
+          <ProtectedRoute path="/users/:userId/dms"></ProtectedRoute>
+          <ProtectedRoute path="/users/:userId/dms/:recipientId">
+            <PrivateDmContainer />
+          </ProtectedRoute>
           <ProtectedRoute path="/" exact={true}>
             <AuthPage />
           </ProtectedRoute>
           <ProtectedRoute path="/servers/create" exact={true}>
-            <CreateServer/>
+            <CreateServer />
           </ProtectedRoute>
           <ProtectedRoute path="/servers/:serverId/:channelId">
             <ServerView />
