@@ -1,7 +1,21 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../../store/session";
 
 function EmailModal() {
   const [email, setEmail] = useState("");
+  const user = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+
+  function handleEmail() {
+    const updatedUser = {
+      username: user.username,
+      email,
+      image_url: user.image_url,
+    };
+
+    dispatch(updateUser(updatedUser));
+  }
   return (
     <>
       <div className="edit-header">Change your Email</div>
@@ -15,7 +29,9 @@ function EmailModal() {
         value={email}
       ></input>
       <div className="submit-div">
-        <button className="submit-edit-btn">Done</button>
+        <button onClick={() => handleEmail()} className="submit-edit-btn">
+          Done
+        </button>
       </div>
     </>
   );
