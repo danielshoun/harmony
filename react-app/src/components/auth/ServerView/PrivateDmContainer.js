@@ -13,6 +13,7 @@ function PrivateDmContainer() {
   const [joinedRoom, setjoinedRoom] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [chatInput, setChatInput] = useState("");
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -41,10 +42,12 @@ function PrivateDmContainer() {
         );
 
         setConversations(convo);
+        setLoaded(true)
+        console.log(loaded)
       }
     }
     fetchDMs();
-  }, [joinedRoom]);
+  }, []);
 
   //   console.log(conversations);
 
@@ -53,23 +56,27 @@ function PrivateDmContainer() {
     console.log(conversations)
 
     // console.log(conversations[0].id)
-    socket.emit("join", {
-      type: "private",
-      conversation_id: conversations[0] ? conversations[0].id : '',
-      recipient_id: recipientId
-    });
-    
-    setjoinedRoom(true);
-    console.log(joinedRoom)
+    if(loaded){
+      console.log('are we loaded', loaded)
+      socket.emit("join", {
+        type: "private",
+        conversation_id: conversations[0] ? conversations[0].id : '',
+        recipient_id: recipientId
+      });
+      
+      setjoinedRoom(true);
+      // console.log(joinedRoom)
+  
+      socket.on("message", (chat) => {
+        setMessages((messages) => [...messages, chat]);
+      });
 
-    socket.on("message", (chat) => {
-      setMessages((messages) => [...messages, chat]);
-    });
+      return () => {
+        socket.disconnect();
+      };
+    }
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [recipientId, conversations]);
+  }, [recipientId, conversations, loaded]);
 
   function sendChat(e) {
     e.preventDefault();
