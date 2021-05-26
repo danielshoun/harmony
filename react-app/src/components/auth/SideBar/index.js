@@ -60,7 +60,7 @@ const SideBar = () => {
                 return (
                     <div key={`server-${server.id}`} className={`side-bar-icon${activeServer === server ? " active-server" : ""}`}
                          onClick={() => handleActive(server)}>
-                        {server.image_url ? <img src={server.image_url} alt={server.name}/> : <div>{server.name[0]}</div>}
+                        {server.pictureUrl ? <img className='side-bar-image' src={server.pictureUrl} alt={server.name}/> : <div>{server.name[0]}</div>}
                     </div>
                 )
             })}

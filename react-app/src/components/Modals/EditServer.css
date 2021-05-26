@@ -1,0 +1,16 @@
+.edit-server-container {
+    height: 370px;
+    width: 416px;
+    border: #1e1e24 1px solid;
+    border-radius: 8px;
+    padding: 16px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.edit-server-container  h3 {
+    margin-top: 0;
+}
