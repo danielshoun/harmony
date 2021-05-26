@@ -54,7 +54,7 @@ function PrivateDmContainer() {
 
     socket.emit("join", {
       type: "private",
-      conversation_id: conversations[0] ? conversations[0].id : null,
+      conversation_id: conversations[0] ? conversations[0].id : '',
     });
 
     setjoinedRoom(true);

@@ -21,7 +21,7 @@ def on_join(data):
     message_type = data["type"]
     room = None
     print('my keyword')
-    print(data["conversation_id"])
+    # print(data["conversation_id"]
     if message_type == 'private':
         if data["conversation_id"]:
             room = str(f'conversation_{data["conversation_id"]}')
@@ -33,9 +33,9 @@ def on_join(data):
             db.session.add(conversation)
             db.session.commit()
             room = str(f'conversation_{conversation.id}')
-
     else:
         room = str(f'channel_{data["channel_id"]}')
+        print(room)
     join_room(room)
 
 
