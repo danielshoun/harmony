@@ -79,9 +79,17 @@ function ChatContainer({ server }) {
       </div>
       <div className="chat-area">
         <div className="chat-messages-container">
-          <div className="chat-messages">
+          <div className="message-container">
             {messages.map((message, i) => {
-              return (<div key={i}>{`${message.sender.username}: ${message.body}`}</div>)
+              return (<div className='message' key={i}>
+                <div className='message-username'>
+                  {`${message.sender.username}`}
+                  <span className='message-time'>{new Date(message.created_at).toTimeString()}</span>
+                </div>
+                <div className='message-body'>
+                  {`${message.body}`}
+                </div>
+              </div>)
             })}
           </div>
           <form action="" className="send-message-form" onSubmit={sendChat}>
