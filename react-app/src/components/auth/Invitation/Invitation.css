@@ -1,0 +1,43 @@
+.invitation-container {
+    height: 300px;
+    width: 416px;
+    margin: 128px auto;
+    border: #1e1e24 1px solid;
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.decline-btn {
+    margin-top: 18px;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 16px;
+    height: 40px;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    background-color: #ed4245;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.decline-btn:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.accept-text {
+    margin-top: 8px;
+}
+
+.decline-text {
+    font-size: 14px;
+    margin-top: 4px;
+    color: #8e9297;
+}

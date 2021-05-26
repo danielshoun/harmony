@@ -143,8 +143,8 @@ export default function reducer(state = initalState, action){
             return newState
         }
         case REMOVE_SERVER:{
-            const userIndex = state.userServers.indexOf(action.server)
-            const allIndex = state.allServers.indexOf(action.server)
+            const userIndex = state.userServers.findIndex(server => server.id === action.server.id)
+            const allIndex = state.allServers.findIndex(server => server.id === action.server.id)
             const userServers = [...state.userServers.slice(0, userIndex), ...state.userServers.slice(userIndex + 1)]
             const allServers = [...state.userServers.slice(0, allIndex), ...state.userServers.slice(allIndex + 1)]
             return { userServers, allServers }
@@ -153,7 +153,6 @@ export default function reducer(state = initalState, action){
             return {userServers: [...state.userServers, action.server], allServers: [...state.allServers]}
         case LEAVE_SERVER:{
             const userIndex = state.userServers.indexOf(state.userServers.find(server => server.id === action.server.id))
-            console.log(`removing server at index ${userIndex} from sidebar`)
             const userServers = [...state.userServers.slice(0, userIndex), ...state.userServers.slice(userIndex + 1)]
             return {userServers, allServers: [...state.allServers]}
         }

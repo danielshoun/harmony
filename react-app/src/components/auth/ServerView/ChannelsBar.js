@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Modal from "react-modal";
 import "./ChannelsBar.css";
 import LeaveServer from "../../Modals/LeaveServer";
 import CreateChannel from "../../Modals/CreateChannel";
+import DeleteServer from "../../Modals/DeleteServer";
+import InviteServer from "../../Modals/InviteServer";
 
 const customStyles = {
   content: {
@@ -29,8 +31,9 @@ const ChannelsBar = ({ server }) => {
   const user = useSelector((state) => state.session.user);
   const channels = server.channels;
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
-  const [activeChannel, setActiveChannel] = useState(channels[0]);
+  const [activeChannel, setActiveChannel] = useState(null);
   const [showServerSettings, setShowServerSettings] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(null);
 
@@ -51,12 +54,17 @@ const ChannelsBar = ({ server }) => {
     return () => document.removeEventListener("click", closeMenu);
   }, [showServerSettings]);
 
-  function openModal(type) {
-    if (type === "leave") {
-      setIsOpen("leave");
-    } else {
-      setIsOpen("channel");
+  useEffect(() => {
+    if(!location.pathname.includes('create') && location.pathname.includes('servers')) {
+      const channelId = location.pathname.split('/')[3];
+      const firstActive = channels.find(channel => channel.id === Number(channelId));
+      console.log(firstActive)
+      setActiveChannel(firstActive)
     }
+  }, [channels, location])
+
+  function openModal(type) {
+    setIsOpen(type);
   }
 
   function closeModal(e) {
@@ -103,7 +111,10 @@ const ChannelsBar = ({ server }) => {
           <div className="server-settings-container">
             <div className="server-settings">
               <div className="server-settings-menu">
-                <div className="server-settings-menu-item">
+                <div
+                    className="server-settings-menu-item"
+                    onClick={() => openModal("invite")}
+                >
                   <div>Invite User</div>
                   <div class="menu-item-icon">
                     <svg
@@ -135,26 +146,48 @@ const ChannelsBar = ({ server }) => {
                     </div>
                   </div>
                 )}
-                <div
-                  className="server-settings-menu-item leave-server"
-                  onClick={() => openModal("leave")}
-                >
-                  <div>Leave Server</div>
-                  <div class="menu-item-icon">
-                    <svg
-                      class="icon-LYJorE"
-                      aria-hidden="false"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
+                {server.owner.id === user.id ?
+                    <div
+                        className="server-settings-menu-item leave-server"
+                        onClick={() => openModal("delete")}
                     >
-                      <path
-                        fill="currentColor"
-                        d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
+                      <div>Delete Server</div>
+                      <div className="menu-item-icon">
+                        <svg
+                            className="icon-LYJorE"
+                            aria-hidden="false"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                        >
+                          <path
+                              fill="currentColor"
+                              d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div> :
+                    <div
+                        className="server-settings-menu-item leave-server"
+                        onClick={() => openModal("leave")}
+                    >
+                      <div>Leave Server</div>
+                      <div className="menu-item-icon">
+                        <svg
+                            className="icon-LYJorE"
+                            aria-hidden="false"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                        >
+                          <path
+                              fill="currentColor"
+                              d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                }
               </div>
             </div>
           </div>
@@ -207,6 +240,13 @@ const ChannelsBar = ({ server }) => {
         </div>
       </div>
       <Modal
+          isOpen={modalIsOpen === "invite"}
+          onRequestClose={closeModal}
+          style={customStyles}
+      >
+        <InviteServer server={server} closeModal={closeModal} />
+      </Modal>
+      <Modal
         isOpen={modalIsOpen === "leave"}
         onRequestClose={closeModal}
         style={customStyles}
@@ -219,6 +259,13 @@ const ChannelsBar = ({ server }) => {
         style={customStyles}
       >
         <CreateChannel server={server} closeModal={closeModal} />
+      </Modal>
+      <Modal
+          isOpen={modalIsOpen === "delete"}
+          onRequestClose={closeModal}
+          style={customStyles}
+      >
+        <DeleteServer server={server} closeModal={closeModal} />
       </Modal>
     </div>
   );
