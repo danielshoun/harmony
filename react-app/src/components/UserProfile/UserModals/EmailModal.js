@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../../store/session";
 
-function EmailModal() {
+function EmailModal(onClose) {
   const [email, setEmail] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ function EmailModal() {
     };
 
     dispatch(updateUser(updatedUser));
+    onClose.onClose();
   }
   return (
     <>

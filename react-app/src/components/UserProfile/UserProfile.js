@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import UsernameModal from "./UserModals/UsernameModal";
 import EmailModal from "./UserModals/EmailModal";
@@ -9,10 +9,10 @@ import "./UserProfile.css";
 import "./UserModals/Modal.css";
 
 function User() {
-  const [user, setUser] = useState({});
   const [showNameModal, setNameModal] = useState(false);
   const [showEmailModal, setEmailModal] = useState(false);
   const [showPicModal, setPicModal] = useState(false);
+  const user = useSelector((state) => state.session.user);
 
   const dispatch = useDispatch();
   const { userId } = useParams();
@@ -21,16 +21,11 @@ function User() {
     await dispatch(logout());
   };
 
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
-    (async () => {
-      const response = await fetch(`/api/users/${userId}`);
-      const user = await response.json();
-      setUser(user);
-    })();
-  }, [userId]);
+  const onClose = () => {
+    setEmailModal(false);
+    setPicModal(false);
+    setNameModal(false);
+  };
 
   if (user.id !== parseInt(userId, 10)) {
     return null;
@@ -43,10 +38,10 @@ function User() {
         <div className="account-details-box">
           <div className="user-profile-header">
             <div className="user-profile-icon">
-              {user.pictureUrl ? (
+              {user.image_url ? (
                 <img
                   className="user-prof-pic"
-                  src={user.pictureUrl}
+                  src={user.image_url}
                   alt={user.username}
                 />
               ) : (
@@ -104,7 +99,7 @@ function User() {
             onClick={() => setNameModal(false)}
           />
           <div className="modal-content">
-            <UsernameModal />
+            <UsernameModal onClose={onClose} />
           </div>
         </div>
       )}
@@ -115,7 +110,7 @@ function User() {
             onClick={() => setEmailModal(false)}
           />
           <div className="modal-content">
-            <EmailModal />
+            <EmailModal onClose={onClose} />
           </div>
         </div>
       )}
@@ -126,7 +121,7 @@ function User() {
             onClick={() => setPicModal(false)}
           />
           <div className="modal-content">
-            <ProfilePicModal currUser={user} />
+            <ProfilePicModal onClose={onClose} />
           </div>
         </div>
       )}

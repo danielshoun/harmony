@@ -56,7 +56,11 @@ const SideBar = () => {
           onClick={() => handleActive("dms")}
         >
           {user.image_url ? (
-            <img src={user.image_url} alt={user.username} />
+            <img
+              className="side-bar-image"
+              src={user.image_url}
+              alt={user.username}
+            />
           ) : (
             <i className="fas fa-user" />
           )}
@@ -70,15 +74,26 @@ const SideBar = () => {
           <i className="fas fa-compass" />
         </div>
       </div>
-      {servers.userServers.map(server => {
+      {servers.userServers.map((server) => {
         return (
-          <div 
-            key={`server-${server.id}`} 
-            className={`side-bar-icon${activeServer === server ? " active-server" : ""}`}
-            onClick={() => handleActive(server)}>
-              {server.pictureUrl ? <img className='side-bar-image' src={server.pictureUrl} alt={server.name}/> : <div>{server.name[0]}</div>}
+          <div
+            key={`server-${server.id}`}
+            className={`side-bar-icon${
+              activeServer === server ? " active-server" : ""
+            }`}
+            onClick={() => handleActive(server)}
+          >
+            {server.pictureUrl ? (
+              <img
+                className="side-bar-image"
+                src={server.pictureUrl}
+                alt={server.name}
+              />
+            ) : (
+              <div>{server.name[0]}</div>
+            )}
           </div>
-        )
+        );
       })}
       <div
         className={`side-bar-icon${

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { updateUser } from "../../../store/session";
 
 import "./ProfilePicModal.css";
 
-function ProfilePicModal(currUser) {
+function ProfilePicModal(onClose) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [profileUrl, setProfileUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-  const user = currUser.currUser;
+  const user = useSelector((state) => state.session.user);
 
   const uploadImage = async (e) => {
     const formData = new FormData();
@@ -28,13 +29,14 @@ function ProfilePicModal(currUser) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
+    console.log(profileUrl);
     const newUser = {
       username: user.username,
       email: user.email,
-      picture_url: profileUrl,
+      image_url: profileUrl,
     };
-    console.log(newUser);
-    // history.go(0);
+    dispatch(updateUser(newUser));
+    onClose.onClose();
   };
 
   return (
@@ -43,10 +45,10 @@ function ProfilePicModal(currUser) {
       <div className="edit-text">Upload a new picture</div>
       <div className="edit-prof-container">
         <div className="edit-profile-icon">
-          {profileUrl ? (
+          {user.image_url ? (
             <img
               className="edit-prof-pic"
-              src={profileUrl}
+              src={user.image_url}
               alt={user.username}
             />
           ) : (
