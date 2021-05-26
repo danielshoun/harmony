@@ -51,7 +51,7 @@ function UsersBar() {
 
   return (
     <div className="sidebar">
-      <div className="server-header">
+      <div className="user-header">
         <h1>Direct Messages</h1>
       </div>
       <div className="channels-bar">
@@ -62,7 +62,15 @@ function UsersBar() {
               className={`users${activeUser === user ? " active-channel" : ""}`}
               onClick={() => handleActive(user)}
             >
-              <div className="user-profpic">Image</div>
+              <div className="profile-pic">
+                <img
+                  src={
+                    user.image_url ||
+                    "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
+                  }
+                  alt=""
+                />
+              </div>
               <span className="user-username">{user.username}</span>
             </div>
           );

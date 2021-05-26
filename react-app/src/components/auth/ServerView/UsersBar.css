@@ -1,3 +1,22 @@
+.user-header {
+  color: #fff;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+  display: flex;
+  font-weight: 500;
+  padding: 0 16px;
+  height: 48px;
+  align-items: center;
+}
+
+.user-header > h1 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 1 1;
+}
 .users {
   display: flex;
   box-sizing: border-box;
@@ -7,4 +26,8 @@
   flex-direction: row;
   align-items: center;
   border-radius: 4px;
+}
+
+.users:hover {
+  cursor: pointer;
 }
