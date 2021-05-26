@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { fetchMemberServers } from "../../../store/Servers";
 import ChannelsBar from "./ChannelsBar";
 import ChatContainer from "./ChatContainer";
@@ -11,7 +11,6 @@ const ServerView = () => {
   const servers = useSelector((state) => state.servers.userServers);
   const server = servers.find((serv) => serv.id === parseInt(serverId));
   const dispatch = useDispatch();
-  // console.log(server)
 
   useEffect(() => {
     if (!servers) {

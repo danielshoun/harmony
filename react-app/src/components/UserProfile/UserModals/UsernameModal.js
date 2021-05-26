@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 function UsernameModal() {
   const [username, setUsername] = useState("");
@@ -14,6 +13,7 @@ function UsernameModal() {
         type="text"
         name="username"
         onChange={(e) => setUsername(e.target.value)}
+        value={username}
       ></input>
       <div className="submit-div">
         <button className="submit-edit-btn">Done</button>

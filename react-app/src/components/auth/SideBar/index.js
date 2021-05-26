@@ -43,8 +43,6 @@ const SideBar = () => {
         }
     }
 
-    console.log(activeServer);
-
     return (
         <div className="side-bar">
             <div className="default-icons">

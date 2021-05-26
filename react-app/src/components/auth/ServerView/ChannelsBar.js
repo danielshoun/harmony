@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import "./ChannelsBar.css";
 import LeaveServer from "../../Modals/LeaveServer";
+import CreateChannel from "../../Modals/CreateChannel";
+import { getServerChannels } from "../../../store/Channels";
 
 const customStyles = {
   content: {
@@ -26,14 +28,42 @@ Modal.setAppElement("#root");
 
 const ChannelsBar = ({ server }) => {
   const user = useSelector((state) => state.session.user);
-  const channels = server.channels;
+  const channels = useSelector((state) => state.channels.channels);
   const history = useHistory();
-  const [activeChannel, setActiveChannel] = useState(channels[0]);
+  const dispatch = useDispatch();
+  const [activeChannel, setActiveChannel] = useState(
+    channels.length > 0 ? channels[0] : null
+  );
   const [showServerSettings, setShowServerSettings] = useState(false);
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(null);
 
-  function openModal() {
-    setIsOpen(true);
+  const openMenu = () => {
+    if (showServerSettings) return;
+    setShowServerSettings(true);
+  };
+
+  useEffect(() => {
+    if (!showServerSettings) return;
+
+    const closeMenu = () => {
+      setShowServerSettings(false);
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showServerSettings]);
+
+  useEffect(() => {
+    dispatch(getServerChannels(server.id));
+  }, [dispatch, server.id]);
+
+  function openModal(type) {
+    if (type === "leave") {
+      setIsOpen("leave");
+    } else {
+      setIsOpen("channel");
+    }
   }
 
   function closeModal(e) {
@@ -50,7 +80,7 @@ const ChannelsBar = ({ server }) => {
     <div id="sidebar" className="sidebar">
       <div
         className="server-header"
-        onClick={() => setShowServerSettings(!showServerSettings)}
+        onClick={openMenu}
       >
         <h1>{server.name}</h1>
         <svg
@@ -96,20 +126,25 @@ const ChannelsBar = ({ server }) => {
                     </svg>
                   </div>
                 </div>
-                <div className="server-settings-menu-item">
-                  <div>Create Channel</div>
-                  <div class="menu-item-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"
-                      ></path>
-                    </svg>
+                {server.owner.id === user.id && (
+                  <div
+                    className="server-settings-menu-item"
+                    onClick={() => openModal("channel")}
+                  >
+                    <div>Create Channel</div>
+                    <div class="menu-item-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"
+                        ></path>
+                      </svg>
+                    </div>
                   </div>
-                </div>
+                )}
                 <div
                   className="server-settings-menu-item leave-server"
-                  onClick={openModal}
+                  onClick={() => openModal("leave")}
                 >
                   <div>Leave Server</div>
                   <div class="menu-item-icon">
@@ -179,11 +214,18 @@ const ChannelsBar = ({ server }) => {
         </div>
       </div>
       <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
+        isOpen={modalIsOpen === "leave"}
+        onRequestClose={closeModal}
+        style={customStyles}
       >
         <LeaveServer server={server} closeModal={closeModal} />
+      </Modal>
+      <Modal
+        isOpen={modalIsOpen === "channel"}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+        <CreateChannel server={server} closeModal={closeModal} />
       </Modal>
     </div>
   );
