@@ -14,6 +14,8 @@ import ServerView from "./components/auth/ServerView";
 import Invitation from "./components/auth/Invitation";
 import ServerBaseRedirect from "./components/auth/ServerView/ServerBaseRedirect";
 import {fetchMemberServers} from "./store/Servers";
+import CreateServer from "./components/auth/CreateServer";
+import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
 
 function App() {
   const user = useSelector((state) => state.session.user);
@@ -59,6 +61,10 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute path="/users/:userId" exact={true}>
               <User />
+            </ProtectedRoute>
+            <ProtectedRoute path="/users/:userId/dms"></ProtectedRoute>
+            <ProtectedRoute path="/users/:userId/dms/:recipientId">
+              <PrivateDmContainer />
             </ProtectedRoute>
             <ProtectedRoute path="/" exact={true}>
               <AuthPage />
