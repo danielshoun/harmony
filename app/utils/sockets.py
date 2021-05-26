@@ -22,9 +22,16 @@ def on_join(data):
     room = None
     if message_type == 'private':
         if data["conversation_id"]:
-            conversation = Conversation.query.get(data["conversation_id"])
+            room = str(f'conversation_{data["conversation_id"]}')
+        else:
+            conversation = Conversation(
+            user_1_id=data['sender_id'],
+            user_2_id=data['recipient_id'])
 
-        room = str(f'conversation_{data["conversation_id"]}')
+            db.session.add(conversation)
+            db.session.commit()
+            room = str(f'conversation_{conversation.id}')
+
     else:
         room = str(f'channel_{data["channel_id"]}')
     join_room(room)
