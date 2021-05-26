@@ -52,11 +52,13 @@ function PrivateDmContainer() {
     socket = io();
     console.log(conversations)
 
+    // console.log(conversations[0].id)
     socket.emit("join", {
       type: "private",
       conversation_id: conversations[0] ? conversations[0].id : '',
+      recipient_id: recipientId
     });
-
+    
     setjoinedRoom(true);
     console.log(joinedRoom)
 

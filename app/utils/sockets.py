@@ -20,14 +20,17 @@ socketio = SocketIO(cors_allowed_origins=origins)
 def on_join(data):
     message_type = data["type"]
     room = None
-    print('my keyword')
+    # print('my keyword')
     # print(data["conversation_id"]
     if message_type == 'private':
         if data["conversation_id"]:
+            print('my keyword')
+            print(data['conversation_id'])
             room = str(f'conversation_{data["conversation_id"]}')
         else:
+            print('my keyword')
             conversation = Conversation(
-                user_1_id=data['sender_id'],
+                user_1_id=current_user.id,
                 user_2_id=data['recipient_id'])
 
             db.session.add(conversation)
