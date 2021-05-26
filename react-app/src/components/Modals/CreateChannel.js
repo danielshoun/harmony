@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createChannel } from "../../store/Channels";
+import { createChannel } from "../../store/Servers";
 import "./CreateChannel.css";
 
 function CreateChannel({ server, closeModal }) {
@@ -18,6 +18,7 @@ function CreateChannel({ server, closeModal }) {
       server_id: server.id,
     };
     const new_channel = await dispatch(createChannel(channel));
+    closeModal(e);
     history.push(`/servers/${server.id}/${new_channel.id}`);
   };
 

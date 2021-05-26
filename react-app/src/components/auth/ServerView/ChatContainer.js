@@ -9,7 +9,6 @@ let socket;
 function ChatContainer({ server }) {
   const user = useSelector((state) => state.session.user);
   const { channelId } = useParams();
-  const channels = useSelector((state) => state.channels.channels);
   const channel = server.channels.find(
     (channel) => channel.id === parseInt(channelId)
   );

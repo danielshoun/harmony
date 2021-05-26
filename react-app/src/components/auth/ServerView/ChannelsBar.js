@@ -5,7 +5,6 @@ import Modal from "react-modal";
 import "./ChannelsBar.css";
 import LeaveServer from "../../Modals/LeaveServer";
 import CreateChannel from "../../Modals/CreateChannel";
-import { getServerChannels } from "../../../store/Channels";
 
 const customStyles = {
   content: {
@@ -28,12 +27,10 @@ Modal.setAppElement("#root");
 
 const ChannelsBar = ({ server }) => {
   const user = useSelector((state) => state.session.user);
-  const channels = useSelector((state) => state.channels.channels);
+  const channels = server.channels;
   const history = useHistory();
   const dispatch = useDispatch();
-  const [activeChannel, setActiveChannel] = useState(
-    channels.length > 0 ? channels[0] : null
-  );
+  const [activeChannel, setActiveChannel] = useState(channels[0]);
   const [showServerSettings, setShowServerSettings] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(null);
 
@@ -53,10 +50,6 @@ const ChannelsBar = ({ server }) => {
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showServerSettings]);
-
-  useEffect(() => {
-    dispatch(getServerChannels(server.id));
-  }, [dispatch, server.id]);
 
   function openModal(type) {
     if (type === "leave") {
