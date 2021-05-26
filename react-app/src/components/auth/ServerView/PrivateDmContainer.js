@@ -15,10 +15,11 @@ function PrivateDmContainer() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`api/dms/${recipientId}`);
+      const res = await fetch(`/api/dms/${recipientId}`);
       if (res.ok) {
         const data = await res.json();
         setMessages(data);
+        console.log(data)
       }
     }
     fetchData();
@@ -26,21 +27,27 @@ function PrivateDmContainer() {
 
   useEffect(() => {
     async function fetchDMs() {
-      const res = await fetch(`api/dms/`);
+      const res = await fetch(`/api/dms/`);
       if (res.ok) {
         const data = await res.json();
-        setConversations(data);
+        // console.log(data)
+        const convo = data.filter(conv =>
+          (conv.user_1.id === user.id && conv.user_2.id === parseInt(recipientId)) || 
+          (conv.user_2.id === user.id && conv.user_1.id === parseInt(recipientId)))
+
+        setConversations(convo);
       }
     }
-  });
+    fetchDMs()
+  }, []);
 
-  console.log(conversations);
+  // console.log(conversations);
 
-  //   useEffect(() => {
-  //     socket = io();
+    // useEffect(() => {
+    //   socket = io();
 
-  //     socket.emit("join", { type: "private" });
-  //   });
+    //   socket.emit("join", { type: "private" });
+    // });
 
   return <></>;
 }

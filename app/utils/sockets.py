@@ -43,8 +43,16 @@ def channel_chat(data):
 
     send(new_message.to_dict(), to=f'channel_{data["channel_id"]}')
 
+
 @socketio.on("private_chat")
 def private_chat(data):
+    if not Conversation.query.get(data["conversation_id"]):
+        db.session.add(Conversation(
+            user_1_id=data['sender_id'],
+            user_2_id=data['recipient_id'],
+        ))
+        db.session.commit()
+
     new_message = PrivateMessage(
         sender_id=data['sender_id'],
         recipient_id=data['recipient_id'],
@@ -57,6 +65,7 @@ def private_chat(data):
     db.session.commit()
 
     send(new_message.to_dict(), to=f'conversation_{data["conversation_id"]}')
+
 
 @socketio.on('connect')
 def on_connect():
