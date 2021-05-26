@@ -13,7 +13,7 @@ function PrivateDmContainer() {
   const [joinedRoom, setjoinedRoom] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [chatInput, setChatInput] = useState("");
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,7 +21,7 @@ function PrivateDmContainer() {
       if (res.ok) {
         const data = await res.json();
         setMessages(data);
-        console.log(data);
+        // console.log(data);
       }
     }
     fetchData();
@@ -42,8 +42,8 @@ function PrivateDmContainer() {
         );
 
         setConversations(convo);
-        setLoaded(true)
-        console.log(loaded)
+        setLoaded(true);
+        console.log(loaded);
       }
     }
     fetchDMs();
@@ -53,20 +53,20 @@ function PrivateDmContainer() {
 
   useEffect(() => {
     socket = io();
-    console.log(conversations)
+    console.log(conversations);
 
     // console.log(conversations[0].id)
-    if(loaded){
-      console.log('are we loaded', loaded)
+    if (loaded) {
+      console.log("are we loaded", loaded);
       socket.emit("join", {
         type: "private",
-        conversation_id: conversations[0] ? conversations[0].id : '',
-        recipient_id: recipientId
+        conversation_id: conversations[0] ? conversations[0].id : "",
+        recipient_id: recipientId,
       });
-      
+
       setjoinedRoom(true);
       // console.log(joinedRoom)
-  
+
       socket.on("message", (chat) => {
         setMessages((messages) => [...messages, chat]);
       });
@@ -75,7 +75,6 @@ function PrivateDmContainer() {
         socket.disconnect();
       };
     }
-
   }, [recipientId, conversations, loaded]);
 
   function sendChat(e) {

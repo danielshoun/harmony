@@ -71,10 +71,7 @@ const ChannelsBar = ({ server }) => {
 
   return (
     <div id="sidebar" className="sidebar">
-      <div
-        className="server-header"
-        onClick={openMenu}
-      >
+      <div className="server-header" onClick={openMenu}>
         <h1>{server.name}</h1>
         <svg
           width="18"

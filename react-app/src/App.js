@@ -14,6 +14,7 @@ import SideBar from "./components/auth/SideBar";
 import ServerView from "./components/auth/ServerView";
 import CreateServer from "./components/auth/CreateServer";
 import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
+import UsersBar from "./components/auth/ServerView/UsersBar";
 
 function App() {
   const user = useSelector((state) => state.session.user);
@@ -53,7 +54,9 @@ function App() {
           <ProtectedRoute path="/users/:userId" exact={true}>
             <User />
           </ProtectedRoute>
-          <ProtectedRoute path="/users/:userId/dms"></ProtectedRoute>
+          <ProtectedRoute path="/users/:userId/dms">
+            <UsersBar />
+          </ProtectedRoute>
           <ProtectedRoute path="/users/:userId/dms/:recipientId">
             <PrivateDmContainer />
           </ProtectedRoute>
