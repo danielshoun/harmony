@@ -134,6 +134,8 @@
   min-height: 0;
   min-width: 0;
   z-index: 0;
+  overflow-y: scroll;
+  margin-bottom: 16px;
 }
 
 .send-message-form {
@@ -161,16 +163,26 @@
 
 .message{
   color: white;
-  padding: 5px;
+  padding: 8px;
+  display: flex;
 
+}
+
+.subsequent-message {
+  padding: 0px 8px;
 }
 
 .message:hover{
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+.message-image-container {
+  margin-right: 4px;
+}
+
 .message-username{
   font-weight: bold;
+  margin-bottom: 4px;
 }
 
 .message-body{
@@ -179,7 +191,7 @@
 
 .message-time{
   font-size: small;
-  margin-left: 16px;
+  margin-left: 8px;
   color: rgb(155, 155, 155);
   font-weight: lighter;
 }

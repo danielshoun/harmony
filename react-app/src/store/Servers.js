@@ -127,7 +127,8 @@ export default function reducer(state = initalState, action){
         case JOIN_SERVER:
             return {userServers: [...state.userServers, action.server], allServers: [...state.allServers]}
         case LEAVE_SERVER:{
-            const userIndex = state.userServers.indexOf(action.server)
+            const userIndex = state.userServers.indexOf(state.userServers.find(server => server.id === action.server.id))
+            console.log(`removing server at index ${userIndex} from sidebar`)
             const userServers = [...state.userServers.slice(0, userIndex), ...state.userServers.slice(userIndex + 1)]
             return {userServers, allServers: [...state.allServers]}
         }

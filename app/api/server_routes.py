@@ -90,8 +90,7 @@ def join_server(id):
 @login_required
 def leave_server(id):
     server = Server.query.get(id)
-    server.members.append(User.query.get(current_user.id))
-    # server.members.remove(User.query.get(1))
+    server.members.remove(User.query.get(current_user.id))
     db.session.add(server)
     db.session.commit()
     return server.to_dict()
