@@ -20,10 +20,25 @@ socketio = SocketIO(cors_allowed_origins=origins)
 def on_join(data):
     message_type = data["type"]
     room = None
+    # print('my keyword')
+    # print(data["conversation_id"]
     if message_type == 'private':
-        room = str(f'conversation_{data["conversation_id"]}')
+        if data["conversation_id"]:
+            print('my keyword')
+            print(data['conversation_id'])
+            room = str(f'conversation_{data["conversation_id"]}')
+        else:
+            print('my keyword')
+            conversation = Conversation(
+                user_1_id=current_user.id,
+                user_2_id=data['recipient_id'])
+
+            db.session.add(conversation)
+            db.session.commit()
+            room = str(f'conversation_{conversation.id}')
     else:
         room = str(f'channel_{data["channel_id"]}')
+        print(room)
     join_room(room)
 
 
@@ -39,6 +54,7 @@ def channel_chat(data):
     db.session.commit()
 
     send(new_message.to_dict(), to=f'channel_{data["channel_id"]}')
+
 
 @socketio.on("private_chat")
 def private_chat(data):
@@ -61,6 +77,7 @@ def private_chat(data):
     db.session.commit()
 
     send(new_message.to_dict(), to=f'conversation_{data["conversation_id"]}')
+
 
 @socketio.on('connect')
 def on_connect():
