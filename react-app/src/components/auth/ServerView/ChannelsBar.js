@@ -86,6 +86,7 @@ const ChannelsBar = ({ server }) => {
       const firstActive = channels.find(
         (channel) => channel.id === Number(channelId)
       );
+      console.log(firstActive);
       setActiveChannel(firstActive);
     }
   }, [channels, location]);

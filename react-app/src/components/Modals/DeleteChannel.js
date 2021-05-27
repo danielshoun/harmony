@@ -13,15 +13,19 @@ function DeleteChannel({ server, closeModal }) {
   );
   const [showError, setShowError] = useState(false);
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     if (server.channels.length > 1) {
-      dispatch(deleteChannel(channel));
+      await dispatch(deleteChannel(channel));
       closeModal(e);
       history.push(`/servers/${server.id}/${server.channels[0].id}`);
     } else {
       setShowError(true);
     }
   };
+
+  if(!channel) {
+    return (<></>)
+  }
 
   return (
     <div className="leave-server-container">

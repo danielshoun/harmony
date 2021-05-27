@@ -294,9 +294,6 @@ export default function reducer(state = initalState, action) {
       const userServersIndex = newState.userServers.findIndex(
         (server) => server.id === action.channel.server_id
       );
-      const allServersIndex = newState.allServers.findIndex(
-        (server) => server.id === action.channel.server_id
-      );
       const userServer = newState.userServers[userServersIndex];
       const userServerChannelIndex = userServer.channels.findIndex(
         (channel) => channel.id === action.channel.id
@@ -304,14 +301,6 @@ export default function reducer(state = initalState, action) {
       userServer.channels = [
         ...userServer.channels.slice(0, userServerChannelIndex),
         ...userServer.channels.slice(userServerChannelIndex + 1),
-      ];
-      const allServer = newState.allServers[allServersIndex];
-      const allServerChannelIndex = allServer.channels.findIndex(
-        (channel) => channel.id === action.channel.id
-      );
-      allServer.channels = [
-        ...allServer.channels.slice(0, allServerChannelIndex),
-        ...allServer.channels.slice(allServerChannelIndex + 1),
       ];
 
       return newState;

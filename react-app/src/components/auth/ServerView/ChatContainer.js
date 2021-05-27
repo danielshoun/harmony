@@ -11,7 +11,7 @@ function ChatContainer({ server }) {
   const user = useSelector((state) => state.session.user);
   const { channelId } = useParams();
   const history = useHistory()
-  const channel = server.channels.find(
+  let channel = server.channels.find(
     (channel) => channel.id === parseInt(channelId)
   );
   const [messages, setMessages] = useState([]);
@@ -19,6 +19,10 @@ function ChatContainer({ server }) {
   const [showMembers, setShowMembers] = useState(true);
   const [chatInput, setChatInput] = useState("");
   const messageContainerRef = useRef(null);
+
+  if(!channel) {
+    channel = server.channels[0]
+  }
 
   useEffect(() => {
     async function fetchData() {
