@@ -52,7 +52,7 @@ function ChatContainer({ server }) {
     return () => {
       socket.disconnect();
     };
-  }, [channel]);
+  }, [channel, messages]);
 
   useEffect(() => {
     if (
