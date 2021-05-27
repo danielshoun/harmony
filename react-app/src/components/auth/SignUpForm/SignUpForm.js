@@ -6,6 +6,7 @@ import "./SignUpForm.css";
 
 const SignUpForm = () => {
   const [username, setUsername] = useState("");
+  const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -15,7 +16,10 @@ const SignUpForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      await dispatch(signUp(username, email, password));
+      const data = await dispatch(signUp(username, email, password));
+      if (data.errors) {
+        setErrors(data.errors);
+      }
     }
   };
 
@@ -93,6 +97,13 @@ const SignUpForm = () => {
             </Link>
           </form>
         </div>
+        {errors.length > 0 && (
+          <div className="login-errors">
+            {errors.map((error) => (
+              <div>{error}</div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
