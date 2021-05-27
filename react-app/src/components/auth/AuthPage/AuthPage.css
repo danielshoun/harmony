@@ -2,21 +2,49 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #202225 #2f3136;
+}
+
+.auth-page-home::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+.auth-page-home::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.auth-page-home::-webkit-scrollbar-thumb {
+  background-color: #202225;
+  min-height: 40px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+}
+
+.auth-page-home::-webkit-scrollbar-track {
+  background-color: #2f3136;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
 }
 
 .auth-page-hero-container {
-  display: block;
+  display: flex;
   border-radius: 8px;
   min-height: 200px;
   margin: 16px 16px 32px 16px;
-  overflow: hidden;
 }
+
 .auth-page-hero-image {
   background-image: url("https://discord.com/assets/3e0acf6d69894a5d20deb7c513cd1412.svg");
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .hero-banner-content {
