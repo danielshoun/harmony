@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./PrivateDmContainer.css";
+import createSocketUseEffect from "../../../utils/createSocketUseEffect";
 import Message from "./Message";
 
 function PrivateDmContainer() {
@@ -51,41 +52,15 @@ function PrivateDmContainer() {
     fetchDMs();
   }, [recipientId, user.id]);
 
-  useEffect(() => {
-    function socketOnChat(chat) {
-      setMessages((messages) => [...messages, chat]);
-    }
-
-    function socketOnEdit(newMessage) {
-      const messageIdx = messages.findIndex(message => message.id === newMessage.id);
-      setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
-    }
-
-    function socketOnDelete({messageId}) {
-      const messageIdx = messages.findIndex(message => message.id === messageId);
-      setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
-    }
-
-    socket.emit("join", {
-      type: "private",
-      conversation_id: conversations[0] ? conversations[0].id : "",
-      recipient_id: recipientId,
-    });
-    socket.on("message", socketOnChat);
-    socket.on("private_edit", socketOnEdit)
-    socket.on("private_delete", socketOnDelete)
-
-    return () => {
-      socket.off("message", socketOnChat);
-      socket.off("private_edit", socketOnEdit);
-      socket.off("private_delete", socketOnDelete)
-      socket.emit("leave", {
-        type: "private",
-        conversation_id: conversations[0] ? conversations[0].id : "",
-        recipient_id: recipientId,
-      })
-    }
-  }, [socket, conversations, recipientId, messages]);
+  useEffect(createSocketUseEffect(
+      "private",
+      socket,
+      setMessages,
+      messages,
+      null,
+      conversations[0]?.id,
+      recipientId
+  ), [socket, conversations, recipientId, messages]);
 
 
   useEffect(() => {

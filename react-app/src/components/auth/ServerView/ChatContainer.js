@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import "./ChatContainer.css";
+import createSocketUseEffect from "../../../utils/createSocketUseEffect";
 import ChatInput from "./ChatInput";
 import MembersButton from "./MembersButton";
 import MembersList from "./MembersList";
@@ -36,33 +37,13 @@ function ChatContainer({server}) {
         fetchData().then();
     }, [channel]);
 
-    useEffect(() => {
-        function socketOnChat(chat) {
-            setMessages((messages) => [...messages, chat]);
-        }
-
-        function socketOnEdit(newMessage) {
-            const messageIdx = messages.findIndex(message => message.id === newMessage.id);
-            setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)]);
-        }
-
-        function socketOnDelete({messageId}) {
-            const messageIdx = messages.findIndex(message => message.id === messageId);
-            setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)]);
-        }
-
-        socket.emit("join", {type: "public", channel_id: channel.id});
-        socket.on("message", socketOnChat);
-        socket.on("public_edit", socketOnEdit);
-        socket.on("public_delete", socketOnDelete);
-
-        return () => {
-            socket.off("message", socketOnChat);
-            socket.off("public_edit", socketOnEdit);
-            socket.off("public_delete", socketOnDelete);
-            socket.emit("leave", {type: "public", channel_id: channel.id});
-        };
-    }, [socket, channel, messages]);
+    useEffect(createSocketUseEffect(
+        "public",
+        socket,
+        setMessages,
+        messages,
+        channel
+    ), [socket, channel, messages]);
 
     useEffect(() => {
         if (

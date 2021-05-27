@@ -113,7 +113,7 @@ def public_delete(data):
     message = PrivateMessage.query.get(data['id'])
     db.session.delete(message)
     db.session.commit()
-    emit("private_delete", {'messageId': data['id']}, to=f'conversation_{data["conversation_id"]}')
+    emit("private_delete", {'messageId': data['id']}, to=f'conversation_{message.conversation_id}')
 
 
 @socketio.on('connect')

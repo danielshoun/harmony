@@ -44,7 +44,7 @@ const Message = ({message, messages, i}) => {
     };
 
     const handleDelete = () => {
-        socket.emit(message.channel_id ? "public_delete" : "private_edit", {id: message.id});
+        socket.emit(message.channel_id ? "public_delete" : "private_delete", {id: message.id});
     };
 
     if (i === 0 || message.sender.id !== messages[i - 1].sender.id || messageDateObj - new Date(messages[i - 1].created_at + "Z") > 300000) {
