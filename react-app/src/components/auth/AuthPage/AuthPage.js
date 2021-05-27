@@ -11,6 +11,8 @@ const AuthPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
+  document.title = "Harmony | Explore"
+
   const handleSearch = (e) => {
     if (e.target.value === "") {
       setSearchInput("");

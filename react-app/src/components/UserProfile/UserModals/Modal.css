@@ -23,7 +23,7 @@
   background-color: rgb(54, 57, 63);
   border-radius: 5px;
   width: 400px;
-  height: 275px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   padding: 24px 16px;
@@ -71,8 +71,17 @@
   margin-top: 30px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   border-top: solid rgb(85, 85, 85) thin;
 }
+
+.user-edit-errors {
+  margin-left: 70px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ed4245;
+}
+
 .submit-edit-btn {
   margin-top: 20px;
   border: none;
@@ -86,7 +95,23 @@
   transition: opacity 0.2s ease;
 }
 
+.large-edit {
+  margin-top: 70px;
+}
 .submit-edit-btn:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+.cancel-btn {
+  display: flex;
+  margin-top: 10px;
+  font-size: 14px;
+  justify-content: center;
+  color: white;
+}
+
+.cancel-btn:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

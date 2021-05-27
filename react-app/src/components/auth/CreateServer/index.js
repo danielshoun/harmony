@@ -11,6 +11,8 @@ const CreateServer = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
 
+  document.title = "Harmony | Create a Server"
+
   const handleCreate = async (e) => {
     e.preventDefault();
     const server = {

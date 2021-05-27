@@ -223,7 +223,7 @@ export default function reducer(state = initalState, action) {
     }
     case JOIN_SERVER:
       return {
-        userServers: [...state.userServers, action.server],
+        userServers: [...state.userServers, action.server].sort((a, b) => a.id - b.id),
         allServers: [...state.allServers],
       };
     case LEAVE_SERVER: {
