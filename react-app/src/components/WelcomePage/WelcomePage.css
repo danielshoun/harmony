@@ -1,5 +1,5 @@
 .welcome-header {
-  background-color: #345fee;
+  background-color: #305ae4;
   color: white;
   text-align: center;
   display: flex;
@@ -15,15 +15,30 @@
   top: 0;
   right: 0;
   height: 100%;
-  width: 35%;
+  width: 100%;
   overflow: hidden;
   z-index: 0;
 }
 
-.background-image > img {
+.bg-1 {
+  position: absolute;
   height: 400px;
   margin-top: 226px;
-  z-index: 1;
+  margin-left: 160px;
+}
+
+.bg-2 {
+  position: absolute;
+  margin-top: 226px;
+  height: 400px;
+  margin-left: -950px;
+}
+
+.bg-3 {
+  position: absolute;
+  height: 300px;
+  margin-top: 325px;
+  margin-left: -950px;
 }
 
 .welcome-content-container > h1 {
@@ -34,6 +49,7 @@
 .welcome-content-container {
   width: 95%;
   padding: 16px;
+  z-index: 1;
 }
 
 .logo-header {

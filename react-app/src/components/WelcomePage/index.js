@@ -19,7 +19,18 @@ const WelcomePage = () => {
     <>
       <div className="welcome-header">
         <div className="background-image">
-          <img src="https://discord.com/assets/7b01f72a2054561145b6dd04add417c0.svg" />
+          <img
+            className="bg-1"
+            src="https://discord.com/assets/7b01f72a2054561145b6dd04add417c0.svg"
+          />
+          <img
+            className="bg-3"
+            src="https://discord.com/assets/1d9b04db64569bf18409a59a32ffd256.svg"
+          />
+          <img
+            className="bg-2"
+            src="https://discord.com/assets/e92fcc9ab6e63c1a17e954af347a1f1d.svg"
+          />
         </div>
         <div className="welcome-content-container">
           <div className="logo-header">
