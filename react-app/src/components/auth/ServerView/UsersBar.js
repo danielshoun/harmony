@@ -7,7 +7,7 @@ import "./UsersBar.css";
 function UsersBar() {
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
-  const [conversations, setConversations] = useState([]);
+  // const [conversations, setConversations] = useState([]);
   const [usersList, setusersList] = useState([]);
   const [activeUser, setactiveUser] = useState("");
 
@@ -20,7 +20,7 @@ function UsersBar() {
           if (convo.user_1.id !== user.id) return convo.user_1;
           else return convo.user_2;
         });
-        setConversations(data);
+        // setConversations(data);
         setusersList(convos);
       }
     }
