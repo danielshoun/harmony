@@ -29,13 +29,13 @@ def on_join(data):
             room = str(f'conversation_{data["conversation_id"]}')
         else:
             print('my keyword')
-            conversation = Conversation(
-                user_1_id=current_user.id,
-                user_2_id=data['recipient_id'])
+            # conversation = Conversation(
+            #     user_1_id=current_user.id,
+            #     user_2_id=data['recipient_id'])
 
-            db.session.add(conversation)
-            db.session.commit()
-            room = str(f'conversation_{conversation.id}')
+            # db.session.add(conversation)
+            # db.session.commit()
+            # room = str(f'conversation_{conversation.id}')
     else:
         room = str(f'channel_{data["channel_id"]}')
         print(room)
@@ -54,6 +54,7 @@ def channel_chat(data):
     db.session.commit()
 
     send(new_message.to_dict(), to=f'channel_{data["channel_id"]}')
+
 
 @socketio.on("public_edit")
 def public_edit(data):

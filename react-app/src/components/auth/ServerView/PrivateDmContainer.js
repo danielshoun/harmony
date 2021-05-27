@@ -23,7 +23,8 @@ function PrivateDmContainer() {
     async function fetchData() {
       const res = await fetch(`/api/dms/${recipientId}`);
       if (res.ok) {
-        const data = await res.json();
+        let data = await res.json();
+        if(data[0]=== 'empty') data = []
         setMessages(data);
         // console.log(data);
       }
@@ -44,10 +45,12 @@ function PrivateDmContainer() {
             (conv.user_2.id === user.id &&
               conv.user_1.id === parseInt(recipientId))
         );
-        // console.log(convo[0])
-        if (convo[0].user_1.id === parseInt(recipientId)) setOtherUser(convo[0].user_1.username)
-        else setOtherUser(convo[0].user_2.username)
-
+        console.log(convo)
+        if(convo.length > 0){
+          if (convo[0].user_1.id === parseInt(recipientId)) setOtherUser(convo[0].user_1.username)
+          else setOtherUser(convo[0].user_2.username)
+        }
+          
         setConversations(convo);
         setLoaded(true);
         console.log(loaded);
@@ -72,7 +75,8 @@ function PrivateDmContainer() {
       });
 
       setjoinedRoom(true);
-      // console.log(joinedRoom)
+      console.log('joined')
+      console.log('conversations', conversations)
 
       socket.on("message", (chat) => {
         setMessages((messages) => [...messages, chat]);

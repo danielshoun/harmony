@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./ChatContainer.css";
 import Message from "./Message";
 
@@ -10,6 +10,7 @@ let socket;
 function ChatContainer({ server }) {
   const user = useSelector((state) => state.session.user);
   const { channelId } = useParams();
+  const history = useHistory()
   const channel = server.channels.find(
     (channel) => channel.id === parseInt(channelId)
   );
@@ -91,6 +92,19 @@ function ChatContainer({ server }) {
     // setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
   }
 
+  async function handelDm(memberId){
+    const res = await fetch(`/api/dms/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({memberId})
+    })
+
+    history.push(`/users/${user.id}/dms/${memberId}`)
+
+  }
+
   return (
     <div className="chat-container">
       <div className="channel-header">
@@ -150,7 +164,10 @@ function ChatContainer({ server }) {
                 <span className="members-group">All</span>
                 <div className="member-container">
                   {server.members.map((member) => (
-                    <div className="member-info">
+                    <div 
+                      className="member-info"
+                      onClick={()=> handelDm(member.id)}
+                    >
                       <div className="profile-pic">
                         <img
                           src={
