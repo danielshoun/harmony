@@ -23,9 +23,9 @@ const Invitation = () => {
         dispatch(fetchMemberServers());
     }, [dispatch]);
 
-    const handleAccept = () => {
-        dispatch(serverJoin(server.id))
-        history.push(`/servers/${serverId}/${server.channels[0].id}`)
+    const handleAccept = async () => {
+        await dispatch(serverJoin(server.id))
+        history.push(`/servers/${server.id}/${server.channels[0].id}`)
     }
 
     return (

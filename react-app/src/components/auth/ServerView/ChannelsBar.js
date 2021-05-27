@@ -86,6 +86,7 @@ const ChannelsBar = ({ server }) => {
         (channel) => channel.id === Number(channelId)
       );
       setActiveChannel(firstActive);
+      document.title = `${server.name} | ${firstActive.name}`
     }
   }, [channels, location]);
 
