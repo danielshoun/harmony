@@ -180,6 +180,10 @@
   margin-right: 4px;
 }
 
+.message-text-container {
+  width: 100%;
+}
+
 .message-username{
   font-weight: bold;
   margin-bottom: 4px;
@@ -187,6 +191,7 @@
 
 .message-body{
   color: lightgray;
+  width: 100%;
 }
 
 .message-time{
@@ -210,4 +215,18 @@
 .message-edit-icon,
 .message-delete-icon {
   cursor: pointer;
+}
+
+.message-edit-input {
+  background-color: #2f3136;
+  width: 95%;
+  resize: none;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: "Noto Sans", sans-serif;
+  color: #fff;
+  font-size: 16px;
+  height: auto;
 }

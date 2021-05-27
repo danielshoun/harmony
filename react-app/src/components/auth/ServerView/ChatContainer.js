@@ -39,6 +39,16 @@ function ChatContainer({ server }) {
       setMessages((messages) => [...messages, chat]);
     });
 
+    socket.on("public_edit", (newMessage) => {
+      const messageIdx = messages.findIndex(message => message.id === newMessage.id);
+      setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
+    })
+
+    socket.on("public_delete", ({messageId}) => {
+      const messageIdx = messages.findIndex(message => message.id === messageId);
+      setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
+    })
+
     return () => {
       socket.disconnect();
     };
@@ -67,6 +77,20 @@ function ChatContainer({ server }) {
     setChatInput("");
   }
 
+  function editMessage(messageId, newBody) {
+    const messageIdx = messages.findIndex(message => message.id === messageId);
+    const newMessage = {...messages[messageIdx]}
+    newMessage.body = newBody
+    socket.emit("public_edit", newMessage)
+    // setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
+  }
+
+  function deleteMessage(messageId) {
+    socket.emit("public_delete", {id: messageId})
+    // const messageIdx = messages.findIndex(message => message.id === messageId);
+    // setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
+  }
+
   return (
     <div className="chat-container">
       <div className="channel-header">
@@ -81,7 +105,7 @@ function ChatContainer({ server }) {
         </div>
         <div className="chat-toolbar">
           <div
-            class="toolbar-member-button"
+            className="toolbar-member-button"
             onClick={() => setShowMembers(!showMembers)}
           >
             <svg width="24" height="24" viewBox="0 0 24 24">
@@ -102,6 +126,8 @@ function ChatContainer({ server }) {
                     message={message}
                     messages={messages}
                     i={i}
+                    editMessage={editMessage}
+                    deleteMessage={deleteMessage}
                 />
             ))}
           </div>
