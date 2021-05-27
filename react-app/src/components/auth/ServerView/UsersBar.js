@@ -11,6 +11,8 @@ function UsersBar() {
   const [usersList, setusersList] = useState([]);
   const [activeUser, setactiveUser] = useState("");
 
+  document.title = "Harmony"
+
   useEffect(() => {
     async function fetchDMs() {
       const res = await fetch(`/api/dms/`);
