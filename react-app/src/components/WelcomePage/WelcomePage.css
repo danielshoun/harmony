@@ -1,102 +1,174 @@
+.welcome-page-container {
+  background-color: white;
+}
 .welcome-header {
-    background-color: #7289da;
-    color: white;
-    text-align: center;
-    padding: 16px;
+  background-color: #305ae4;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  height: 626px;
+  margin: 0;
 }
 
-.welcome-header > h1 {
-    margin: 0;
+.background-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-1 {
+  position: absolute;
+  height: 400px;
+  margin-top: 226px;
+  margin-left: 160px;
+}
+
+.bg-2 {
+  position: absolute;
+  margin-top: 226px;
+  height: 400px;
+  margin-left: -950px;
+}
+
+.bg-3 {
+  position: absolute;
+  height: 300px;
+  margin-top: 325px;
+  margin-left: -950px;
+}
+
+.welcome-content-container > h1 {
+  margin: 0;
+  font-size: 56px;
+}
+
+.welcome-content-container {
+  width: 95%;
+  padding: 16px;
+  z-index: 1;
+}
+
+.logo-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 90px;
+}
+
+.logo-header > label {
+  margin-left: 6px;
+  font-weight: bold;
 }
 
 .header-logo {
-    font-size: 128px;
-    margin-top: 16px;
+  font-size: 30px;
 }
 
 .welcome-subheader {
-    margin-top: 16px;
+  margin-top: 16px;
+  margin-bottom: 40px;
+  font-size: 20px;
 }
 
 .buttons-container {
-    margin-top: 32px;
+  margin-top: 100px;
 }
 
 .header-button {
-    margin: 0 8px;
-    border: none;
-    border-radius: 4px;
-    background-color: white;
-    padding: 8px;
-    width: 64px;
-    cursor: pointer;
+  border: none;
+  border-radius: 28px;
+  background-color: white;
+  padding: 10px 20px;
+  margin: 3px 5px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  transition: color, box-shadow 0.2s ease-in;
+}
+
+.header-button:hover {
+  color: #7289da;
+  box-shadow: 0px 8px 10px rgba(68, 68, 68, 0.4);
+  transform: translateY(-1px);
 }
 
 .header-button-large {
-    width: 128px;
+  width: 128px;
+}
+
+.button-row-container {
+  margin: 10px 0;
 }
 
 .info-container {
-    display: flex;
-    flex-flow: row wrap;
-    color: white;
-    justify-content: center;
-    margin-top: 16px;
+  display: flex;
+  flex-flow: row wrap;
+  color: rgb(35, 39, 42);
+  justify-content: center;
+  margin-top: 16px;
 }
 
 .info-card {
-    width: 300px;
-    text-align: center;
-    margin: 0 32px;
+  width: 300px;
+  text-align: center;
+  margin: 0 32px;
 }
 
 .card-description {
-    text-align: left;
+  text-align: left;
 }
 
-.about-container > h2{
-    color: white;
-    text-align: center;
-    margin-top: 64px;
+.about-container > h2 {
+  color: rgb(35, 39, 42);
+  text-align: center;
+  margin-top: 64px;
 }
 
 .about-container {
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  margin: 0 auto;
 }
 
 .dev-info-container {
-    display: flex;
-    margin: 32px 0;
+  display: flex;
+  margin: 32px 0;
 }
 
 .dev-image {
-    width: 200px;
-    height: 200px;
-    background-color: white;
-    border-radius: 4px;
+  width: 200px;
+  height: 200px;
+  background-color: rgb(223, 223, 223);
+  border-radius: 4px;
 }
 
 .dev-about-content {
-    margin-left: 32px;
-    max-width: 75%;
-    color: white;
+  margin-left: 32px;
+  max-width: 75%;
+  color: rgb(35, 39, 42);
 }
 
 .about-links-container {
-    font-size: 14px;
-    margin-left: 16px;
-    color: #8e9297;
+  font-size: 14px;
+  margin-left: 16px;
+  color: #8e9297;
 }
 
 .about-link {
-    text-decoration: none;
-    color: #8e9297;
+  text-decoration: none;
+  color: #8e9297;
 }
 
 .dev-about-content > h3 {
-    margin: 0 0 16px;
-    display: inline-block;
+  margin: 0 0 16px;
+  display: inline-block;
 }
