@@ -34,7 +34,7 @@
 .auth-page-hero-container {
   display: flex;
   border-radius: 8px;
-  min-height: 200px;
+  min-height: 410px;
   margin: 16px 16px 32px 16px;
 }
 
@@ -59,6 +59,10 @@
   background-color: white;
   border-radius: 8px;
   margin: 16px auto;
+}
+
+.search-container:focus {
+  border: 1px solid #00b0f4;
 }
 
 .hero-search-bar {

@@ -70,7 +70,7 @@ const LoginForm = () => {
                 </button>
                 <div className="login-demo-buttons">
                   <button className="demo-btn" style={{marginRight: "5px"}} onClick={() => LoginDemo()}>
-                    Demo
+                    Demo 1
                   </button>
                   <button className="demo-btn" style={{marginLeft: "5px"}} onClick={() => LoginDemo(2)}>
                     Demo 2

@@ -84,7 +84,7 @@
 .login-demo-buttons {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding-bottom: 10px;
 }
 
 .login-btn {
