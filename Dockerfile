@@ -4,7 +4,7 @@ WORKDIR /react-app
 COPY react-app/. .
 
 # You have to set this because it should be set during build time.
-ENV REACT_APP_BASE_URL=https://dashboard.heroku.com/apps/harmony-app-aa
+ENV REACT_APP_BASE_URL=https://harmony-app-aa.herokuapp.com
 
 # Build our React App
 RUN npm install
