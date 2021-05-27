@@ -4,23 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import "./UsersBar.css";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#36393f",
-    border: "none",
-    padding: "0",
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-  },
-};
-
 function UsersBar() {
   const user = useSelector((state) => state.session.user);
   const history = useHistory();

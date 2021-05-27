@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import Modal from "react-modal";
 import "./ChannelsBar.css";
@@ -35,7 +35,6 @@ const ChannelsBar = ({ server }) => {
   const channels = server.channels;
   const history = useHistory();
   const location = useLocation();
-  const dispatch = useDispatch();
   const [activeChannel, setActiveChannel] = useState(null);
   const [showServerSettings, setShowServerSettings] = useState(false);
   const [showChannelSettings, setShowChannelSettings] = useState(false);
@@ -86,7 +85,6 @@ const ChannelsBar = ({ server }) => {
       const firstActive = channels.find(
         (channel) => channel.id === Number(channelId)
       );
-      console.log(firstActive);
       setActiveChannel(firstActive);
     }
   }, [channels, location]);
@@ -227,9 +225,8 @@ const ChannelsBar = ({ server }) => {
       <div className="channels-bar">
         {channels.map((channel) => {
           return (
-            <>
+            <React.Fragment key={`channel-${channel.id}`}>
               <div
-                key={`channel-${channel.id}`}
                 className={`channel${
                   activeChannel === channel ? " active-channel" : ""
                 }`}
@@ -303,7 +300,7 @@ const ChannelsBar = ({ server }) => {
                   </div>
                 </div>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>

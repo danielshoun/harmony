@@ -21,7 +21,7 @@ const LoginForm = () => {
   const LoginDemo = async (num) => {
     setEmail(`demo${num || ""}@aa.io`);
     setPassword("password");
-    const data = await dispatch(login(email, password));
+    await dispatch(login(email, password));
   };
   const updateEmail = (e) => {
     setEmail(e.target.value);
