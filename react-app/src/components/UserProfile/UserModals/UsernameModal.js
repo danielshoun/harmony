@@ -1,7 +1,21 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../../store/session";
 
-function UsernameModal() {
+function UsernameModal(onClose) {
   const [username, setUsername] = useState("");
+  const user = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+
+  function handleUsername() {
+    const updatedUser = {
+      username,
+      email: user.email,
+      image_url: user.image_url,
+    };
+    dispatch(updateUser(updatedUser));
+    onClose.onClose();
+  }
 
   return (
     <>
@@ -16,7 +30,9 @@ function UsernameModal() {
         value={username}
       ></input>
       <div className="submit-div">
-        <button className="submit-edit-btn">Done</button>
+        <button onClick={() => handleUsername()} className="submit-edit-btn">
+          Done
+        </button>
       </div>
     </>
   );

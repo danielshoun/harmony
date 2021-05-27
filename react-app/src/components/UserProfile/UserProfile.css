@@ -38,9 +38,10 @@
 }
 
 .user-prof-pic {
-  height: 80px;
-  width: auto;
-  border-radius: 50%;
+  height: inherit;
+  width: inherit;
+  border-radius: inherit;
+  overflow: hidden;
 }
 .overlay {
   position: absolute;
