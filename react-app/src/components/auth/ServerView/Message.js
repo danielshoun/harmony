@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector} from "react-redux";
 
-const Message = ({message, messages, i}) => {
+const Message = ({message, messages, i, editMessage, deleteMessage}) => {
     const user = useSelector((state) => state.session.user);
     const [showingOptions, setShowingOptions] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -28,9 +28,18 @@ const Message = ({message, messages, i}) => {
     }
 
     const handleShowOptions = () => {
-        if(message.sender.id === user.id) {
+        if (message.sender.id === user.id) {
             setShowingOptions(true);
         }
+    }
+
+    const handleEdit = () => {
+        editMessage(message.id, editText);
+        setIsEditing(false);
+    }
+
+    const handleDelete = () => {
+        deleteMessage(message.id);
     }
 
     if (i === 0 || message.sender.id !== messages[i - 1].sender.id) {
@@ -60,8 +69,10 @@ const Message = ({message, messages, i}) => {
                     <div className="message-body">
                         {isEditing ?
                             <input
+                                className='message-edit-input'
                                 value={editText}
                                 onChange={(e) => setEditText(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' ? handleEdit() : null}
                             /> :
                             `${message.body}`}
                     </div>
@@ -71,7 +82,10 @@ const Message = ({message, messages, i}) => {
                         className="fas fa-pencil-alt message-edit-icon"
                         onClick={() => setIsEditing(true)}
                     />
-                    <i className="far fa-trash-alt message-delete-icon"/>
+                    <i
+                        className="far fa-trash-alt message-delete-icon"
+                        onClick={() => handleDelete()}
+                    />
                 </div>
             </div>
         );
@@ -83,13 +97,17 @@ const Message = ({message, messages, i}) => {
             onMouseLeave={() => setShowingOptions(false)}
         >
             <div className="message-image-container">
-                <div className="profile-pic" />
+                <div className="profile-pic"/>
             </div>
             <div className="message-text-container">
                 <div className="message-body">
                     {isEditing ?
-                        <input>
-                        </input> :
+                        <input
+                            className='message-edit-input'
+                            value={editText}
+                            onChange={(e) => setEditText(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' ? handleEdit() : null}
+                        /> :
                         `${message.body}`}
                 </div>
             </div>
@@ -98,7 +116,10 @@ const Message = ({message, messages, i}) => {
                     className="fas fa-pencil-alt message-edit-icon"
                     onClick={() => setIsEditing(true)}
                 />
-                <i className="far fa-trash-alt message-delete-icon"/>
+                <i
+                    className="far fa-trash-alt message-delete-icon"
+                    onClick={() => handleDelete()}
+                />
             </div>
         </div>
     );
