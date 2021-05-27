@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import WelcomePage from "./components/WelcomePage";
 import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm/SignUpForm";
@@ -14,12 +14,10 @@ import ServerView from "./components/auth/ServerView";
 import Invitation from "./components/auth/Invitation";
 import ServerBaseRedirect from "./components/auth/ServerView/ServerBaseRedirect";
 import {fetchMemberServers} from "./store/Servers";
-import CreateServer from "./components/auth/CreateServer";
 import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
 import UsersBar from "./components/auth/ServerView/UsersBar";
 
 function App() {
-  const user = useSelector((state) => state.session.user);
   const [userLoaded, setUserLoaded] = useState(false);
   const [serversLoaded, setServersLoaded] = useState(false);
   const dispatch = useDispatch();

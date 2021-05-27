@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateChannel } from "../../store/Servers";
 import "./CreateChannel.css";
 
 function EditChannel({ server, closeModal }) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { channelId } = useParams();
   const channel = server.channels.find(
     (channel) => channel.id === Number(channelId)

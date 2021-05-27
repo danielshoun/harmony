@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { updateUser } from "../../../store/session";
 
 import "./ProfilePicModal.css";
 
 function ProfilePicModal(onClose) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [profileUrl, setProfileUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const user = useSelector((state) => state.session.user);
@@ -29,7 +27,6 @@ function ProfilePicModal(onClose) {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    console.log(profileUrl);
     const newUser = {
       username: user.username,
       email: user.email,

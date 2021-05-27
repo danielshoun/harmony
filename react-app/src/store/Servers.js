@@ -60,11 +60,9 @@ export const fetchMemberServers = () => async (dispatch) => {
   const res2 = await fetch("/api/servers/");
   const res = await fetch("/api/servers/member");
 
-  // console.log(res.ok)
   if (res.ok) {
     const servers = await res.json();
     const allServers = await res2.json();
-    // console.log(servers)
     dispatch(getServers(servers, allServers));
   }
 };
@@ -168,7 +166,6 @@ export const serverJoin = (serverId) => async (dispatch) => {
 
   if (res.ok) {
     const server = await res.json();
-    console.log(server);
     dispatch(joinServer(server));
   }
 };
@@ -188,11 +185,19 @@ const initalState = { userServers: [], allServers: [] };
 
 export default function reducer(state = initalState, action) {
   switch (action.type) {
-    case GET_SERVERS:
-      return {
+    case GET_SERVERS: {
+      const newState = {
         userServers: action.servers.sort((a, b) => a.id - b.id),
         allServers: action.allServers.sort((a, b) => a.id - b.id),
       };
+      newState.userServers.map((server) =>
+        server.channels.sort((a, b) => a.id - b.id)
+      );
+      newState.allServers.map((server) =>
+      server.channels.sort((a, b) => a.id - b.id)
+    );
+      return newState;
+    }
     case ADD_SERVER: {
       const userServers = [...state.userServers, action.server];
       const allServers = [...state.allServers, action.server];
@@ -254,13 +259,8 @@ export default function reducer(state = initalState, action) {
       const userServersIndex = state.userServers.findIndex(
         (server) => server.id === action.channel.server_id
       );
-      const allServersIndex = state.allServers.findIndex(
-        (server) => server.id === action.channel.server_id
-      );
       const userServer = newState.userServers[userServersIndex];
       userServer.channels.push(action.channel);
-      const allServer = newState.allServers[allServersIndex];
-      // allServer.channels.push(action.channel);
       return newState;
     case EDIT_CHANNEL: {
       const newState = {
@@ -270,19 +270,21 @@ export default function reducer(state = initalState, action) {
       const userServersIndex = newState.userServers.findIndex(
         (server) => server.id === action.channel.server_id
       );
-      const allServersIndex = newState.allServers.findIndex(
-        (server) => server.id === action.channel.server_id
-      );
+      // const allServersIndex = newState.allServers.findIndex(
+      //   (server) => server.id === action.channel.server_id
+      // );
       const userServer = newState.userServers[userServersIndex];
       const userServerChannelIndex = userServer.channels.findIndex(
         (channel) => channel.id === action.channel.id
       );
       userServer.channels[userServerChannelIndex] = action.channel;
-      const allServer = newState.allServers[allServersIndex];
-      const allServerChannelIndex = allServer.channels.findIndex(
-        (channel) => channel.id === action.channel.id
-      );
-      allServer.channels[allServerChannelIndex] = action.channel;
+      userServer.channels.sort((a, b) => a.id - b.id);
+      // const allServer = newState.allServers[allServersIndex];
+      // const allServerChannelIndex = allServer.channels.findIndex(
+      //   (channel) => channel.id === action.channel.id
+      // );
+      // allServer.channels[allServerChannelIndex] = action.channel;
+      // allServer.channels.sort((a, b) => a.id - b.id);
 
       return newState;
     }

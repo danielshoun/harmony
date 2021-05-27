@@ -97,7 +97,7 @@ function ChatContainer({ server }) {
   }
 
   async function handleDm(memberId){
-    const res = await fetch(`/api/dms/`, {
+    await fetch(`/api/dms/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -171,6 +171,7 @@ function ChatContainer({ server }) {
                     <div
                       className="member-info"
                       onClick={()=> member.id === user.id ? null : handleDm(member.id)}
+                      key={`member-${member.id}`}
                     >
                       <div className="profile-pic">
                         <img
