@@ -68,11 +68,23 @@
   color: #00b0f4;
   opacity: 0.8;
   transition: opacity 0.2s ease;
+  padding-bottom: 6px;
 }
 
 .login-page-redirect:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-demo-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
 }
 
 .login-btn {
@@ -104,6 +116,7 @@
   background-color: rgb(59, 165, 92);
   opacity: 0.8;
   transition: opacity 0.2s ease;
+  flex: 1 1 auto;
 }
 
 .demo-btn:hover {
