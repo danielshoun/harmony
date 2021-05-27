@@ -16,7 +16,7 @@ const WelcomePage = () => {
     const data = await dispatch(login("demo2@aa.io", "password"));
   }
   return (
-    <>
+    <div className="welcome-page-container">
       <div className="welcome-header">
         <div className="background-image">
           <img
@@ -217,7 +217,7 @@ const WelcomePage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

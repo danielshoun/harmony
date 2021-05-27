@@ -1,3 +1,6 @@
+.welcome-page-container {
+  background-color: white;
+}
 .welcome-header {
   background-color: #305ae4;
   color: white;
@@ -108,7 +111,7 @@
 .info-container {
   display: flex;
   flex-flow: row wrap;
-  color: white;
+  color: rgb(35, 39, 42);
   justify-content: center;
   margin-top: 16px;
 }
@@ -124,7 +127,7 @@
 }
 
 .about-container > h2 {
-  color: white;
+  color: rgb(35, 39, 42);
   text-align: center;
   margin-top: 64px;
 }
@@ -144,14 +147,14 @@
 .dev-image {
   width: 200px;
   height: 200px;
-  background-color: white;
+  background-color: rgb(223, 223, 223);
   border-radius: 4px;
 }
 
 .dev-about-content {
   margin-left: 32px;
   max-width: 75%;
-  color: white;
+  color: rgb(35, 39, 42);
 }
 
 .about-links-container {
