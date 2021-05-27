@@ -130,4 +130,3 @@ def on_leave(data):
     else:
         room = str(f'channel_{data["channel_id"]}')
     leave_room(room)
-    send('test leave')

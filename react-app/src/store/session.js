@@ -1,6 +1,9 @@
+import { io } from "socket.io-client";
+
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+let socket;
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -12,6 +15,7 @@ const removeUser = () => ({
 });
 
 const initialState = { user: null };
+
 
 export const updateUser = (updatedUser) => async (dispatch) => {
   const { username, email, image_url } = updatedUser;
@@ -26,6 +30,7 @@ export const updateUser = (updatedUser) => async (dispatch) => {
 
   if (response.ok) {
     const newUser = await response.json();
+    newUser.socket = socket;
     dispatch(setUser(newUser));
   }
 };
@@ -40,6 +45,10 @@ export const authenticate = () => async (dispatch) => {
   if (data.errors) {
     return;
   }
+
+
+  socket = io();
+  data.socket = socket;
 
   dispatch(setUser(data));
 };
@@ -60,11 +69,15 @@ export const login = (email, password) => async (dispatch) => {
     return data;
   }
 
+  socket = io();
+  data.socket = socket;
+
   dispatch(setUser(data));
   return {};
 };
 
 export const logout = () => async (dispatch) => {
+  socket.disconnect()
   const response = await fetch("/api/auth/logout", {
     headers: {
       "Content-Type": "application/json",
@@ -91,6 +104,9 @@ export const signUp = (username, email, password) => async (dispatch) => {
   if (data.errors) {
     return data;
   }
+
+  socket = io();
+  data.socket = socket;
 
   dispatch(setUser(data));
   return {};
