@@ -190,18 +190,10 @@ const ChannelsBar = ({ server }) => {
                   >
                     <div>Delete Server</div>
                     <div className="menu-item-icon">
-                      <svg
-                        className="icon-LYJorE"
-                        aria-hidden="false"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z"
-                        ></path>
-                      </svg>
+                      <i
+                        class="far fa-trash-alt message-delete-icon"
+                        aria-hidden="true"
+                      ></i>
                     </div>
                   </div>
                 ) : (
@@ -273,7 +265,7 @@ const ChannelsBar = ({ server }) => {
                     style={{ top: `${yOffset}px` }}
                   >
                     <div className="server-settings">
-                      <div className="server-settings-menu">
+                      <div className="server-settings-menu channel-settings-menu">
                         <div
                           className="server-settings-menu-item"
                           onClick={() => openModal("edit-channel")}
@@ -299,18 +291,10 @@ const ChannelsBar = ({ server }) => {
                         >
                           <div>Delete Channel</div>
                           <div class="menu-item-icon">
-                            <svg
-                              className="icon-LYJorE"
-                              aria-hidden="false"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z"
-                              ></path>
-                            </svg>
+                            <i
+                              class="far fa-trash-alt message-delete-icon"
+                              aria-hidden="true"
+                            ></i>
                           </div>
                         </div>
                       </div>
@@ -351,6 +335,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "invite"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <InviteServer server={server} closeModal={closeModal} />
       </Modal>
@@ -358,6 +343,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "leave"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <LeaveServer server={server} closeModal={closeModal} />
       </Modal>
@@ -365,6 +351,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "channel"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <CreateChannel server={server} closeModal={closeModal} />
       </Modal>
@@ -372,6 +359,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "delete"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <DeleteServer server={server} closeModal={closeModal} />
       </Modal>
@@ -379,6 +367,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "edit"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <EditServer server={server} closeModal={closeModal} />
       </Modal>
@@ -386,6 +375,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "edit-channel"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <EditChannel server={server} closeModal={closeModal} />
       </Modal>
@@ -393,6 +383,7 @@ const ChannelsBar = ({ server }) => {
         isOpen={modalIsOpen === "delete-channel"}
         onRequestClose={closeModal}
         style={customStyles}
+        closeTimeoutMS={120}
       >
         <DeleteChannel server={server} closeModal={closeModal} />
       </Modal>
