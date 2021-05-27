@@ -16,6 +16,7 @@ import ServerBaseRedirect from "./components/auth/ServerView/ServerBaseRedirect"
 import {fetchMemberServers} from "./store/Servers";
 import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
 import UsersBar from "./components/auth/ServerView/UsersBar";
+import MainContentWrapper from "./components/MainContentWrapper";
 
 function App() {
   const [userLoaded, setUserLoaded] = useState(false);
@@ -51,7 +52,10 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <div className="main-content">
+        <ProtectedRoute path="">
+          <MainContentWrapper />
+        </ProtectedRoute>
+        {/* <div className="main-content">
           <ProtectedRoute path="/">
             <SideBar />
           </ProtectedRoute>
@@ -79,7 +83,7 @@ function App() {
           <ProtectedRoute path="/servers/:serverId">
             <ServerBaseRedirect />
           </ProtectedRoute>
-        </div>
+        </div> */}
       </Switch>
     </BrowserRouter>
   );
