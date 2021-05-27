@@ -6,9 +6,10 @@ import "./ProfilePicModal.css";
 
 function ProfilePicModal(onClose) {
   const dispatch = useDispatch();
-  const [profileUrl, setProfileUrl] = useState("");
-  const [imageLoading, setImageLoading] = useState(false);
   const user = useSelector((state) => state.session.user);
+  const [profileUrl, setProfileUrl] = useState(user.image_url);
+  const [imageLoading, setImageLoading] = useState(false);
+  const [errors, setErrors] = useState("");
 
   const uploadImage = async (e) => {
     const formData = new FormData();
@@ -28,12 +29,17 @@ function ProfilePicModal(onClose) {
   const handleCreate = async (e) => {
     e.preventDefault();
     const newUser = {
+      type: "image",
       username: user.username,
       email: user.email,
       image_url: profileUrl,
     };
-    dispatch(updateUser(newUser));
-    onClose.onClose();
+    const data = await dispatch(updateUser(newUser));
+    if (data.errors) {
+      setErrors(data.errors);
+    } else {
+      onClose.onClose();
+    }
   };
 
   return (
@@ -68,6 +74,10 @@ function ProfilePicModal(onClose) {
         >
           {imageLoading ? "Uploading..." : "Done"}
         </button>
+        <div onClick={() => onClose.onClose()} className="cancel-btn">
+          Cancel
+        </div>
+        {errors && <div className="user-edit-errors">{errors}</div>}
       </div>
     </>
   );

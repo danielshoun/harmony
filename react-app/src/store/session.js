@@ -14,19 +14,22 @@ const removeUser = () => ({
 const initialState = { user: null };
 
 export const updateUser = (updatedUser) => async (dispatch) => {
-  const { username, email, image_url } = updatedUser;
+  const { type, username, email, image_url } = updatedUser;
 
   const response = await fetch("/api/users/", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username, email, image_url }),
+    body: JSON.stringify({ username, email, image_url, type }),
   });
 
-  if (response.ok) {
-    const newUser = await response.json();
+  const newUser = await response.json();
+  if (newUser.errors) {
+    return newUser;
+  } else {
     dispatch(setUser(newUser));
+    return newUser;
   }
 };
 

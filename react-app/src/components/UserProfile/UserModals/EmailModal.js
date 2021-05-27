@@ -4,18 +4,25 @@ import { updateUser } from "../../../store/session";
 
 function EmailModal(onClose) {
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
-  function handleEmail() {
+  async function handleEmail() {
     const updatedUser = {
+      type: "email",
       username: user.username,
       email,
       image_url: user.image_url,
     };
 
-    dispatch(updateUser(updatedUser));
-    onClose.onClose();
+    const data = await dispatch(updateUser(updatedUser));
+
+    if (data.errors) {
+      setErrors(data.errors);
+    } else {
+      onClose.onClose();
+    }
   }
   return (
     <>
@@ -29,10 +36,14 @@ function EmailModal(onClose) {
         onChange={(e) => setEmail(e.target.value)}
         value={email}
       ></input>
-      <div className="submit-div">
+      <div className="submit-div large-edit">
         <button onClick={() => handleEmail()} className="submit-edit-btn">
           Done
         </button>
+        <div onClick={() => onClose.onClose()} className="cancel-btn">
+          Cancel
+        </div>
+        {errors && <div className="user-edit-errors">{errors}</div>}
       </div>
     </>
   );

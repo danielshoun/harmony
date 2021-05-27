@@ -3,20 +3,8 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
-import os
-from random import choice
 
 auth_routes = Blueprint('auth', __name__)
-
-DEFAULT_IMAGES = [
-    'default-blue.png',
-    'default-gray.png',
-    'default-green.png',
-    'default-red.png',
-    'default-yellow.png'
-]
-BUCKET_NAME = os.environ.get("S3_BUCKET")
-S3_LOCATION = f"http://{BUCKET_NAME}.s3.amazonaws.com"
 
 
 def validation_errors_to_error_messages(validation_errors):
@@ -78,8 +66,7 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password'],
-            image_url=f'{S3_LOCATION}/{choice(DEFAULT_IMAGES)}'
+            password=form.data['password']
         )
         db.session.add(user)
         db.session.commit()
