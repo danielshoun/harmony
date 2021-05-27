@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { io } from "socket.io-client";
 import "./PrivateDmContainer.css";
+import createSocketUseEffect from "../../../utils/createSocketUseEffect";
 import Message from "./Message";
-
-let socket;
 
 function PrivateDmContainer() {
   const { recipientId } = useParams();
   const user = useSelector((state) => state.session.user);
+  const socket = user.socket;
   const [messages, setMessages] = useState([]);
-  // const [joinedRoom, setjoinedRoom] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [chatInput, setChatInput] = useState("");
-  const [loaded, setLoaded] = useState(false);
   const messageContainerRef = useRef(null);
   const [initialMessages, setInitialMessages] = useState(true);
   const [otherUser, setOtherUser] = useState('')
@@ -50,44 +47,20 @@ function PrivateDmContainer() {
         }
 
         setConversations(convo);
-        setLoaded(true);
       }
     }
     fetchDMs();
   }, [recipientId, user.id]);
 
-
-  useEffect(() => {
-    socket = io();
-
-    if (loaded) {
-      socket.emit("join", {
-        type: "private",
-        conversation_id: conversations[0] ? conversations[0].id : "",
-        recipient_id: recipientId,
-      });
-
-      // setjoinedRoom(true);
-
-      socket.on("message", (chat) => {
-        setMessages((messages) => [...messages, chat]);
-      });
-
-      socket.on("private_edit", (newMessage) => {
-        const messageIdx = messages.findIndex(message => message.id === newMessage.id);
-        setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
-      })
-
-      socket.on("private_delete", ({messageId}) => {
-        const messageIdx = messages.findIndex(message => message.id === messageId);
-        setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
-      })
-
-      return () => {
-        socket.disconnect();
-      };
-    }
-  }, [recipientId, conversations, loaded, messages]);
+  useEffect(createSocketUseEffect(
+      "private",
+      socket,
+      setMessages,
+      messages,
+      null,
+      conversations[0]?.id,
+      recipientId
+  ), [socket, conversations, recipientId, messages]);
 
 
   useEffect(() => {
@@ -120,13 +93,10 @@ function PrivateDmContainer() {
     const newMessage = {...messages[messageIdx]}
     newMessage.body = newBody
     socket.emit("private_edit", newMessage)
-    // setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
   }
 
   function deleteMessage(messageId) {
     socket.emit("private_delete", {id: messageId, conversation_id: conversations[0].id})
-    // const messageIdx = messages.findIndex(message => message.id === messageId);
-    // setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
   }
 
   return (
@@ -160,7 +130,6 @@ function PrivateDmContainer() {
               name=""
               id=""
               placeholder={`Message #${user.username}`}
-              // rows="1"
               contentEditable="true"
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}

@@ -115,6 +115,7 @@
   flex: 0 0 auto;
   height: auto;
   background-color: #2f3136;
+  overflow-x: hidden;
 }
 
 .members-group {

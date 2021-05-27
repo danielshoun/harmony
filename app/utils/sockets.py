@@ -113,7 +113,7 @@ def public_delete(data):
     message = PrivateMessage.query.get(data['id'])
     db.session.delete(message)
     db.session.commit()
-    emit("private_delete", {'messageId': data['id']}, to=f'conversation_{data["conversation_id"]}')
+    emit("private_delete", {'messageId': data['id']}, to=f'conversation_{message.conversation_id}')
 
 
 @socketio.on('connect')
@@ -130,4 +130,3 @@ def on_leave(data):
     else:
         room = str(f'channel_{data["channel_id"]}')
     leave_room(room)
-    send('test leave')

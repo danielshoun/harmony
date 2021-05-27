@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {useSelector} from "react-redux";
 
-const Message = ({message, messages, i, editMessage, deleteMessage}) => {
+const Message = ({message, messages, i}) => {
     const user = useSelector((state) => state.session.user);
+    const socket = user.socket;
     const [showingOptions, setShowingOptions] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(message.body);
+
     const messageDateObj = new Date(message.created_at + "Z");
     const today = new Date();
     let timeString;
@@ -31,16 +33,19 @@ const Message = ({message, messages, i, editMessage, deleteMessage}) => {
         if (message.sender.id === user.id) {
             setShowingOptions(true);
         }
-    }
+    };
 
     const handleEdit = () => {
-        editMessage(message.id, editText);
+        const messageIdx = messages.findIndex(searchMessage => searchMessage.id === message.id);
+        const newMessage = {...messages[messageIdx]};
+        newMessage.body = editText;
+        socket.emit(message.channel_id ? "public_edit" : "private_edit", newMessage);
         setIsEditing(false);
-    }
+    };
 
     const handleDelete = () => {
-        deleteMessage(message.id);
-    }
+        socket.emit(message.channel_id ? "public_delete" : "private_delete", {id: message.id});
+    };
 
     if (i === 0 || message.sender.id !== messages[i - 1].sender.id || messageDateObj - new Date(messages[i - 1].created_at + "Z") > 300000) {
         return (
@@ -69,15 +74,15 @@ const Message = ({message, messages, i, editMessage, deleteMessage}) => {
                     <div className="message-body">
                         {isEditing ?
                             <input
-                                className='message-edit-input'
+                                className="message-edit-input"
                                 value={editText}
                                 onChange={(e) => setEditText(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' ? handleEdit() : null}
+                                onKeyDown={(e) => e.key === "Enter" ? handleEdit() : null}
                             /> :
                             `${message.body}`}
                     </div>
                 </div>
-                <div className='options-container' hidden={!showingOptions}>
+                <div className="options-container" hidden={!showingOptions}>
                     <i
                         className="fas fa-pencil-alt message-edit-icon"
                         onClick={() => setIsEditing(true)}
@@ -103,15 +108,15 @@ const Message = ({message, messages, i, editMessage, deleteMessage}) => {
                 <div className="message-body">
                     {isEditing ?
                         <input
-                            className='message-edit-input'
+                            className="message-edit-input"
                             value={editText}
                             onChange={(e) => setEditText(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' ? handleEdit() : null}
+                            onKeyDown={(e) => e.key === "Enter" ? handleEdit() : null}
                         /> :
                         `${message.body}`}
                 </div>
             </div>
-            <div className='options-container' hidden={!showingOptions}>
+            <div className="options-container" hidden={!showingOptions}>
                 <i
                     className="fas fa-pencil-alt message-edit-icon"
                     onClick={() => setIsEditing(true)}
@@ -123,6 +128,6 @@ const Message = ({message, messages, i, editMessage, deleteMessage}) => {
             </div>
         </div>
     );
-}
+};
 
 export default Message;
