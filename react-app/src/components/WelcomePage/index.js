@@ -18,6 +18,9 @@ const WelcomePage = () => {
   return (
     <>
       <div className="welcome-header">
+        <div className="background-image">
+          <img src="https://discord.com/assets/7b01f72a2054561145b6dd04add417c0.svg" />
+        </div>
         <div className="welcome-content-container">
           <div className="logo-header">
             <i className="fas fa-peace header-logo" />

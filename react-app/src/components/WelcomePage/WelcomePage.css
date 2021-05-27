@@ -1,12 +1,29 @@
 .welcome-header {
-  background-color: #7289da;
+  background-color: #345fee;
   color: white;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
   height: 626px;
   margin: 0;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 35%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.background-image > img {
+  height: 400px;
+  margin-top: 226px;
+  z-index: 1;
 }
 
 .welcome-content-container > h1 {
