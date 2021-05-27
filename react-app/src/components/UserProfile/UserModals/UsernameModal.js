@@ -10,6 +10,7 @@ function UsernameModal(onClose) {
 
   async function handleUsername() {
     const updatedUser = {
+      type: "username",
       username,
       email: user.email,
       image_url: user.image_url,

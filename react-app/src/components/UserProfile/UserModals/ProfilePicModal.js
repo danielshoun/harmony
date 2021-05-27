@@ -6,10 +6,10 @@ import "./ProfilePicModal.css";
 
 function ProfilePicModal(onClose) {
   const dispatch = useDispatch();
-  const [profileUrl, setProfileUrl] = useState("");
+  const user = useSelector((state) => state.session.user);
+  const [profileUrl, setProfileUrl] = useState(user.image_url);
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState("");
-  const user = useSelector((state) => state.session.user);
 
   const uploadImage = async (e) => {
     const formData = new FormData();
@@ -29,6 +29,7 @@ function ProfilePicModal(onClose) {
   const handleCreate = async (e) => {
     e.preventDefault();
     const newUser = {
+      type: "image",
       username: user.username,
       email: user.email,
       image_url: profileUrl,

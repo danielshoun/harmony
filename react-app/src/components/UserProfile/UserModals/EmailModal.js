@@ -10,6 +10,7 @@ function EmailModal(onClose) {
 
   async function handleEmail() {
     const updatedUser = {
+      type: "email",
       username: user.username,
       email,
       image_url: user.image_url,
