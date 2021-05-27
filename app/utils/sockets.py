@@ -8,7 +8,8 @@ from app.models import ChannelMessage, db, Channel, PrivateMessage, Conversation
 
 if os.environ.get('FLASK_ENV') == 'production':
     origins = [
-        'placeholder'
+        'http://harmony-app-aa.herokuapp.com/',
+        'https://harmony-app-aa.herokuapp.com/'
     ]
 else:
     origins = '*'

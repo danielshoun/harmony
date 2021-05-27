@@ -4,7 +4,7 @@ import "./CreateChannel.css";
 function InviteServer({ server, closeModal }) {
     const [inviteLink] = useState(
         process.env.NODE_ENV === "production" ?
-            "REPLACE THIS WITH HEROKU LINK" :
+            `https://harmony-app-aa.herokuapp.com/invitation/${server.id}` :
             `http://localhost:3000/invitation/${server.id}`
     );
 
