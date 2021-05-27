@@ -123,6 +123,7 @@
 
 .member-info:hover {
   background-color: rgba(79, 84, 92, 0.16);
+  cursor: pointer;
 }
 
 .member-name {

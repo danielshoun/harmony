@@ -92,7 +92,7 @@ function ChatContainer({ server }) {
     // setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
   }
 
-  async function handelDm(memberId){
+  async function handleDm(memberId){
     const res = await fetch(`/api/dms/`, {
       method: "POST",
       headers: {
@@ -164,9 +164,9 @@ function ChatContainer({ server }) {
                 <span className="members-group">All</span>
                 <div className="member-container">
                   {server.members.map((member) => (
-                    <div 
+                    <div
                       className="member-info"
-                      onClick={()=> handelDm(member.id)}
+                      onClick={()=> member.id === user.id ? null : handleDm(member.id)}
                     >
                       <div className="profile-pic">
                         <img

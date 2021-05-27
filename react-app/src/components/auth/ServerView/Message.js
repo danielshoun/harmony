@@ -42,7 +42,8 @@ const Message = ({message, messages, i, editMessage, deleteMessage}) => {
         deleteMessage(message.id);
     }
 
-    if (i === 0 || message.sender.id !== messages[i - 1].sender.id) {
+    console.log(today - messageDateObj)
+    if (i === 0 || message.sender.id !== messages[i - 1].sender.id || messageDateObj - new Date(messages[i - 1].created_at + "Z") > 300000) {
         return (
             <div
                 className="message"

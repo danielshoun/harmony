@@ -42,7 +42,7 @@ function UsersBar() {
       }
     }
     fetchDMs();
-  }, []);
+  }, [user.id]);
 
   const handleActive = (activeUser) => {
     setactiveUser(activeUser);

@@ -65,12 +65,14 @@ def public_edit(data):
 
     emit("public_edit", message.to_dict(), to=f'channel_{message.channel_id}')
 
+
 @socketio.on("public_delete")
 def public_delete(data):
     message = ChannelMessage.query.get(data['id'])
     db.session.delete(message)
     db.session.commit()
     emit("public_delete", {'messageId': data['id']}, to=f'channel_{message.channel_id}')
+
 
 @socketio.on("private_chat")
 def private_chat(data):
@@ -93,6 +95,24 @@ def private_chat(data):
     db.session.commit()
 
     send(new_message.to_dict(), to=f'conversation_{data["conversation_id"]}')
+
+
+@socketio.on("private_edit")
+def public_edit(data):
+    message = PrivateMessage.query.get(data['id'])
+    message.body = data['body']
+    db.session.add(message)
+    db.session.commit()
+
+    emit("private_edit", message.to_dict(), to=f'conversation_{data["conversation_id"]}')
+
+
+@socketio.on("private_delete")
+def public_delete(data):
+    message = PrivateMessage.query.get(data['id'])
+    db.session.delete(message)
+    db.session.commit()
+    emit("private_delete", {'messageId': data['id']}, to=f'conversation_{data["conversation_id"]}')
 
 
 @socketio.on('connect')

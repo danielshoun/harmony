@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./PrivateDmContainer.css";
+import Message from "./Message";
 
 let socket;
 
@@ -50,7 +51,7 @@ function PrivateDmContainer() {
           if (convo[0].user_1.id === parseInt(recipientId)) setOtherUser(convo[0].user_1.username)
           else setOtherUser(convo[0].user_2.username)
         }
-          
+
         setConversations(convo);
         setLoaded(true);
         console.log(loaded);
@@ -82,11 +83,21 @@ function PrivateDmContainer() {
         setMessages((messages) => [...messages, chat]);
       });
 
+      socket.on("private_edit", (newMessage) => {
+        const messageIdx = messages.findIndex(message => message.id === newMessage.id);
+        setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
+      })
+
+      socket.on("private_delete", ({messageId}) => {
+        const messageIdx = messages.findIndex(message => message.id === messageId);
+        setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
+      })
+
       return () => {
         socket.disconnect();
       };
     }
-  }, [recipientId, conversations, loaded]);
+  }, [recipientId, conversations, loaded, messages]);
 
 
   useEffect(() => {
@@ -101,7 +112,7 @@ function PrivateDmContainer() {
       setInitialMessages(false);
     }
   }, [messageContainerRef, messages, initialMessages, user]);
-  
+
 
   function sendChat(e) {
     e.preventDefault();
@@ -112,6 +123,20 @@ function PrivateDmContainer() {
       body: chatInput,
     });
     setChatInput("");
+  }
+
+  function editMessage(messageId, newBody) {
+    const messageIdx = messages.findIndex(message => message.id === messageId);
+    const newMessage = {...messages[messageIdx]}
+    newMessage.body = newBody
+    socket.emit("private_edit", newMessage)
+    // setMessages(messages => [...messages.slice(0, messageIdx), newMessage, ...messages.slice(messageIdx + 1, messages.length)])
+  }
+
+  function deleteMessage(messageId) {
+    socket.emit("private_delete", {id: messageId, conversation_id: conversations[0].id})
+    // const messageIdx = messages.findIndex(message => message.id === messageId);
+    // setMessages(messages => [...messages.slice(0, messageIdx), ...messages.slice(messageIdx + 1, messages.length)])
   }
 
   return (
@@ -128,62 +153,17 @@ function PrivateDmContainer() {
         <div className="chat-messages-container">
           <div className="message-container" ref={messageContainerRef}>
             {messages.map((message, i) => {
-              const messageDateObj = new Date(message.created_at);
-              const today = new Date();
-              let timeString;
-              let hours = messageDateObj.getHours();
-              let minutes = messageDateObj.getMinutes();
-              let ampm = hours >= 12 ? "PM" : "AM";
-              hours = hours % 12;
-              hours = hours ? hours : 12;
-              minutes = minutes < 10 ? `0${minutes}` : minutes;
-              if (
-                messageDateObj.getDate() === today.getDate() &&
-                messageDateObj.getMonth() === today.getMonth() &&
-                messageDateObj.getFullYear() === today.getFullYear()
-              ) {
-                timeString = `${hours}:${minutes} ${ampm}`;
-              } else {
-                timeString = `${messageDateObj.getMonth() + 1}/${messageDateObj.getDate() + 1
-                  }/${messageDateObj.getFullYear()}, ${hours}:${minutes} ${ampm}`;
-              }
-
-              if (i === 0 || message.sender.id !== messages[i - 1].sender.id) {
-                return (
-                  <div className="message" key={i}>
-                    <div className="message-image-container">
-                      <div className="profile-pic">
-                        <img
-                          className="profile-pic"
-                          src={
-                            message.sender.image_url ||
-                            "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
-                          }
-                          alt={message.sender.username}
-                        />
-                      </div>
-                    </div>
-                    <div className="message-text-container">
-                      <div className="message-username">
-                        {`${message.sender.username}`}
-                        <span className="message-time">{timeString}</span>
-                      </div>
-                      <div className="message-body">{`${message.body}`}</div>
-                    </div>
-                  </div>
-                );
-              }
               return (
-                <div className="message subsequent-message" key={i}>
-                  <div className="message-image-container">
-                    <div className="profile-pic" />
-                  </div>
-                  <div className="message-text-container">
-                    <div className="message-body">{`${message.body}`}</div>
-                  </div>
-                </div>
-              );
-            })}
+                  <Message
+                      key={i}
+                      message={message}
+                      messages={messages}
+                      i={i}
+                      editMessage={editMessage}
+                      deleteMessage={deleteMessage}
+                  />
+              )
+              })}
           </div>
           <form action="" className="send-message-form" onSubmit={sendChat}>
             <input
