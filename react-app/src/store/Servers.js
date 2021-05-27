@@ -189,7 +189,10 @@ const initalState = { userServers: [], allServers: [] };
 export default function reducer(state = initalState, action) {
   switch (action.type) {
     case GET_SERVERS:
-      return { userServers: action.servers, allServers: action.allServers };
+      return {
+        userServers: action.servers.sort((a, b) => a.id - b.id),
+        allServers: action.allServers.sort((a, b) => a.id - b.id),
+      };
     case ADD_SERVER: {
       const userServers = [...state.userServers, action.server];
       const allServers = [...state.allServers, action.server];

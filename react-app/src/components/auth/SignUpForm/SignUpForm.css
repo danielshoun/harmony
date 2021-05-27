@@ -30,6 +30,7 @@
   background-color: #7289da;
   opacity: 0.8;
   transition: opacity 0.2s ease;
+  margin-bottom: 10px;
 }
 
 .signup-btn:hover {

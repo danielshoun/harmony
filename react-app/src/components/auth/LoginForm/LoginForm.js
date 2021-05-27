@@ -18,10 +18,10 @@ const LoginForm = () => {
       setErrors(data.errors);
     }
   };
-  const LoginDemo = async () => {
-    setEmail("demo@aa.io");
+  const LoginDemo = async (num) => {
+    setEmail(`demo${num || ""}@aa.io`);
     setPassword("password");
-    const data = await dispatch(login("demo@aa.io", "password"));
+    const data = await dispatch(login(email, password));
   };
   const updateEmail = (e) => {
     setEmail(e.target.value);
@@ -64,12 +64,19 @@ const LoginForm = () => {
                 onChange={updatePassword}
               />
 
-              <button className="login-btn" type="submit">
-                Login
-              </button>
-              <button className="demo-btn" onClick={() => LoginDemo()}>
-                Demo
-              </button>
+              <div className="login-buttons">
+                <button className="login-btn" type="submit">
+                  Login
+                </button>
+                <div className="login-demo-buttons">
+                  <button className="demo-btn" style={{marginRight: "5px"}} onClick={() => LoginDemo()}>
+                    Demo 1
+                  </button>
+                  <button className="demo-btn" style={{marginLeft: "5px"}} onClick={() => LoginDemo(2)}>
+                    Demo 2
+                  </button>
+                </div>
+              </div>
               <Link className="register-link" to="/sign-up">
                 <div className="login-page-redirect">
                   Don't have an account? Register now!
