@@ -1,5 +1,4 @@
 import React from "react";
-import { Switch } from "react-router-dom";
 import AuthPage from "./auth/AuthPage/AuthPage";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import UsersList from "./UsersList";

@@ -11,7 +11,7 @@ function PrivateDmContainer() {
   const { recipientId } = useParams();
   const user = useSelector((state) => state.session.user);
   const [messages, setMessages] = useState([]);
-  const [joinedRoom, setjoinedRoom] = useState(false);
+  // const [joinedRoom, setjoinedRoom] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const [loaded, setLoaded] = useState(false);
@@ -67,7 +67,7 @@ function PrivateDmContainer() {
         recipient_id: recipientId,
       });
 
-      setjoinedRoom(true);
+      // setjoinedRoom(true);
 
       socket.on("message", (chat) => {
         setMessages((messages) => [...messages, chat]);

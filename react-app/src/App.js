@@ -4,18 +4,9 @@ import { useDispatch } from "react-redux";
 import WelcomePage from "./components/WelcomePage";
 import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm/SignUpForm";
-import AuthPage from "./components/auth/AuthPage/AuthPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
-import User from "./components/UserProfile/UserProfile";
 import { authenticate } from "./store/session";
-import SideBar from "./components/auth/SideBar";
-import ServerView from "./components/auth/ServerView";
-import Invitation from "./components/auth/Invitation";
-import ServerBaseRedirect from "./components/auth/ServerView/ServerBaseRedirect";
 import {fetchMemberServers} from "./store/Servers";
-import PrivateDmContainer from "./components/auth/ServerView/PrivateDmContainer";
-import UsersBar from "./components/auth/ServerView/UsersBar";
 import MainContentWrapper from "./components/MainContentWrapper";
 
 function App() {

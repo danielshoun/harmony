@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./WelcomePage.css";
 import { login } from "../../store/session";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,9 +11,11 @@ const WelcomePage = () => {
 
   async function handleDemo() {
     const data = await dispatch(login("demo@aa.io", "password"));
+    return data
   }
   async function handleDemo2() {
     const data = await dispatch(login("demo2@aa.io", "password"));
+    return data
   }
   return (
     <div className="welcome-page-container">
@@ -22,14 +24,17 @@ const WelcomePage = () => {
           <img
             className="bg-1"
             src="https://discord.com/assets/7b01f72a2054561145b6dd04add417c0.svg"
+            alt='background1'
           />
           <img
             className="bg-3"
             src="https://discord.com/assets/1d9b04db64569bf18409a59a32ffd256.svg"
+            alt='background3'
           />
           <img
             className="bg-2"
             src="https://discord.com/assets/e92fcc9ab6e63c1a17e954af347a1f1d.svg"
+            alt='background2'
           />
         </div>
         <div className="welcome-content-container">
