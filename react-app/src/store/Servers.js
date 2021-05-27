@@ -257,7 +257,7 @@ export default function reducer(state = initalState, action) {
       const userServer = newState.userServers[userServersIndex];
       userServer.channels.push(action.channel);
       const allServer = newState.allServers[allServersIndex];
-      allServer.channels.push(action.channel);
+      // allServer.channels.push(action.channel);
       return newState;
     case EDIT_CHANNEL: {
       const newState = {
