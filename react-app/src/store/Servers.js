@@ -5,6 +5,8 @@ const JOIN_SERVER = "servers/JOIN_SERVER";
 const LEAVE_SERVER = "servers/LEAVE_SERVER";
 const EDIT_SERVER = "servers/EDIT_SERVER";
 const ADD_CHANNEL = "servers/ADD_CHANNEL";
+const EDIT_CHANNEL = "servers/EDIT_CHANNEL";
+const DELETE_CHANNEL = "servers/DELETE_CHANNEL";
 
 const getServers = (servers, allServers) => {
   return {
@@ -41,6 +43,16 @@ const editServer = (server) => ({
 
 const addChannel = (channel) => ({
   type: ADD_CHANNEL,
+  channel,
+});
+
+const editChannel = (channel) => ({
+  type: EDIT_CHANNEL,
+  channel,
+});
+
+const removeChannel = (channel) => ({
+  type: DELETE_CHANNEL,
   channel,
 });
 
@@ -121,6 +133,34 @@ export const createChannel = (channel) => async (dispatch) => {
   }
 };
 
+export const updateChannel = (channel) => async (dispatch) => {
+  const res = await fetch("/api/channels/", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      channel_id: channel.channel_id,
+      name: channel.name,
+      description: channel.description,
+    }),
+  });
+  if (res.ok) {
+    const channel = await res.json();
+    dispatch(editChannel(channel));
+    return channel;
+  }
+};
+
+export const deleteChannel = (channel) => async (dispatch) => {
+  const res = await fetch(`/api/channels/${channel.id}`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    dispatch(removeChannel(channel));
+  }
+};
+
 export const serverJoin = (serverId) => async (dispatch) => {
   const res = await fetch(`/api/servers/${serverId}/join`, {
     method: "POST",
@@ -189,23 +229,19 @@ export default function reducer(state = initalState, action) {
       return { userServers, allServers: [...state.allServers] };
     }
     case EDIT_SERVER: {
-      const userIndex = state.userServers.findIndex(
+      const newState = {
+        userServers: [...state.userServers],
+        allServers: [...state.allServers],
+      };
+      const userIndex = newState.userServers.findIndex(
         (server) => server.id === action.server.id
       );
-      const allIndex = state.allServers.findIndex(
+      const allIndex = newState.allServers.findIndex(
         (server) => server.id === action.server.id
       );
-      const userServers = [
-        ...state.userServers.slice(0, userIndex),
-        ...state.userServers.slice(userIndex + 1),
-      ];
-      const allServers = [
-        ...state.userServers.slice(0, allIndex),
-        ...state.userServers.slice(allIndex + 1),
-      ];
-      userServers.push(action.server);
-      allServers.push(action.server);
-      return { userServers, allServers };
+      newState.userServers[userIndex] = action.server;
+      newState.allServers[allIndex] = action.server;
+      return newState;
     }
     case ADD_CHANNEL:
       const newState = {
@@ -223,6 +259,60 @@ export default function reducer(state = initalState, action) {
       const allServer = newState.allServers[allServersIndex];
       allServer.channels.push(action.channel);
       return newState;
+    case EDIT_CHANNEL: {
+      const newState = {
+        userServers: [...state.userServers],
+        allServers: [...state.allServers],
+      };
+      const userServersIndex = newState.userServers.findIndex(
+        (server) => server.id === action.channel.server_id
+      );
+      const allServersIndex = newState.allServers.findIndex(
+        (server) => server.id === action.channel.server_id
+      );
+      const userServer = newState.userServers[userServersIndex];
+      const userServerChannelIndex = userServer.channels.findIndex(
+        (channel) => channel.id === action.channel.id
+      );
+      userServer.channels[userServerChannelIndex] = action.channel;
+      const allServer = newState.allServers[allServersIndex];
+      const allServerChannelIndex = allServer.channels.findIndex(
+        (channel) => channel.id === action.channel.id
+      );
+      allServer.channels[allServerChannelIndex] = action.channel;
+
+      return newState;
+    }
+    case DELETE_CHANNEL: {
+      const newState = {
+        userServers: [...state.userServers],
+        allServers: [...state.allServers],
+      };
+      const userServersIndex = newState.userServers.findIndex(
+        (server) => server.id === action.channel.server_id
+      );
+      const allServersIndex = newState.allServers.findIndex(
+        (server) => server.id === action.channel.server_id
+      );
+      const userServer = newState.userServers[userServersIndex];
+      const userServerChannelIndex = userServer.channels.findIndex(
+        (channel) => channel.id === action.channel.id
+      );
+      userServer.channels = [
+        ...userServer.channels.slice(0, userServerChannelIndex),
+        ...userServer.channels.slice(userServerChannelIndex + 1),
+      ];
+      const allServer = newState.allServers[allServersIndex];
+      const allServerChannelIndex = allServer.channels.findIndex(
+        (channel) => channel.id === action.channel.id
+      );
+      allServer.channels = [
+        ...allServer.channels.slice(0, allServerChannelIndex),
+        ...allServer.channels.slice(allServerChannelIndex + 1),
+      ];
+
+      return newState;
+    }
     default:
       return state;
   }

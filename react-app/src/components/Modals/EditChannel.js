@@ -1,25 +1,28 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createChannel } from "../../store/Servers";
+import { updateChannel } from "../../store/Servers";
 import "./CreateChannel.css";
 
 function EditChannel({ server, closeModal }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const { channelId } = useParams();
+  const channel = server.channels.find(
+    (channel) => channel.id === Number(channelId)
+  );
+  const [name, setName] = useState(channel.name);
+  const [description, setDescription] = useState(channel.description || "");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const channel = {
+    const edit_channel = {
+      channel_id: channel.id,
       name,
       description,
-      server_id: server.id,
     };
-    const new_channel = await dispatch(createChannel(channel));
+    dispatch(updateChannel(edit_channel));
     closeModal(e);
-    history.push(`/servers/${server.id}/${new_channel.id}`);
   };
 
   return (
@@ -48,7 +51,7 @@ function EditChannel({ server, closeModal }) {
         </div>
         <div className="create-channel-buttons">
           <button className="create-button" type="submit">
-            <div>Create Channel</div>
+            <div>Edit Channel</div>
           </button>
           <button className="cancel-button" onClick={closeModal}>
             Cancel
