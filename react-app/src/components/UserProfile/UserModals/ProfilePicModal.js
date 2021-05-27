@@ -74,6 +74,9 @@ function ProfilePicModal(onClose) {
         >
           {imageLoading ? "Uploading..." : "Done"}
         </button>
+        <div onClick={() => onClose.onClose()} className="cancel-btn">
+          Cancel
+        </div>
         {errors && <div className="user-edit-errors">{errors}</div>}
       </div>
     </>
