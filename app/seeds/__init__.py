@@ -4,6 +4,7 @@ from .servers import seed_servers, undo_servers
 from .channels import seed_channels, undo_channels
 from .channel_messages import seed_channel_messages, undo_channel_messages
 from .memberships import seed_memberships, undo_memberships
+from .conversation import seed_conversations, undo_conversations
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -19,6 +20,7 @@ def seed():
     seed_channels()
     seed_channel_messages()
     seed_memberships()
+    seed_conversations()
     # Add other seed functions here
 
 # Creates the `flask seed undo` command
@@ -31,4 +33,5 @@ def undo():
     undo_channels()
     undo_channel_messages()
     undo_memberships()
+    undo_conversations()
     # Add other undo functions here
