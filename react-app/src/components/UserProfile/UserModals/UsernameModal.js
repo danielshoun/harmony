@@ -4,17 +4,23 @@ import { updateUser } from "../../../store/session";
 
 function UsernameModal(onClose) {
   const [username, setUsername] = useState("");
+  const [errors, setErrors] = useState("");
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
-  function handleUsername() {
+  async function handleUsername() {
     const updatedUser = {
       username,
       email: user.email,
       image_url: user.image_url,
     };
-    dispatch(updateUser(updatedUser));
-    onClose.onClose();
+
+    const data = await dispatch(updateUser(updatedUser));
+    if (data.errors) {
+      setErrors(data.errors);
+    } else {
+      onClose.onClose();
+    }
   }
 
   return (
@@ -29,10 +35,11 @@ function UsernameModal(onClose) {
         onChange={(e) => setUsername(e.target.value)}
         value={username}
       ></input>
-      <div className="submit-div">
+      <div className="submit-div large-edit">
         <button onClick={() => handleUsername()} className="submit-edit-btn">
           Done
         </button>
+        {errors && <div className="user-edit-errors">{errors}</div>}
       </div>
     </>
   );

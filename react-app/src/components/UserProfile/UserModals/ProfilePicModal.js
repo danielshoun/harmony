@@ -8,6 +8,7 @@ function ProfilePicModal(onClose) {
   const dispatch = useDispatch();
   const [profileUrl, setProfileUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
+  const [errors, setErrors] = useState("");
   const user = useSelector((state) => state.session.user);
 
   const uploadImage = async (e) => {
@@ -32,8 +33,12 @@ function ProfilePicModal(onClose) {
       email: user.email,
       image_url: profileUrl,
     };
-    dispatch(updateUser(newUser));
-    onClose.onClose();
+    const data = await dispatch(updateUser(newUser));
+    if (data.errors) {
+      setErrors(data.errors);
+    } else {
+      onClose.onClose();
+    }
   };
 
   return (
@@ -68,6 +73,7 @@ function ProfilePicModal(onClose) {
         >
           {imageLoading ? "Uploading..." : "Done"}
         </button>
+        {errors && <div className="user-edit-errors">{errors}</div>}
       </div>
     </>
   );

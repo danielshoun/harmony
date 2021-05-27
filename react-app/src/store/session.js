@@ -24,9 +24,12 @@ export const updateUser = (updatedUser) => async (dispatch) => {
     body: JSON.stringify({ username, email, image_url }),
   });
 
-  if (response.ok) {
-    const newUser = await response.json();
+  const newUser = await response.json();
+  if (newUser.errors) {
+    return newUser;
+  } else {
     dispatch(setUser(newUser));
+    return newUser;
   }
 };
 
