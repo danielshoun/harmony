@@ -16,12 +16,12 @@ body {
   color: white;
   padding: 4px;
   border-radius: 8px;
-  opacity: 80%;
+  opacity: 0.8;
   transition: opacity 0.1s ease;
 }
 
 .button-primary:hover {
-  opacity: 100%;
+  opacity: 1;
 }
 
 .main-content {

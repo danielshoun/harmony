@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import WelcomePage from "./components/WelcomePage";
 import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm/SignUpForm";
@@ -10,6 +10,7 @@ import {fetchMemberServers} from "./store/Servers";
 import MainContentWrapper from "./components/MainContentWrapper";
 
 function App() {
+  const user = useSelector(state => state.session.user)
   const [userLoaded, setUserLoaded] = useState(false);
   const [serversLoaded, setServersLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -21,11 +22,14 @@ function App() {
     })();
   }, [dispatch]);
   useEffect(() => {
-    (async () => {
-      await dispatch(fetchMemberServers())
-      setServersLoaded(true);
-    })();
-  }, [dispatch])
+    if(user) {
+      (async () => {
+        await dispatch(fetchMemberServers())
+
+      })();
+    }
+    setServersLoaded(true);
+  }, [dispatch, user])
 
   if (!userLoaded || !serversLoaded) {
     return null;
