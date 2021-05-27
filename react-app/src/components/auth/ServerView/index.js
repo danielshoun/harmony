@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import ChannelsBar from "./ChannelsBar";
 import ChatContainer from "./ChatContainer";
@@ -9,14 +9,7 @@ const ServerView = () => {
   const { serverId } = useParams();
   const servers = useSelector((state) => state.servers.userServers);
   const server = servers.find((serv) => serv.id === parseInt(serverId));
-  const dispatch = useDispatch();
   const history = useHistory();
-
-  // useEffect(() => {
-  //   if (!servers) {
-  //     dispatch(fetchMemberServers());
-  //   }
-  // }, [dispatch]);
 
   if(!server) {
     history.push('/')

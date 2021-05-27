@@ -1,7 +1,6 @@
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
-// const UPDATE_USER = "session/UPDATE_USER";
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -72,7 +71,7 @@ export const logout = () => async (dispatch) => {
     },
   });
 
-  const data = await response.json();
+  await response.json();
   dispatch(removeUser());
 };
 
