@@ -215,6 +215,6 @@
 
 .channel-settings-container {
   position: absolute;
-  left: 82px;
-  top: 56px;
+  left: 320px;
+  z-index: 1000;
 }
