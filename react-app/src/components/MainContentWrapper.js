@@ -9,8 +9,7 @@ import Invitation from "./auth/Invitation";
 import ServerBaseRedirect from "./auth/ServerView/ServerBaseRedirect";
 import PrivateDmContainer from "./auth/ServerView/PrivateDmContainer";
 import UsersBar from "./auth/ServerView/UsersBar";
-import { Redirect, Route, Switch } from "react-router-dom";
-import NotFound from "./NotFound";
+import { Redirect, Switch } from "react-router-dom";
 
 const MainContentWrapper = () => {
   return (
