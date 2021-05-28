@@ -3,6 +3,10 @@ import { useHistory } from "react-router-dom";
 import "./WelcomePage.css";
 import { login } from "../../store/session";
 import { useSelector, useDispatch } from "react-redux";
+import danny from "./Headshots/danny.png";
+import kevin from "./Headshots/kevin.jpg";
+import elias from "./Headshots/elias.jpeg";
+import david from "./Headshots/david.jpg";
 
 const WelcomePage = () => {
   const user = useSelector((state) => state.session.user);
@@ -86,7 +90,7 @@ const WelcomePage = () => {
                 className="header-button header-button-large"
                 onClick={() => history.push("/")}
               >
-                Go To App
+                Launch Harmony
               </button>
             ) : (
               <div>
@@ -170,106 +174,129 @@ const WelcomePage = () => {
       <div className="about-container">
         <h2>Meet The Developers</h2>
         <div className="dev-info-container">
-          <div className="dev-image">Image Placeholder</div>
+          <img src={kevin} className="dev-image" />
           <div className="dev-about-content">
             <h3>Kevin Zheng</h3>
             <span className="about-links-container">
               (&nbsp;
-              <a href="/" className="about-link  left-link">
+              <a
+                href="https://github.com/jiezheng2020"
+                className="about-link  left-link"
+              >
                 Github
               </a>
               ,&nbsp;
-              <a href="/" className="about-link">
+              <a
+                href="https://www.linkedin.com/in/kevin-zheng-1387a7138"
+                className="about-link"
+              >
                 LinkedIn
               </a>
               &nbsp;)
             </span>
             <div className="dev-about-description">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum."
+              I graduated from Northwestern University in 2020 with a bachelors
+              in Mechanical Engineering. During my time there, I realized that
+              my passions didn't align with what I was learning. I was always
+              drawn to the design and problem solving aspect of MechE more so
+              than the theory behind it. I believe that the tech industry is the
+              future and can impact people's lives in ways the traditional
+              manufacturing industry cannot, and I hope to become someone that
+              can do that through software and technology.
             </div>
           </div>
         </div>
         <div className="dev-info-container">
-          <div className="dev-image">Image Placeholder</div>
+          <img src={david} className="dev-image" />
           <div className="dev-about-content">
             <h3>David Kim</h3>
             <span className="about-links-container">
               (&nbsp;
-              <a href="/" className="about-link  left-link">
+              <a
+                href="https://github.com/hye-kim"
+                className="about-link  left-link"
+              >
                 Github
               </a>
               ,&nbsp;
-              <a href="/" className="about-link">
+              <a
+                href="https://www.linkedin.com/in/hye-kim"
+                className="about-link"
+              >
                 LinkedIn
               </a>
               &nbsp;)
             </span>
             <div className="dev-about-description">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum."
+              I graduated from Northwestern University in 2019 with a degree in
+              Economics. After working in the finance industry for a year, I
+              realized that I wanted to pursue something that I was more
+              heartfelt about. As a hobby artist, I like making beautiful design
+              and channeling my inner creativity, and I felt that I could
+              channel these passions into my work. From sleek single-page apps
+              to interesting games, I enjoy making things that allow others to
+              feel joy and be inspired.
             </div>
           </div>
         </div>
         <div className="dev-info-container">
-          <div className="dev-image">Image Placeholder</div>
+          <img src={elias} className="dev-image" />
           <div className="dev-about-content">
             <h3>Elias Eichen</h3>
             <span className="about-links-container">
               (&nbsp;
-              <a href="/" className="about-link  left-link">
+              <a
+                href="https://github.com/EEichen"
+                className="about-link  left-link"
+              >
                 Github
               </a>
               ,&nbsp;
-              <a href="/" className="about-link">
+              <a
+                href="http://linkedin.com/in/elias-eichen-bb15a4198"
+                className="about-link"
+              >
                 LinkedIn
               </a>
               &nbsp;)
             </span>
             <div className="dev-about-description">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum."
+              I have always loved to build and solve problems. Programming
+              allows me to do both.
             </div>
           </div>
         </div>
         <div className="dev-info-container">
-          <div className="dev-image">Image Placeholder</div>
+          <img src={danny} className="dev-image" />
           <div className="dev-about-content">
             <h3>Danny Shoun</h3>
             <span className="about-links-container">
               (&nbsp;
-              <a href="/" className="about-link  left-link">
+              <a
+                href="https://github.com/danielshoun"
+                className="about-link  left-link"
+              >
                 Github
               </a>
               ,&nbsp;
-              <a href="/" className="about-link">
+              <a
+                href="https://www.linkedin.com/in/daniel-shoun/"
+                className="about-link"
+              >
                 LinkedIn
               </a>
               &nbsp;)
             </span>
             <div className="dev-about-description">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum."
+              I have always had a passion for innovation and creativity. I enjoy
+              doing anything and everything artistic, and I see software
+              development as a natural extension of that. I first began coding
+              as a hobby in elementary school when I learned how to make simple
+              modifications for my favorite video game. I received my bachelor's
+              degree in Biomedical Sciences from the University of South
+              Florida, where I did (now published) research in molecular
+              medicine. My dream is to one day combine what I have learned about
+              medicine in school with my technological skills.
             </div>
           </div>
         </div>
