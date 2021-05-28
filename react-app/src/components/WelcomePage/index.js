@@ -9,6 +9,8 @@ const WelcomePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  document.title = "Harmony"
+
   async function handleDemo() {
     const data = await dispatch(login("demo@aa.io", "password"));
     return data;
