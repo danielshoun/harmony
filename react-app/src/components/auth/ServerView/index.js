@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import { useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import ChannelsBar from "./ChannelsBar";
@@ -10,10 +10,16 @@ const ServerView = () => {
   const servers = useSelector((state) => state.servers.userServers);
   const server = servers.find((serv) => serv.id === parseInt(serverId));
   const history = useHistory();
+  const firstRender = useRef(true)
 
-  if(!server) {
-    history.push('/')
-  }
+  useEffect(() => {
+    if(!firstRender) {
+      if(!server) {
+        history.push('/')
+      }
+    }
+    firstRender.current = false;
+  }, [server, history])
 
   return (
     <div className="server-view">

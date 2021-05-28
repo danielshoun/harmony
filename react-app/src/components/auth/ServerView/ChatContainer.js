@@ -103,7 +103,6 @@ function ChatContainer({server}) {
                 </div>
                 {showMembers &&
                 <MembersList
-                    server={server}
                     onlineMembers={onlineMembers}
                     offlineMembers={offlineMembers}
                 />}

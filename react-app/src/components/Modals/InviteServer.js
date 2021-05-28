@@ -8,6 +8,10 @@ function InviteServer({ server, closeModal }) {
             `http://localhost:3000/invitation/${server.id}`
     );
 
+    function handleChange() {
+
+    }
+
     return (
         <div className="create-channel-container">
             <div className="create-channel-header">
@@ -19,6 +23,7 @@ function InviteServer({ server, closeModal }) {
                     type="text"
                     placeholder="new-channel"
                     value={inviteLink}
+                    onChange={handleChange}
                 />
             </div>
             <div className="create-channel-buttons">

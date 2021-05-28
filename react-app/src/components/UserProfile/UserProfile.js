@@ -49,7 +49,7 @@ function User() {
               ) : (
                 <div className="user-profile-icon">{user.username[0]}</div>
               )}
-              <div class="overlay">
+              <div className="overlay">
                 <div
                   onClick={() => {
                     setPicModal(true);

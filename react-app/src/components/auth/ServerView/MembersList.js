@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const MembersList = ({ server, onlineMembers, offlineMembers }) => {
+const MembersList = ({ onlineMembers, offlineMembers }) => {
   const user = useSelector((state) => state.session.user);
   const socket = user.socket;
   const history = useHistory();
@@ -101,12 +101,12 @@ const MembersList = ({ server, onlineMembers, offlineMembers }) => {
         <div>
           <span className="members-group">Online - {onlineMembers.length}</span>
           <div className="member-container">
-            {onlineMembers.map((member) => (
+            {onlineMembers.map((member, i) => (
               <div
                 className="member-info"
                 // onClick={() => member.id === user.id ? null : handleDm(member.id)}
                 onClick={() => openMessageMenu(member)}
-                key={`member-${member.id}`}
+                key={i}
               >
                 <div className="profile-pic">
                   <img
@@ -125,12 +125,12 @@ const MembersList = ({ server, onlineMembers, offlineMembers }) => {
         <div>
           <span className="members-group">Offline - {offlineMembers.length}</span>
           <div className="member-container">
-            {offlineMembers.map((member) => (
+            {offlineMembers.map((member, i) => (
                 <div
                     className="member-info"
                     // onClick={() => member.id === user.id ? null : handleDm(member.id)}
                     onClick={() => openMessageMenu(member)}
-                    key={`member-${member.id}`}
+                    key={i}
                 >
                   <div className="profile-pic">
                     <img

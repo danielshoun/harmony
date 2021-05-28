@@ -37,6 +37,7 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: flex-end;
+  position: relative;
 }
 
 .user-notification-ping {

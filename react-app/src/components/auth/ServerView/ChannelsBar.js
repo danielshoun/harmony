@@ -77,6 +77,12 @@ const ChannelsBar = ({ server }) => {
   }, [showChannelSettings]);
 
   useEffect(() => {
+      if(activeChannel) {
+          document.title = `${server.name} | ${activeChannel.name}`
+      }
+  }, [server, activeChannel])
+
+  useEffect(() => {
     if (
       !location.pathname.includes("create") &&
       location.pathname.includes("servers")
@@ -86,7 +92,7 @@ const ChannelsBar = ({ server }) => {
         (channel) => channel.id === Number(channelId)
       );
       setActiveChannel(firstActive);
-      document.title = `${server.name} | ${firstActive.name}`
+
     }
   }, [channels, location, server]);
 
@@ -132,7 +138,7 @@ const ChannelsBar = ({ server }) => {
                   onClick={() => openModal("invite")}
                 >
                   <div>Invite User</div>
-                  <div class="menu-item-icon">
+                  <div className="menu-item-icon">
                     <svg
                       aria-hidden="false"
                       width="24"
@@ -152,7 +158,7 @@ const ChannelsBar = ({ server }) => {
                     onClick={() => openModal("channel")}
                   >
                     <div>Create Channel</div>
-                    <div class="menu-item-icon">
+                    <div className="menu-item-icon">
                       <svg width="16" height="16" viewBox="0 0 24 24">
                         <path
                           fill="currentColor"
@@ -168,7 +174,7 @@ const ChannelsBar = ({ server }) => {
                     onClick={() => openModal("edit")}
                   >
                     <div>Edit Server</div>
-                    <div class="menu-item-icon">
+                    <div className="menu-item-icon">
                       <svg
                         aria-hidden="false"
                         width="24"
@@ -191,7 +197,7 @@ const ChannelsBar = ({ server }) => {
                     <div>Delete Server</div>
                     <div className="menu-item-icon">
                       <i
-                        class="far fa-trash-alt message-delete-icon"
+                        className="far fa-trash-alt message-delete-icon"
                         aria-hidden="true"
                       ></i>
                     </div>
@@ -270,7 +276,7 @@ const ChannelsBar = ({ server }) => {
                           onClick={() => openModal("edit-channel")}
                         >
                           <div>Edit Channel</div>
-                          <div class="menu-item-icon">
+                          <div className="menu-item-icon">
                             <svg
                               aria-hidden="false"
                               width="24"
@@ -289,9 +295,9 @@ const ChannelsBar = ({ server }) => {
                           onClick={() => openModal("delete-channel")}
                         >
                           <div>Delete Channel</div>
-                          <div class="menu-item-icon">
+                          <div className="menu-item-icon">
                             <i
-                              class="far fa-trash-alt message-delete-icon"
+                              className="far fa-trash-alt message-delete-icon"
                               aria-hidden="true"
                             ></i>
                           </div>
