@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from sqlalchemy import or_, and_
+from datetime import datetime
 
 from app.models import Server, db, Channel, User, PrivateMessage, Conversation
 
@@ -30,9 +31,20 @@ def create_conversation():
         and_(Conversation.user_2_id == current_user.id,
              Conversation.user_1_id == other_user_id))).all()
 
-    print('convo5', conversation)
+    # time = datetime.utcnow()
+
     if(len(conversation) > 0):
-        return {'message': 'already exists'}
+        # message = PrivateMessage(
+        #     body=data["body"],
+        #     sender_id=current_user.id,
+        #     recipient_id=data["memberId"],
+        #     created_at=time,
+        #     conversation_id=conversation[0].id
+        # )
+
+        # db.session.add(message)
+        # db.session.commit()
+        return {"conversationId": conversation[0].id}
 
     conversation = Conversation(
         user_1_id=current_user.id,
@@ -42,7 +54,18 @@ def create_conversation():
     db.session.add(conversation)
     db.session.commit()
 
-    return {'message': 'created new conversaiton'}
+    # message = PrivateMessage(
+    #     body=data["body"],
+    #     sender_id=current_user.id,
+    #     recipient_id=data["memberId"],
+    #     created_at=time,
+    #     conversation_id=conversation.id
+    # )
+
+    # db.session.add(message)
+    # db.session.commit()
+
+    return {"conversationId": conversation.id}
 
 
 @dm_routes.route('/<int:other_user_id>')
