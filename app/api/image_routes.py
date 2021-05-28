@@ -23,5 +23,4 @@ def add_image():
         return upload, 400
 
     url = upload['url']
-    print(url)
     return {'url': url}

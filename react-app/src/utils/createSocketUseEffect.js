@@ -1,5 +1,3 @@
-import {on} from "socket.io-client/build/on";
-
 const createSocketUseEffect = (
     type,
     socket,

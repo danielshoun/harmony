@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import "./AuthPage.css";
-import { serverJoin } from "../../../store/Servers";
+import ServerCard from "./ServerCard";
 
 const AuthPage = () => {
   const servers = useSelector((state) => state.servers);
-  const dispatch = useDispatch();
 
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -54,69 +53,15 @@ const AuthPage = () => {
       </div>
       <div className="auth-page-servers-container">
         {!showSearchResults &&
-          servers.allServers.map((server) => {
+          servers.allServers.map((server, i) => {
             return (
-              <div className="server-card" key={server.id}>
-                {server.pictureUrl ? (
-                  <img
-                    className="server-image"
-                    src={server.pictureUrl}
-                    alt={server.name}
-                  />
-                ) : (
-                  <div className="server-image">{server.name[0]}</div>
-                )}
-                <div className="server-name">{server.name}</div>
-                <div className="server-owner">{server.ownerName}</div>
-                <div className="server-count">
-                  {server.members.length} users
-                </div>
-                {servers.userServers
-                  .map((server) => server.id)
-                  .includes(server.id) ? (
-                  <div className="joined-text">Joined</div>
-                ) : (
-                  <button
-                    className="button-primary join-button"
-                    onClick={() => dispatch(serverJoin(server.id))}
-                  >
-                    Join
-                  </button>
-                )}
-              </div>
+              <ServerCard server={server} key={i}/>
             );
           })}
         {showSearchResults &&
-          searchResults.map((server) => {
+          searchResults.map((server, i) => {
             return (
-              <div className="server-card" key={server.id}>
-                {server.pictureUrl ? (
-                  <img
-                    className="server-image"
-                    src={server.pictureUrl}
-                    alt={server.name}
-                  />
-                ) : (
-                  <div className="server-image">{server.name[0]}</div>
-                )}
-                <div className="server-name">{server.name}</div>
-                <div className="server-owner">{server.ownerName}</div>
-                <div className="server-count">
-                  {server.members.length} users
-                </div>
-                {servers.userServers
-                  .map((server) => server.id)
-                  .includes(server.id) ? (
-                  <div className="joined-text">Joined</div>
-                ) : (
-                  <button
-                    className="button-primary join-button"
-                    onClick={() => dispatch(serverJoin(server.id))}
-                  >
-                    Join
-                  </button>
-                )}
-              </div>
+              <ServerCard server={server} key={i}/>
             );
           })}
       </div>

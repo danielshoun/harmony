@@ -29,7 +29,6 @@ export const fetchNewMessages = () => async (dispatch) => {
 
   if (res.ok) {
     const newMessages = await res.json();
-    console.log(newMessages);
 
     const notifications = {};
 
@@ -47,8 +46,6 @@ export const fetchNewMessages = () => async (dispatch) => {
 
 export const addNotification = (notification) => async (dispatch) => {
   const { recipient_id, sender_id, conversation_id } = notification;
-  console.log("this is the thunk notification");
-  console.log(notification);
   dispatch(
     newNotification({
       recipient_id: recipient_id,

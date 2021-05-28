@@ -26,7 +26,7 @@ function PrivateDmContainer() {
       }
     }
     fetchData();
-    
+
   }, [recipientId]);
 
   useEffect(() => {
@@ -155,7 +155,7 @@ function PrivateDmContainer() {
             <input
               name=""
               id=""
-              placeholder={`Message #${user.username}`}
+              placeholder={`Message @${otherUser}`}
               contentEditable="true"
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}

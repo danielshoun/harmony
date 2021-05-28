@@ -22,6 +22,7 @@ body {
 
 .button-primary:hover {
   opacity: 1;
+  cursor: pointer;
 }
 
 .main-content {

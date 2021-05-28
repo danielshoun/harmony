@@ -46,7 +46,6 @@ const MembersList = ({ server, onlineMembers, offlineMembers }) => {
       body: JSON.stringify({ memberId: activeMember.id }),
     });
     const conversationId = await res.json();
-    console.log(conversationId);
     socket.emit("private_chat", {
       sender_id: user.id,
       recipient_id: parseInt(activeMember.id),

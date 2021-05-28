@@ -31,26 +31,32 @@ const WelcomePage = () => {
           <img
             className="bg-10"
             src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"
+            alt='Header Banner Background Component'
           />
           <img
             className="bg-11"
             src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"
+            alt='Header Banner Background Component'
           />
           <img
             className="bg-6"
             src="https://discord.com/assets/690c2345bcaaaa50b71548231a26b696.svg"
+            alt='Header Banner Background Component'
           />
           <img
             className="bg-5"
             src="https://discord.com/assets/9c0629769616f9629689a0e68a2e57b7.svg"
+            alt='Header Banner Background Component'
           />
           <img
             className="bg-7"
             src="https://discord.com/assets/4bdac631250f5f9e8a4b928d5efa22c8.svg"
+            alt='Header Banner Background Component'
           />
           <img
             className="bg-8"
             src="https://discord.com/assets/94acf432b564660994742251c2a5f222.svg"
+            alt='Header Banner Background Component'
           />
           <img
             className="bg-3"
@@ -75,6 +81,7 @@ const WelcomePage = () => {
           <img
             className="bg-4"
             src="https://discord.com/assets/31fde13d3508b8ddb01cf817ad09c690.svg"
+            alt='Header Banner Background Component'
           />
         </div>
         <div className="welcome-content-container">
@@ -157,7 +164,7 @@ const WelcomePage = () => {
           </div>
         </div>
         <div className="info-container-channel">
-          <img src="https://discord.com/assets/c01c644bc9fa2a28678ae2f44969d248.svg" />
+          <img src="https://discord.com/assets/c01c644bc9fa2a28678ae2f44969d248.svg" alt=''/>
           <div className="info-channel-text">
             <h2>Public servers with plenty of room to talk</h2>
             <div className="info-channel-small">
@@ -176,7 +183,7 @@ const WelcomePage = () => {
       <div className="about-container">
         <h2>Meet The Developers</h2>
         <div className="dev-info-container">
-          <img src={kevin} className="dev-image" />
+          <img src={kevin} className="dev-image" alt=''/>
           <div className="dev-about-content">
             <h3>Kevin Zheng</h3>
             <span className="about-links-container">
@@ -209,7 +216,7 @@ const WelcomePage = () => {
           </div>
         </div>
         <div className="dev-info-container">
-          <img src={david} className="dev-image" />
+          <img src={david} className="dev-image" alt=''/>
           <div className="dev-about-content">
             <h3>David Kim</h3>
             <span className="about-links-container">
@@ -233,7 +240,7 @@ const WelcomePage = () => {
               I graduated from Northwestern University in 2019 with a degree in
               Economics. After working in the finance industry for a year, I
               realized that I wanted to pursue something that I was more
-              heartfelt about. As a hobby artist, I like making beautiful design
+              heartfelt about. As a hobby artist, I like making beautiful designs
               and channeling my inner creativity, and I felt that I could
               channel these passions into my work. From sleek single-page apps
               to interesting games, I enjoy making things that allow others to
@@ -242,7 +249,7 @@ const WelcomePage = () => {
           </div>
         </div>
         <div className="dev-info-container">
-          <img src={elias} className="dev-image" />
+          <img src={elias} className="dev-image" alt=''/>
           <div className="dev-about-content">
             <h3>Elias Eichen</h3>
             <span className="about-links-container">
@@ -269,7 +276,7 @@ const WelcomePage = () => {
           </div>
         </div>
         <div className="dev-info-container">
-          <img src={danny} className="dev-image" />
+          <img src={danny} className="dev-image" alt=''/>
           <div className="dev-about-content">
             <h3>Danny Shoun</h3>
             <span className="about-links-container">

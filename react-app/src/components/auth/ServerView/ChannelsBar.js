@@ -88,7 +88,7 @@ const ChannelsBar = ({ server }) => {
       setActiveChannel(firstActive);
       document.title = `${server.name} | ${firstActive.name}`
     }
-  }, [channels, location]);
+  }, [channels, location, server]);
 
   function openModal(type) {
     setIsOpen(type);

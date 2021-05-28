@@ -28,18 +28,7 @@ def on_join(data):
     # print(data["conversation_id"]
     if message_type == 'private':
         if data["conversation_id"]:
-            print('my keyword')
-            print(data['conversation_id'])
             room = str(f'conversation_{data["conversation_id"]}')
-        else:
-            print('my keyword')
-            # conversation = Conversation(
-            #     user_1_id=current_user.id,
-            #     user_2_id=data['recipient_id'])
-
-            # db.session.add(conversation)
-            # db.session.commit()
-            # room = str(f'conversation_{conversation.id}')
     else:
         channel = Channel.query.get(data["channel_id"])
         online_user_ids = []
@@ -55,28 +44,24 @@ def on_join(data):
             to=request.sid
         )
         room = str(f'channel_{data["channel_id"]}')
-        print(room)
     join_room(room)
 
 
 @socketio.on('join_notifications')
 def join_notifications():
-    print('I have joined the notifs room')
     room = str(f'notifications_{current_user.id}')
     join_room(room)
+
 
 @socketio.on('send_notifications')
 def send_notifications(data):
     recipient_id = data["recipient_id"]
     sender_id = data["sender_id"]
     conversation_id = data["conversation_id"]
-    print('I have sent a notification')
-    print({"recipient_id": recipient_id, "sender_id": sender_id, "conversation_id": conversation_id})
-    print(data["recipient_id"], data["sender_id"], data["conversation_id"])
 
-    emit('receive_notifications', {"recipient_id": recipient_id, "sender_id": sender_id, "conversation_id": conversation_id}, to=f'notifications_{recipient_id}')
-
-
+    emit('receive_notifications',
+         {"recipient_id": recipient_id, "sender_id": sender_id, "conversation_id": conversation_id},
+         to=f'notifications_{recipient_id}')
 
 
 @socketio.on('public_chat')
@@ -152,15 +137,9 @@ def public_delete(data):
     emit("private_delete", {'messageId': data['id']}, to=f'conversation_{message.conversation_id}')
 
 
-@socketio.on('connect')
-def on_connect():
-    print(f'NEW SOCKET CONNECTION, SOCKET ID: {request.sid}')
-
-
 @socketio.on('login')
 def login(data):
     ONLINE_USERS[request.sid] = data['user_id']
-    print(f'NEW LOGIN, SOCKET ID: {request.sid}, USER ID: {ONLINE_USERS[request.sid]}')
     user = User.query.get(data['user_id'])
     user_channel_ids = sum([[channel.id for channel in server.channels] for server in user.servers_joined], [])
     for channel_id in user_channel_ids:
@@ -169,7 +148,6 @@ def login(data):
 
 @socketio.on('disconnect')
 def on_disconnect():
-    print(f'SOCKET DISCONNECTED, SOCKET ID: {request.sid}, USER ID: {ONLINE_USERS[request.sid]}')
     user = User.query.get(ONLINE_USERS[request.sid])
     user_channel_ids = sum([[channel.id for channel in server.channels] for server in user.servers_joined], [])
     for channel_id in user_channel_ids:
