@@ -69,16 +69,35 @@ def create_conversation():
 
 
 @dm_routes.route('/new')
-# @login_required
+@login_required
 def get_new_private_messages():
     print('keyword')
     new_messages = PrivateMessage.query.filter(
-        and_(PrivateMessage.recipient_id == 1,
+        and_(PrivateMessage.recipient_id == current_user.id,
              PrivateMessage.read == False)).all()
 
     print('keyword', new_messages)
     # return jsonify(['1', '2'])
     return jsonify([new_message.to_dict() for new_message in new_messages])
+
+
+@dm_routes.route('/read', methods=['PUT'])
+def mark_read():
+    data = request.json
+    id = data['id']
+
+    dms = PrivateMessage.query.filter(
+        and_(PrivateMessage.sender_id == id,
+             PrivateMessage.recipient_id == current_user.id)
+    ).all()
+
+    # print('mykeyword', dms)
+
+    for dm in dms:
+        dm.read = True
+
+    db.session.add_all(dms)
+    db.session.commit()
 
 
 @dm_routes.route('/<int:other_user_id>')

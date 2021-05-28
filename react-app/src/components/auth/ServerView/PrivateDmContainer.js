@@ -26,6 +26,7 @@ function PrivateDmContainer() {
       }
     }
     fetchData();
+    
   }, [recipientId]);
 
   useEffect(() => {
