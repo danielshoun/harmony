@@ -8,6 +8,7 @@ const ServerBaseRedirect = () => {
     const servers = useSelector((state) => state.servers);
     const server = servers.allServers.find(server => server.id === Number(serverId));
 
+    console.log("SERVER BASE", server)
     if(server) {
         return (
             <Redirect to={`/servers/${serverId}/${server.channels[0].id}`} />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import UsernameModal from "./UserModals/UsernameModal";
@@ -14,11 +14,13 @@ function User() {
   const [showPicModal, setPicModal] = useState(false);
   const user = useSelector((state) => state.session.user);
 
+  const history = useHistory()
   const dispatch = useDispatch();
   const { userId } = useParams();
 
   const logOut = async () => {
     await dispatch(logout());
+    history.push("/welcome")
   };
 
   const onClose = () => {
