@@ -5,6 +5,7 @@ import WelcomePage from "./components/WelcomePage";
 import LoginForm from "./components/auth/LoginForm/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm/SignUpForm";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import NotFound from "./components/NotFound"
 import { authenticate } from "./store/session";
 import {fetchMemberServers} from "./store/Servers";
 import MainContentWrapper from "./components/MainContentWrapper";
@@ -21,6 +22,7 @@ function App() {
       setUserLoaded(true);
     })();
   }, [dispatch]);
+
   useEffect(() => {
     if(user) {
       (async () => {
@@ -47,9 +49,12 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path="">
+        <Route path="/not-found" exact={true}>
+          <NotFound />
+        </Route>
+        <Route path="">
           <MainContentWrapper />
-        </ProtectedRoute>
+        </Route>
         {/* <div className="main-content">
           <ProtectedRoute path="/">
             <SideBar />
