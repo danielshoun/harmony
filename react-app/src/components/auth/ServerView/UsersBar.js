@@ -7,11 +7,12 @@ import "./UsersBar.css";
 function UsersBar() {
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
+  const notifications = useSelector((state) => state.notifications);
   // const [conversations, setConversations] = useState([]);
   const [usersList, setusersList] = useState([]);
   const [activeUser, setactiveUser] = useState("");
 
-  document.title = "Harmony"
+  document.title = "Harmony";
 
   useEffect(() => {
     async function fetchDMs() {
@@ -47,7 +48,7 @@ function UsersBar() {
               className={`users${activeUser === user ? " active-channel" : ""}`}
               onClick={() => handleActive(user)}
             >
-              <div className="profile-pic">
+              <div className="profile-pic user-notification-pic">
                 <img
                   src={
                     user.image_url ||
@@ -55,6 +56,7 @@ function UsersBar() {
                   }
                   alt=""
                 />
+                <div className="user-notification-ping"></div>
               </div>
               <span className="user-username">{user.username}</span>
             </div>
