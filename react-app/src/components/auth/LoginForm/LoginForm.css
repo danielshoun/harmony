@@ -34,7 +34,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  height: 80%;
 }
 
 .login-form-contents {
@@ -150,12 +150,10 @@
 }
 
 .login-errors {
-  position: relative;
-  margin: 30px 0;
   padding: 30px;
   position: absolute;
   background-color: #ed4245;
   border-radius: 8px;
   color: white;
-  bottom: 125px;
+  bottom: 110px;
 }
