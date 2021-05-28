@@ -5,12 +5,14 @@ from random import randint
 fake = Faker()
 
 # Adds a demo user, you can add other users here if you want
+
+
 def seed_servers():
 
     seed_servers = []
     seed_channels = []
     for i in range(1, 8):
-        owner_id=randint(1, 10)
+        owner_id = randint(1, 30)
         server = Server(
             name=fake.word(),
             picture_url=None,
@@ -32,6 +34,8 @@ def seed_servers():
 # SQLAlchemy doesn't have a built in function to do this
 # TRUNCATE Removes all the data from the table, and resets
 # the auto incrementing primary key
+
+
 def undo_servers():
     db.session.execute('TRUNCATE servers RESTART IDENTITY CASCADE;')
     db.session.commit()
