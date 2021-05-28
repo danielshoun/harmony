@@ -216,8 +216,8 @@ export default function reducer(state = initalState, action) {
                 ...state.userServers.slice(userIndex + 1)
             ];
             const allServers = [
-                ...state.userServers.slice(0, allIndex),
-                ...state.userServers.slice(allIndex + 1)
+                ...state.allServers.slice(0, allIndex),
+                ...state.allServers.slice(allIndex + 1)
             ];
             return {userServers, allServers};
         }
