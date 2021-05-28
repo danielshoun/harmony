@@ -1,6 +1,8 @@
 from werkzeug.security import generate_password_hash
 from app.models import db, User
 from faker import Faker
+from app.api.auth_routes import DEFAULT_IMAGES, S3_LOCATION
+from random import choice
 
 fake = Faker()
 
@@ -9,17 +11,23 @@ fake = Faker()
 
 def seed_users():
 
-    demo = User(username='Demo', email='demo@aa.io',
-                password='password')
+    demo = User(username='Demo',
+                email='demo@aa.io',
+                password='password',
+                image_url=f'{S3_LOCATION}/{choice(DEFAULT_IMAGES)}')
 
-    demo2 = User(username='Demo 2', email='demo2@aa.io', password='password')
+    demo2 = User(username='Demo 2',
+                 email='demo2@aa.io',
+                 password='password',
+                 image_url=f'{S3_LOCATION}/{choice(DEFAULT_IMAGES)}')
 
     seed_users = [demo, demo2]
     for i in range(1, 30):
         seed_users.append(User(
-            username=fake.user_name(), 
+            username=fake.user_name(),
             email=fake.email(),
-            password='password'
+            password='password',
+            image_url=f'{S3_LOCATION}/{choice(DEFAULT_IMAGES)}'
             ))
 
     db.session.add_all(seed_users)
