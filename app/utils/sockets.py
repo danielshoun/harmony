@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_login import current_user
 import datetime
@@ -15,6 +15,8 @@ else:
     origins = '*'
 
 socketio = SocketIO(cors_allowed_origins=origins)
+
+ONLINE_USERS = {}
 
 
 @socketio.on('join')
@@ -118,7 +120,19 @@ def public_delete(data):
 
 @socketio.on('connect')
 def on_connect():
-    print('connected')
+    print(f'NEW SOCKET CONNECTION, SOCKET ID: {request.sid}')
+
+
+@socketio.on('login')
+def login(data):
+    ONLINE_USERS[request.sid] = data['user_id']
+    print(f'NEW LOGIN, SOCKET ID: {request.sid}, USER ID: {ONLINE_USERS[request.sid]}')
+
+
+@socketio.on('disconnect')
+def on_disconnect():
+    print(f'SOCKET DISCONNECTED, SOCKET ID: {request.sid}, USER ID: {ONLINE_USERS[request.sid]}')
+    del ONLINE_USERS[request.sid]
 
 
 @socketio.on('leave')
