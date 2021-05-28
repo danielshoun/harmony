@@ -27,9 +27,12 @@ Check out the [wiki](https://github.com/danielshoun/harmony/wiki) for more infor
 - Sign up a new account and log in
 - Create / Edit / Join / Delete servers
 - Create / Edit / Delete channels
+- Edit User Username, Email, and Profile picture
 - Search for servers to join
 - Enter public text channels to communicate with other users in real-time
 - Privately message individual users to communicate with one another in real-time
+- Receive notifications when a user messages you in real-time
+- See a list of online and offline users updated in real-time
 
 ## Instructions
 
