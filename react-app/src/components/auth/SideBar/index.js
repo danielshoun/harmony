@@ -2,15 +2,23 @@ import React, { useEffect, useState } from "react";
 import "./SideBar.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMemberServers } from "../../../store/Servers";
+import {fetchNewMessages } from "../../../store/notifications"
 import { useHistory, useLocation } from "react-router-dom";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
   const servers = useSelector((state) => state.servers);
+  const notifications = useSelector((state) => state.notifications)
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const [activeServer, setActiveServer] = useState(null);
+
+
+  useEffect(() => {
+    dispatch(fetchNewMessages())
+  }, [dispatch])
+
 
   useEffect(() => {
     if (location.pathname.includes("create")) {
