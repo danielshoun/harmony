@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const MembersList = ({ server }) => {
+const MembersList = ({ server, onlineMembers, offlineMembers }) => {
   const user = useSelector((state) => state.session.user);
   const socket = user.socket;
   const history = useHistory();
@@ -93,9 +93,9 @@ const MembersList = ({ server }) => {
       )}
       <div className="members-list">
         <div>
-          <span className="members-group">All</span>
+          <span className="members-group">Online - {onlineMembers.length}</span>
           <div className="member-container">
-            {server.members.map((member) => (
+            {onlineMembers.map((member) => (
               <div
                 className="member-info"
                 // onClick={() => member.id === user.id ? null : handleDm(member.id)}
@@ -113,6 +113,30 @@ const MembersList = ({ server }) => {
                 </div>
                 <div className="member-name">{member.username}</div>
               </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <span className="members-group">Offline - {offlineMembers.length}</span>
+          <div className="member-container">
+            {offlineMembers.map((member) => (
+                <div
+                    className="member-info"
+                    // onClick={() => member.id === user.id ? null : handleDm(member.id)}
+                    onClick={() => openMessageMenu(member)}
+                    key={`member-${member.id}`}
+                >
+                  <div className="profile-pic">
+                    <img
+                        src={
+                          member.image_url ||
+                          "https://discord.com/assets/6debd47ed13483642cf09e832ed0bc1b.png"
+                        }
+                        alt=""
+                    />
+                  </div>
+                  <div className="member-name">{member.username}</div>
+                </div>
             ))}
           </div>
         </div>

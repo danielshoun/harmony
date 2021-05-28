@@ -1,10 +1,11 @@
-from flask import jsonify, request
+from flask import request
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_login import current_user
 import datetime
 import os
+from json import dumps
 
-from app.models import ChannelMessage, db, Channel, PrivateMessage, Conversation
+from app.models import ChannelMessage, db, Channel, PrivateMessage, Conversation, User
 
 if os.environ.get('FLASK_ENV') == 'production':
     origins = [
@@ -40,6 +41,19 @@ def on_join(data):
             # db.session.commit()
             # room = str(f'conversation_{conversation.id}')
     else:
+        channel = Channel.query.get(data["channel_id"])
+        online_user_ids = []
+        offline_user_ids = []
+        for user in channel.server.members:
+            if user.id in ONLINE_USERS.values():
+                online_user_ids.append(user.id)
+            else:
+                offline_user_ids.append(user.id)
+        emit(
+            "user_list",
+            dumps({"onlineUserIds": online_user_ids, "offlineUserIds": offline_user_ids}),
+            to=request.sid
+        )
         room = str(f'channel_{data["channel_id"]}')
         print(room)
     join_room(room)
@@ -127,11 +141,19 @@ def on_connect():
 def login(data):
     ONLINE_USERS[request.sid] = data['user_id']
     print(f'NEW LOGIN, SOCKET ID: {request.sid}, USER ID: {ONLINE_USERS[request.sid]}')
+    user = User.query.get(data['user_id'])
+    user_channel_ids = sum([[channel.id for channel in server.channels] for server in user.servers_joined], [])
+    for channel_id in user_channel_ids:
+        emit("user_online", {'userId': user.id}, to=f'channel_{channel_id}')
 
 
 @socketio.on('disconnect')
 def on_disconnect():
     print(f'SOCKET DISCONNECTED, SOCKET ID: {request.sid}, USER ID: {ONLINE_USERS[request.sid]}')
+    user = User.query.get(ONLINE_USERS[request.sid])
+    user_channel_ids = sum([[channel.id for channel in server.channels] for server in user.servers_joined], [])
+    for channel_id in user_channel_ids:
+        emit("user_offline", {'userId': user.id}, to=f'channel_{channel_id}')
     del ONLINE_USERS[request.sid]
 
 
