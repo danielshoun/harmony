@@ -2,15 +2,25 @@ import React, { useEffect, useState } from "react";
 import "./SideBar.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMemberServers } from "../../../store/Servers";
+import {
+  fetchNewMessages,
+  addNotification,
+} from "../../../store/notifications";
 import { useHistory, useLocation } from "react-router-dom";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
+  const socket = user.socket;
   const servers = useSelector((state) => state.servers);
+  const notifications = useSelector((state) => state.notifications);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const [activeServer, setActiveServer] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchNewMessages());
+  }, [dispatch]);
 
   useEffect(() => {
     if (location.pathname.includes("create")) {
@@ -31,6 +41,13 @@ const SideBar = () => {
   useEffect(() => {
     dispatch(fetchMemberServers());
   }, [dispatch]);
+
+  useEffect(() => {
+    socket.emit("join_notifications");
+    socket.on("receive_notifications", (notification) => {
+      dispatch(addNotification(notification));
+    });
+  });
 
   function handleActive(server) {
     setActiveServer(server);
@@ -63,6 +80,11 @@ const SideBar = () => {
             />
           ) : (
             <i className="fas fa-user" />
+          )}
+          {Object.values(notifications).length && (
+            <div className="notification-ping">
+              {Object.values(notifications).length}
+            </div>
           )}
         </div>
         <div

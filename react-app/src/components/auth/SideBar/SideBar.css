@@ -67,3 +67,19 @@
   width: inherit;
   border-radius: inherit;
 }
+
+.notification-ping {
+  position: absolute;
+  z-index: 1;
+  top: 50px;
+  left: 45px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: red;
+  border: solid black;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 15px;
+}

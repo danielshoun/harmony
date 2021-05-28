@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { deleteNotification } from "../../../store/notifications";
 
 import "./UsersBar.css";
 
 function UsersBar() {
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
+  const notifications = useSelector((state) => state.notifications);
+  const dispatch = useDispatch()
   // const [conversations, setConversations] = useState([]);
   const [usersList, setusersList] = useState([]);
   const [activeUser, setactiveUser] = useState("");
 
-  document.title = "Harmony"
+  document.title = "Harmony";
 
   useEffect(() => {
     async function fetchDMs() {
@@ -29,8 +32,21 @@ function UsersBar() {
     fetchDMs();
   }, [user.id]);
 
+  async function markRead(id){
+    await fetch('/api/dms/read', {
+      method: 'PUT',
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({id})
+    })
+  }
+
   const handleActive = (activeUser) => {
     setactiveUser(activeUser);
+    dispatch(deleteNotification(activeUser.id))
+    markRead(activeUser.id)
+
     history.push(`/users/${user.id}/dms/${activeUser.id}`);
   };
 
@@ -47,7 +63,7 @@ function UsersBar() {
               className={`users${activeUser === user ? " active-channel" : ""}`}
               onClick={() => handleActive(user)}
             >
-              <div className="profile-pic">
+              <div className="profile-pic user-notification-pic">
                 <img
                   src={
                     user.image_url ||
@@ -55,6 +71,7 @@ function UsersBar() {
                   }
                   alt=""
                 />
+                <div className={notifications[user.id] ? "user-notification-ping" : ''}></div>
               </div>
               <span className="user-username">{user.username}</span>
             </div>

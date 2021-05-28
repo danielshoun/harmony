@@ -31,3 +31,19 @@
 .users:hover {
   cursor: pointer;
 }
+
+.user-notification-pic {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.user-notification-ping {
+  width: 10px;
+  position: absolute;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  border: solid black thin;
+}
