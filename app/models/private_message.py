@@ -9,6 +9,7 @@ class PrivateMessage(db.Model):
     recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     conversation_id = db.Column(db.Integer, db.ForeignKey('conversations.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)
+    read = db.Column(db.Boolean, default=False)
 
     conversation = db.relationship('Conversation', back_populates='messages')
     sender = db.relationship('User', back_populates='dms_sent', foreign_keys=[sender_id])
@@ -21,5 +22,6 @@ class PrivateMessage(db.Model):
             "sender": self.sender.to_dict(),
             "recipient": self.recipient.to_dict(),
             "created_at": self.created_at.isoformat(),
-            "conversation_id": self.conversation_id
+            "conversation_id": self.conversation_id,
+            "read": self.read,
         }

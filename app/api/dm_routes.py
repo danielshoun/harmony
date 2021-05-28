@@ -45,6 +45,17 @@ def create_conversation():
     return {'message': 'created new conversaiton'}
 
 
+@dm_routes.route('/new')
+@login_required
+def get_new_private_messages():
+    new_messages = PrivateMessage.query.filter(
+        and_(PrivateMessage.recipient_id == current_user.id,
+             PrivateMessage.read is False))
+
+    print(new_messages)
+    return jsonify([new_messages.to_dict() for new_message in new_messages])
+
+
 @dm_routes.route('/<int:other_user_id>')
 @login_required
 def get_private_messages(other_user_id):
