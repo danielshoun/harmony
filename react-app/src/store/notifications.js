@@ -18,7 +18,7 @@ export const fetchNewMessages = () => async (dispatch) => {
         const notifications = {};
 
         newMessages.forEach(message => {
-            notifications[message.id] = {
+            notifications[message.sender.id] = {
                 sender_id: message.sender.id,
                 conversation_id: message.conversation_id,
                 read: message.read
