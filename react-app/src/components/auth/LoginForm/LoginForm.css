@@ -22,7 +22,6 @@
 .header-logo-container:hover,
 .header-logo-container > label:hover {
   cursor: pointer;
-  text-shadow: rgb(56, 56, 56) 1px 0 4px;
 }
 
 .header-logo-container > label {

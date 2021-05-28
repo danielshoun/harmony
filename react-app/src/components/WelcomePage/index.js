@@ -17,10 +17,19 @@ const WelcomePage = () => {
     const data = await dispatch(login("demo2@aa.io", "password"));
     return data;
   }
+
   return (
     <div className="welcome-page-container">
       <div className="welcome-header">
         <div className="background-image">
+          <img
+            className="bg-10"
+            src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"
+          />
+          <img
+            className="bg-11"
+            src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"
+          />
           <img
             className="bg-6"
             src="https://discord.com/assets/690c2345bcaaaa50b71548231a26b696.svg"
@@ -29,7 +38,6 @@ const WelcomePage = () => {
             className="bg-5"
             src="https://discord.com/assets/9c0629769616f9629689a0e68a2e57b7.svg"
           />
-
           <img
             className="bg-7"
             src="https://discord.com/assets/4bdac631250f5f9e8a4b928d5efa22c8.svg"
@@ -81,10 +89,10 @@ const WelcomePage = () => {
                 Go To App
               </button>
             ) : (
-              <div className="button-container">
+              <div>
                 <div className="button-row-container">
                   <button
-                    className="header-button"
+                    className="header-button small-btn"
                     onClick={() => history.push("/login")}
                   >
                     Login
@@ -96,9 +104,9 @@ const WelcomePage = () => {
                     Sign Up
                   </button>
                 </div>
-                <div className="button-row-container">
+                <div>
                   <button
-                    className="header-button"
+                    className="header-button small-btn"
                     onClick={() => handleDemo()}
                   >
                     Demo
@@ -115,29 +123,47 @@ const WelcomePage = () => {
           </div>
         </div>
       </div>
-      <div className="info-container">
-        <div className="info-card">
-          <h3>Find your place</h3>
-          <div className="card-description">
-            Our server browser will help you find somewhere to call home. Use
-            the search bar to make it easier! Are your friends already waiting
-            for you? Have them send an invite link to join directly.
+      <div className="large-info-container">
+        <div className="info-container">
+          <div className="info-card">
+            <h3>Find your place</h3>
+            <div className="card-description">
+              Our server browser will help you find somewhere to call home. Use
+              the search bar to make it easier! Are your friends already waiting
+              for you? Have them send an invite link to join directly.
+            </div>
+          </div>
+          <div className="info-card">
+            <h3>Chat in real time</h3>
+            <div className="card-description">
+              Email is so 20th century. With the power of WebSockets, friends in
+              your server can reach you instantly without having to wait! Keep
+              the conversation going for as long as you want.
+            </div>
+          </div>
+          <div className="info-card">
+            <h3>Get in touch</h3>
+            <div className="card-description">
+              Have something to say but don't want to broadcast it to the world?
+              Start a conversation with a friend and keep it between the two of
+              you. We won't share your secrets, but they might!
+            </div>
           </div>
         </div>
-        <div className="info-card">
-          <h3>Chat in real time</h3>
-          <div className="card-description">
-            Email is so 20th century. With the power of WebSockets, friends in
-            your server can reach you instantly without having to wait! Keep the
-            conversation going for as long as you want.
-          </div>
-        </div>
-        <div className="info-card">
-          <h3>Get in touch</h3>
-          <div className="card-description">
-            Have something to say but don't want to broadcast it to the world?
-            Start a conversation with a friend and keep it between the two of
-            you. We won't share your secrets, but they might!
+        <div className="info-container-channel">
+          <img src="https://discord.com/assets/c01c644bc9fa2a28678ae2f44969d248.svg" />
+          <div className="info-channel-text">
+            <h2>Public servers with plenty of room to talk</h2>
+            <div className="info-channel-small">
+              Harmony servers are organized into topic-based channels where you
+              can collaborate, share, and just talk about your day!
+            </div>
+            <a
+              className="repo-redirect"
+              href="https://github.com/danielshoun/harmony"
+            >
+              Github Repo
+            </a>
           </div>
         </div>
       </div>
