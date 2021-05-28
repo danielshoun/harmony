@@ -11,7 +11,7 @@ s3 = boto3.client(
 
 ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "gif"}
 BUCKET_NAME = os.environ.get("S3_BUCKET")
-S3_LOCATION = f"http://{BUCKET_NAME}.s3.amazonaws.com"
+S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com"
 
 
 def allowed_file(filename):
