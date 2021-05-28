@@ -54,15 +54,20 @@ To run this application:
 
    ```bash
    pipenv shell
+   ```
+   ```bash
    flask db upgrade
+   ```
+   ```bash
    flask seed all
+   ```
+   ```bash
    flask run
    ```
 
 6. Install front end dependencies from the `react-app` directory and then run the front end server
    ```bash
-   npm install
-   npm run
+   npm install && npm run
    ```
 
 ## Code Snippets
