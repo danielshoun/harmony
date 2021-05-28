@@ -45,6 +45,10 @@ const SignUpForm = () => {
 
   return (
     <div className="auth-background-img">
+      <a href="/welcome" className="header-logo-container">
+        <i className="fas fa-peace header-logo" />
+        <label>Harmony</label>
+      </a>
       <div className="login-form-container">
         <div className="signup-form-contents">
           <h3>Create an account</h3>
