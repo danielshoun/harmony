@@ -51,6 +51,9 @@ export const authenticate = () => async (dispatch) => {
 
 
   socket = io();
+  socket.emit('login', {
+    user_id: data.id
+  })
   data.socket = socket;
 
   dispatch(setUser(data));
@@ -73,6 +76,9 @@ export const login = (email, password) => async (dispatch) => {
   }
 
   socket = io();
+  socket.emit('login', {
+    user_id: data.id
+  })
   data.socket = socket;
 
   dispatch(setUser(data));
@@ -109,6 +115,9 @@ export const signUp = (username, email, password) => async (dispatch) => {
   }
 
   socket = io();
+  socket.emit('login', {
+    user_id: data.id
+  })
   data.socket = socket;
 
   dispatch(setUser(data));
