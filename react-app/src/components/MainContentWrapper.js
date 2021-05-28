@@ -24,10 +24,11 @@ const MainContentWrapper = () => {
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/dms">
+        <ProtectedRoute path="/users/:userId/dms" exact={true}>
           <UsersBar />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/dms/:recipientId">
+          <UsersBar />
           <PrivateDmContainer />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
