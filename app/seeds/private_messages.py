@@ -25,7 +25,7 @@ def seed_private_messages():
                 sender_id=sender,
                 recipient_id=reciever,
                 conversation_id=convo.id,
-                created_at=time + time_change
+                created_at=time - time_change
             )
             time_change += timedelta(minutes=randint(1, 5))
             seed_pms.append(pm)

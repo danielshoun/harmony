@@ -20,7 +20,7 @@ def seed_channel_messages():
                 body=fake.sentence(),
                 channel_id=i,
                 sender_id=randint(1, 30),
-                created_at=time + time_change
+                created_at=time - time_change
             )
             time_change += timedelta(minutes=randint(1, 5))
             channel_messages.append(channel_message)
