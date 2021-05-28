@@ -53,6 +53,13 @@ const MembersList = ({ server }) => {
       conversation_id: Number(conversationId.conversationId),
       body,
     });
+
+    socket.emit("send_notifications", {
+      recipient_id: parseInt(activeMember.id),
+      sender_id: user.id,
+      conversation_id: Number(conversationId.conversationId),
+    });
+
     history.push(`/users/${user.id}/dms/${activeMember.id}`);
   }
 

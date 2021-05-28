@@ -45,6 +45,26 @@ def on_join(data):
     join_room(room)
 
 
+@socketio.on('join_notifications')
+def join_notifications():
+    print('I have joined the notifs room')
+    room = str(f'notifications_{current_user.id}')
+    join_room(room)
+
+@socketio.on('send_notifications')
+def send_notifications(data):
+    recipient_id = data["recipient_id"]
+    sender_id = data["sender_id"]
+    conversation_id = data["conversation_id"]
+    print('I have sent a notification')
+    print({"recipient_id": recipient_id, "sender_id": sender_id, "conversation_id": conversation_id})
+    print(data["recipient_id"], data["sender_id"], data["conversation_id"])
+
+    emit('receive_notifications', {"recipient_id": recipient_id, "sender_id": sender_id, "conversation_id": conversation_id}, to=f'notifications_{recipient_id}')
+
+
+
+
 @socketio.on('public_chat')
 def channel_chat(data):
     new_message = ChannelMessage(
