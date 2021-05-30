@@ -81,7 +81,7 @@ const SideBar = () => {
           ) : (
             <i className="fas fa-user" />
           )}
-          {Object.values(notifications).length && (
+          {Object.values(notifications).length > 0 && (
             <div className="notification-ping">
               {Object.values(notifications).length}
             </div>
