@@ -75,12 +75,70 @@ To run this application:
 
 ## Code Snippets
 
-```js
-// Insert here
-```
+The socket event listeners were able to be re-used between our public and private chat components by creating a function that would generate an agnostic useEffect hook. A shortened version of this function is shown below; the full implementation can be seen in the [createSocketUseEffect utils file](https://github.com/danielshoun/harmony/blob/main/react-app/src/utils/createSocketUseEffect.js).
 
-```py
-# Insert here
+```js
+const createSocketUseEffect = (
+    type,
+    socket,
+    setMessages,
+    messages,
+    channel = null,
+    conversationId = null,
+    recipientId = null,
+    server = null,
+    setOnlineMembers = null,
+    setOfflineMembers = null
+) => {
+    return () => {
+        function socketOnChat(chat) {
+            // Add new chat message.
+        }
+
+        function socketOnEdit(newMessage) {
+            // Change message when edited by user.
+        }
+
+        function socketOnDelete({messageId}) {
+            // Remove message when deleted by user.
+        }
+
+        let socketOnUserList;
+        let socketOnUserOnline;
+        let socketOnUserOffline;
+
+        if (server) {
+            socketOnUserList = (data) => {
+                // Get initial list of online/offline users when joining a server.
+            };
+
+            socketOnUserOnline = ({userId}) => {
+                // Update user lists when a user comes online.
+            };
+
+            socketOnUserOffline = ({userId}) => {
+                // Update user lists when a user goes offline.
+            };
+        }
+
+
+        let roomInfo = {type};
+        if (type === "public") {
+            roomInfo.channel_id = channel.id;
+        } else {
+            roomInfo.conversation_id = conversationId;
+            roomInfo.recipient_id = recipientId;
+        }
+
+        // Add event listeners for the functions defined above.
+
+        return () => {
+            // Remove event listeners for cleanup.
+        };
+    };
+};
+
+export default createSocketUseEffect;
 ```
 
 ## Future To Do Items
