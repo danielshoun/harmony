@@ -7,12 +7,14 @@ import "./UsersBar.css";
 
 function UsersBar() {
   const user = useSelector((state) => state.session.user);
+  const socket = user.socket;
   const history = useHistory();
   const notifications = useSelector((state) => state.notifications);
   const dispatch = useDispatch()
   // const [conversations, setConversations] = useState([]);
   const [usersList, setusersList] = useState([]);
   const [activeUser, setactiveUser] = useState("");
+  const [firstRender, setFirstRender] = useState(true);
 
   document.title = "Harmony";
 
@@ -29,8 +31,31 @@ function UsersBar() {
         setusersList(convos);
       }
     }
-    fetchDMs();
-  }, [user.id]);
+    if(firstRender) {
+      fetchDMs();
+      setFirstRender(false);
+    }
+
+    const socketOnReceiveNotifications = async ({recipient_id, sender_id, conversation_id}) => {
+      console.log(activeUser.id, sender_id)
+      if(usersList.filter(user => user.id === sender_id).length === 0) {
+        const res = await fetch(`/api/users/${sender_id}`);
+        const user = await res.json();
+        setusersList(prevState => {
+          return [...prevState, user]
+        })
+      } else if(activeUser.id === sender_id) {
+        await markRead(activeUser.id)
+      }
+    }
+
+    socket.on("receive_notifications", socketOnReceiveNotifications)
+
+    return () => {
+      socket.off("receive_notifications", socketOnReceiveNotifications)
+    }
+
+  }, [user.id, socket, usersList, activeUser, firstRender]);
 
   async function markRead(id){
     await fetch('/api/dms/read', {
