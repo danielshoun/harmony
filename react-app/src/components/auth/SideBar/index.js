@@ -45,7 +45,10 @@ const SideBar = () => {
   useEffect(() => {
     socket.emit("join_notifications");
     socket.on("receive_notifications", (notification) => {
-      dispatch(addNotification(notification));
+      const location = window.location.href.split('/')
+      if (parseInt(location[location.length - 1]) !== notification.sender_id && parseInt(location[location.length - 3]) !== notification.sender_id) {
+        dispatch(addNotification(notification));
+      }
     });
   });
 

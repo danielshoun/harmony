@@ -37,7 +37,6 @@ function UsersBar() {
     }
 
     const socketOnReceiveNotifications = async ({recipient_id, sender_id, conversation_id}) => {
-      console.log(activeUser.id, sender_id)
       if(usersList.filter(user => user.id === sender_id).length === 0) {
         const res = await fetch(`/api/users/${sender_id}`);
         const user = await res.json();
