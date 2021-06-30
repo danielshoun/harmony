@@ -151,8 +151,8 @@
 .login-errors {
   padding: 30px;
   position: absolute;
-  background-color: #ed4245;
+  background-color: #36393f;
   border-radius: 8px;
-  color: white;
+  color: rgb(221, 60, 60);
   bottom: 110px;
 }
