@@ -176,4 +176,4 @@ def join_vc():
 def send_vc(data):
     other_user = data['other_user']
 
-    emit('receive_vc', {'call': 'join'}, to=f'video_chat_{other_user}')
+    emit('receive_vc', {'call': 'join', 'user': current_user.id}, to=f'video_chat_{other_user}')
