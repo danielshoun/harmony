@@ -4,15 +4,14 @@ import "./CreateVC.css";
 
 function CreateVC({ closeModal, other_user, setAcceptedCall, offer }) {
   const user = useSelector((state) => state.session.user);
-  const peerCon = useSelector((state) => state.peerCon.peerCon)
+  const peerCon = useSelector((state) => state.peerCon.peerCon);
   const socket = user.socket;
 
   const handleAccept = async () => {
     //logic for RTCPeerConnection\
-    console.log(offer)
-    peerCon.setRemoteDescription(new RTCSessionDescription(offer))
+    peerCon.setRemoteDescription(new RTCSessionDescription(offer));
     const answer = await peerCon.createAnswer();
-    await peerCon.setLocalDescription(answer)
+    await peerCon.setLocalDescription(answer);
     socket.emit("send_accepted_vc", { other_user: other_user, answer });
     closeModal();
     setAcceptedCall(true);

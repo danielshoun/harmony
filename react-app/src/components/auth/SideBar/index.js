@@ -24,7 +24,7 @@ const SideBar = () => {
   const [call, setCall] = useState(false);
   const [acceptedCall, setAcceptedCall] = useState(false);
   const [otherUser, setotherUser] = useState("");
-  const [offer, setOffer] = useState(undefined)
+  const [offer, setOffer] = useState(undefined);
 
   useEffect(() => {
     dispatch(fetchNewMessages());
@@ -51,22 +51,50 @@ const SideBar = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const peerCon = new RTCPeerConnection({ 'iceServers': [{ 'urls': 'stun:stun3.l.google.com:19302' }] })
-    dispatch(setPeerConn(peerCon))
+    const peerCon = new RTCPeerConnection({
+      iceServers: [{ urls: "stun:stun3.l.google.com:19302" }],
+    });
+
+    async function createStream() {
+      const localStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      localStream.getTracks().forEach((track) => {
+        peerCon.addTrack(track, localStream);
+      });
+
+      const remoteStream = new MediaStream();
+      const remoteVideo = document.querySelector("#videochat");
+      remoteVideo.srcObject = remoteStream;
+      console.log(remoteVideo);
+
+      peerCon.addEventListener("track", async (e) => {
+        remoteStream.addTrack(e.track, remoteStream);
+      });
+
+      return localStream;
+    }
+
+    createStream();
+
+    dispatch(setPeerConn(peerCon));
     socket.emit("join_notifications");
     socket.emit("join_vc");
 
     socket.on("receive_vc", (data) => {
-      setOffer(data["offer"])
+      setOffer(data["offer"]);
       setotherUser(data["user"]);
       setCall(true);
     });
 
     socket.on("accepted_vc", async (data) => {
-      await peerCon.setRemoteDescription(new RTCSessionDescription(data['answer']))
-      console.log(peerCon)
+      await peerCon.setRemoteDescription(
+        new RTCSessionDescription(data["answer"])
+      );
+      console.log(peerCon);
       setAcceptedCall(true);
-
     });
 
     socket.on("receive_notifications", (notification) => {
@@ -169,13 +197,14 @@ const SideBar = () => {
           offer={offer}
         />
       </Modal>
-      <Modal
+      {/* <Modal
         isOpen={acceptedCall}
         onRequestClose={closeModal}
         closeTimeoutMS={120}
-      >
-        <VoiceChat closeModal={closeModal} />
-      </Modal>
+      ></Modal> */}
+      <div className="video-container">
+        <video autoPlay playsInline controls={false} id="videochat"></video>
+      </div>
     </div>
   );
 };

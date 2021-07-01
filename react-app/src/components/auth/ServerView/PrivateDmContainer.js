@@ -8,7 +8,7 @@ import Message from "./Message";
 function PrivateDmContainer() {
   const { recipientId } = useParams();
   const user = useSelector((state) => state.session.user);
-  const peerCon = useSelector((state) => state.peerCon.peerCon)
+  const peerCon = useSelector((state) => state.peerCon.peerCon);
   const socket = user.socket;
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
@@ -120,11 +120,11 @@ function PrivateDmContainer() {
   }
 
   async function handleCallUser() {
-    const offer = await peerCon.createOffer()
-    await peerCon.setLocalDescription(offer)
+    const offer = await peerCon.createOffer();
+    await peerCon.setLocalDescription(offer);
     socket.emit("send_vc", {
       other_user: userCalled,
-      offer: offer
+      offer: offer,
     });
   }
 
