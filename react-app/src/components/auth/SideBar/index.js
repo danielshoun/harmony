@@ -10,6 +10,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import Modal from "react-modal";
 import CreateVC from "../../Modals/CreateVC";
 import VoiceChat from "../../Modals/VoiceChat";
+import { setPeerConn } from "../../../store/peerConnection";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
@@ -23,6 +24,7 @@ const SideBar = () => {
   const [call, setCall] = useState(false);
   const [acceptedCall, setAcceptedCall] = useState(false);
   const [otherUser, setotherUser] = useState("");
+  const [offer, setOffer] = useState(undefined)
 
   useEffect(() => {
     dispatch(fetchNewMessages());
@@ -49,16 +51,22 @@ const SideBar = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const peerCon = new RTCPeerConnection({ 'iceServers': [{ 'urls': 'stun:stun3.l.google.com:19302' }] })
+    dispatch(setPeerConn(peerCon))
     socket.emit("join_notifications");
     socket.emit("join_vc");
 
     socket.on("receive_vc", (data) => {
+      setOffer(data["offer"])
       setotherUser(data["user"]);
       setCall(true);
     });
 
-    socket.on("accepted_vc", (data) => {
+    socket.on("accepted_vc", async (data) => {
+      await peerCon.setRemoteDescription(new RTCSessionDescription(data['answer']))
+      console.log(peerCon)
       setAcceptedCall(true);
+
     });
 
     socket.on("receive_notifications", (notification) => {
@@ -158,6 +166,7 @@ const SideBar = () => {
           closeModal={closeModal}
           other_user={otherUser}
           setAcceptedCall={setAcceptedCall}
+          offer={offer}
         />
       </Modal>
       <Modal

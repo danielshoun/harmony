@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import session from "./session";
 import servers from "./Servers";
 import notifications from './notifications';
+import peerCon from './peerConnection'
 
 const rootReducer = combineReducers({
   session,
   servers,
   notifications,
+  peerCon
 });
 
 let enhancer;
