@@ -177,3 +177,10 @@ def send_vc(data):
     other_user = data['other_user']
 
     emit('receive_vc', {'call': 'join', 'user': current_user.id}, to=f'video_chat_{other_user}')
+
+@socketio.on('send_accepted_vc')
+def send_accepted_vc(data):
+    other_user = data['other_user']
+    print('socket route works', other_user)
+
+    emit('accepted_vc', {'user': current_user.id}, to=f'video_chat_{other_user}')

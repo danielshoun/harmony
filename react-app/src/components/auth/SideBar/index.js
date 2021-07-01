@@ -9,6 +9,7 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import Modal from "react-modal";
 import CreateVC from "../../Modals/CreateVC";
+import VoiceChat from "../../Modals/VoiceChat";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
@@ -20,6 +21,8 @@ const SideBar = () => {
   const location = useLocation();
   const [activeServer, setActiveServer] = useState(null);
   const [call, setCall] = useState(false);
+  const [acceptedCall, setAcceptedCall] = useState(false);
+  const [otherUser, setotherUser] = useState("");
 
   useEffect(() => {
     dispatch(fetchNewMessages());
@@ -50,8 +53,12 @@ const SideBar = () => {
     socket.emit("join_vc");
 
     socket.on("receive_vc", (data) => {
+      setotherUser(data["user"]);
       setCall(true);
-      console.log(call);
+    });
+
+    socket.on("accepted_vc", (data) => {
+      setAcceptedCall(true);
     });
 
     socket.on("receive_notifications", (notification) => {
@@ -63,7 +70,7 @@ const SideBar = () => {
         dispatch(addNotification(notification));
       }
     });
-  });
+  }, [otherUser]);
 
   function handleActive(server) {
     setActiveServer(server);
@@ -81,6 +88,7 @@ const SideBar = () => {
 
   function closeModal() {
     setCall(false);
+    setAcceptedCall(false);
   }
 
   return (
@@ -146,7 +154,18 @@ const SideBar = () => {
         <i className="fas fa-plus" />
       </div>
       <Modal isOpen={call} onRequestClose={closeModal} closeTimeoutMS={120}>
-        <CreateVC closeModal={closeModal} />
+        <CreateVC
+          closeModal={closeModal}
+          other_user={otherUser}
+          setAcceptedCall={setAcceptedCall}
+        />
+      </Modal>
+      <Modal
+        isOpen={acceptedCall}
+        onRequestClose={closeModal}
+        closeTimeoutMS={120}
+      >
+        <VoiceChat closeModal={closeModal} />
       </Modal>
     </div>
   );
