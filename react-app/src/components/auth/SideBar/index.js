@@ -7,6 +7,8 @@ import {
   addNotification,
 } from "../../../store/notifications";
 import { useHistory, useLocation } from "react-router-dom";
+import Modal from "react-modal";
+import CreateVC from "../../Modals/CreateVC";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
@@ -17,7 +19,7 @@ const SideBar = () => {
   const history = useHistory();
   const location = useLocation();
   const [activeServer, setActiveServer] = useState(null);
-  const [call, setCall] = useState(false)
+  const [call, setCall] = useState(false);
 
   useEffect(() => {
     dispatch(fetchNewMessages());
@@ -45,16 +47,19 @@ const SideBar = () => {
 
   useEffect(() => {
     socket.emit("join_notifications");
-    socket.emit("join_vc")
+    socket.emit("join_vc");
 
-    socket.on('receive_vc', (data) => {
-      setCall(true)
-      console.log(call)
-    }) 
+    socket.on("receive_vc", (data) => {
+      setCall(true);
+      console.log(call);
+    });
 
     socket.on("receive_notifications", (notification) => {
-      const location = window.location.href.split('/')
-      if (parseInt(location[location.length - 1]) !== notification.sender_id && parseInt(location[location.length - 3]) !== notification.sender_id) {
+      const location = window.location.href.split("/");
+      if (
+        parseInt(location[location.length - 1]) !== notification.sender_id &&
+        parseInt(location[location.length - 3]) !== notification.sender_id
+      ) {
         dispatch(addNotification(notification));
       }
     });
@@ -72,6 +77,10 @@ const SideBar = () => {
     } else {
       history.push(`/servers/${server.id}/${server.channels[0].id}`);
     }
+  }
+
+  function closeModal() {
+    setCall(false);
   }
 
   return (
@@ -136,6 +145,9 @@ const SideBar = () => {
       >
         <i className="fas fa-plus" />
       </div>
+      <Modal isOpen={call} onRequestClose={closeModal} closeTimeoutMS={120}>
+        <CreateVC closeModal={closeModal} />
+      </Modal>
     </div>
   );
 };

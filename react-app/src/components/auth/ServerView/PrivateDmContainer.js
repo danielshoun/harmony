@@ -15,6 +15,7 @@ function PrivateDmContainer() {
   const messageContainerRef = useRef(null);
   const [initialMessages, setInitialMessages] = useState(true);
   const [otherUser, setOtherUser] = useState("");
+  const [userCalled, setuserCalled] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -26,7 +27,6 @@ function PrivateDmContainer() {
       }
     }
     fetchData();
-
   }, [recipientId]);
 
   useEffect(() => {
@@ -42,9 +42,13 @@ function PrivateDmContainer() {
               conv.user_1.id === parseInt(recipientId))
         );
         if (convo.length > 0) {
-          if (convo[0].user_1.id === parseInt(recipientId))
+          if (convo[0].user_1.id === parseInt(recipientId)) {
             setOtherUser(convo[0].user_1.username);
-          else setOtherUser(convo[0].user_2.username);
+            setuserCalled(convo[0].user_1.id);
+          } else {
+            setOtherUser(convo[0].user_2.username);
+            setuserCalled(convo[0].user_2.id);
+          }
         }
 
         setConversations(convo);
@@ -114,6 +118,12 @@ function PrivateDmContainer() {
     });
   }
 
+  function handleCallUser() {
+    socket.emit("send_vc", {
+      other_user: userCalled,
+    });
+  }
+
   return (
     <div className="chat-container">
       <div className="channel-header">
@@ -132,6 +142,9 @@ function PrivateDmContainer() {
             ></path>
           </svg>
           <span>{otherUser}</span>
+          <button type="button" onClick={handleCallUser}>
+            Call
+          </button>
         </div>
         <div className="chat-toolbar"></div>
       </div>
