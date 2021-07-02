@@ -15,6 +15,15 @@ function CreateVC({ closeModal, other_user, setAcceptedCall, offer }) {
     socket.emit("send_accepted_vc", { other_user: other_user, answer });
     closeModal();
     setAcceptedCall(true);
+    setTimeout(() => {
+      // console.log(peerCon)
+      peerCon.close()
+      // peerCon.setLocalDescription(null)
+      // peerCon.setRemoteDescription(new RTCSessionDescription())
+      // peerCon.signalingState = "stable"
+      // console.log(peerCon)
+
+    }, 300)
   };
 
   const handleDecline = () => {

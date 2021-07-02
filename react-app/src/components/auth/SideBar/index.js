@@ -14,6 +14,7 @@ import { setPeerConn } from "../../../store/peerConnection";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
+  let peerCon = useSelector((state) => state.peerCon.peerCon);
   const socket = user.socket;
   const servers = useSelector((state) => state.servers);
   const notifications = useSelector((state) => state.notifications);
@@ -22,9 +23,12 @@ const SideBar = () => {
   const location = useLocation();
   const [activeServer, setActiveServer] = useState(null);
   const [call, setCall] = useState(false);
-  const [acceptedCall, setAcceptedCall] = useState(false);
+  const [acceptedCall, setAcceptedCall] = useState(true);
   const [otherUser, setotherUser] = useState("");
   const [offer, setOffer] = useState(undefined);
+  const [newPeerCon, setNewPeerCon] = useState(false)
+
+  console.log(peerCon)
 
   useEffect(() => {
     dispatch(fetchNewMessages());
@@ -51,11 +55,29 @@ const SideBar = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const peerCon = new RTCPeerConnection({
+    peerCon = new RTCPeerConnection({
       iceServers: [{ urls: "stun:stun3.l.google.com:19302" }],
-    });
+    },);
 
-    async function createStream() {
+    peerCon.onconnectionstatechange = async function(event){
+      const conState = event.target.connectionState
+      if (conState === 'disconnected'){
+        peerCon.close()
+        // peerCon.setLocalDescription(null)
+        // peerCon.setRemoteDescription(new RTCSessionDescription())
+        // peerCon.signalingState = "stable"
+        console.log(event.target)
+        const peerCon1 = new RTCPeerConnection({
+          iceServers: [{ urls: "stun:stun3.l.google.com:19302" }],
+        });
+        createStream(peerCon1)
+        peerCon = peerCon1
+        dispatch(setPeerConn(peerCon1));
+        
+      }
+    }
+
+    async function createStream(peerCon) {
       const localStream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
@@ -68,16 +90,17 @@ const SideBar = () => {
       const remoteStream = new MediaStream();
       const remoteVideo = document.querySelector("#videochat");
       remoteVideo.srcObject = remoteStream;
-      console.log(remoteVideo);
+      // console.log(remoteVideo);
+      peerCon.remoteStream = remoteStream
 
       peerCon.addEventListener("track", async (e) => {
         remoteStream.addTrack(e.track, remoteStream);
       });
 
-      return localStream;
+      return peerCon;
     }
 
-    createStream();
+    createStream(peerCon);
 
     dispatch(setPeerConn(peerCon));
     socket.emit("join_notifications");
@@ -87,14 +110,6 @@ const SideBar = () => {
       setOffer(data["offer"]);
       setotherUser(data["user"]);
       setCall(true);
-    });
-
-    socket.on("accepted_vc", async (data) => {
-      await peerCon.setRemoteDescription(
-        new RTCSessionDescription(data["answer"])
-      );
-      console.log(peerCon);
-      setAcceptedCall(true);
     });
 
     socket.on("receive_notifications", (notification) => {
@@ -107,6 +122,19 @@ const SideBar = () => {
       }
     });
   }, [otherUser]);
+
+  useEffect(() => {
+    if(peerCon){
+      socket.on("accepted_vc", async (data) => {
+        console.log(peerCon);
+        await peerCon.setRemoteDescription(
+          new RTCSessionDescription(data["answer"])
+        );
+  
+        setAcceptedCall(true);
+      });
+    }
+  }, [peerCon])
 
   function handleActive(server) {
     setActiveServer(server);

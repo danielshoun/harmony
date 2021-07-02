@@ -122,10 +122,22 @@ function PrivateDmContainer() {
   async function handleCallUser() {
     const offer = await peerCon.createOffer();
     await peerCon.setLocalDescription(offer);
+    // console.log(offer)
     socket.emit("send_vc", {
       other_user: userCalled,
       offer: offer,
     });
+    // for some reason this is needed for the connection 
+    // state to go from new to connected
+    setTimeout( async () => {
+      const offer = await peerCon.createOffer();
+      console.log(offer)
+      await peerCon.setLocalDescription(offer);
+      socket.emit("send_vc", {
+        other_user: userCalled,
+        offer: offer,
+      });
+    }, 0)
   }
 
   return (
