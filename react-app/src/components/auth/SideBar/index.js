@@ -134,7 +134,7 @@ const SideBar = () => {
         setAcceptedCall(true);
       });
     }
-  }, [peerCon])
+  }, [socket])
 
   function handleActive(server) {
     setActiveServer(server);

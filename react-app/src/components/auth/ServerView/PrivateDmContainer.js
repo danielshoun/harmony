@@ -131,7 +131,7 @@ function PrivateDmContainer() {
     // state to go from new to connected
     setTimeout( async () => {
       const offer = await peerCon.createOffer();
-      console.log(offer)
+      console.log(peerCon)
       await peerCon.setLocalDescription(offer);
       socket.emit("send_vc", {
         other_user: userCalled,
