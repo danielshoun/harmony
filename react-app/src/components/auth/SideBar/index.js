@@ -27,6 +27,7 @@ const SideBar = () => {
   const [otherUser, setotherUser] = useState("");
   const [offer, setOffer] = useState(undefined);
   const [newPeerCon, setNewPeerCon] = useState(false)
+  const [acceptedOn, setAcceptedOn] = useState(false)
 
   console.log(peerCon)
 
@@ -124,7 +125,9 @@ const SideBar = () => {
   }, [otherUser]);
 
   useEffect(() => {
-    if(peerCon){
+    if(peerCon && !acceptedOn){
+      setAcceptedOn(true)
+
       socket.on("accepted_vc", async (data) => {
         console.log(peerCon);
         await peerCon.setRemoteDescription(
@@ -134,7 +137,7 @@ const SideBar = () => {
         setAcceptedCall(true);
       });
     }
-  }, [socket])
+  }, [peerCon, socket, acceptedOn])
 
   function handleActive(server) {
     setActiveServer(server);
