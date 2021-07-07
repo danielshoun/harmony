@@ -178,8 +178,8 @@ function PrivateDmContainer() {
             ></path>
           </svg>
           <span>{otherUser}</span>
-          <button type="button" onClick={handleCallUser}>
-            Call
+          <button type="button" className='call-button' onClick={handleCallUser}>
+            <i class="fas fa-phone-volume"></i>
           </button>
         </div>
         <div className="chat-toolbar"></div>

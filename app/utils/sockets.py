@@ -177,7 +177,7 @@ def send_vc(data):
     other_user = data['other_user']
 
     emit('receive_vc', {'call': 'join',
-                        'user': current_user.id,
+                        'user': current_user.to_dict(),
                         'offer': data['offer']},
          to=f'video_chat_{other_user}')
 

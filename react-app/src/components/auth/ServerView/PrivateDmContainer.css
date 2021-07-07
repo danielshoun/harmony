@@ -1,0 +1,13 @@
+.call-button{
+    background-color: transparent;
+    border: none;
+    color: #b7b9bd;
+    cursor: pointer;
+    margin-left: 10px;
+    opacity: .7;
+    font-size: 20px;
+}
+
+.call-button:hover{
+    opacity: 1;
+}

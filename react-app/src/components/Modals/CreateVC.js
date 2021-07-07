@@ -29,7 +29,7 @@ function CreateVC({ closeModal, other_user, setAcceptedCall, offer }) {
     peerCon.setRemoteDescription(new RTCSessionDescription(offer));
     const answer = await peerCon.createAnswer();
     await peerCon.setLocalDescription(answer);
-    socket.emit("send_accepted_vc", { other_user: other_user, answer });
+    socket.emit("send_accepted_vc", { other_user: other_user.id, answer });
     console.log(peerCon, "accepted call");
     closeModal();
     setAcceptedCall(true);
@@ -50,11 +50,12 @@ function CreateVC({ closeModal, other_user, setAcceptedCall, offer }) {
   };
 
   return (
-    <div style={{ height: "400px", width: "400px", backgroundColor: "white" }}>
-      <button type="button" onClick={handleAccept}>
+    <div className='inc-call-options'>
+      <div className='calling-user'>User {other_user.username} is calling you!</div>
+      <button className='accept-call' type="button" onClick={handleAccept}>
         Accept
       </button>
-      <button type="button" onClick={handleDecline}>
+      <button className='decline-call' type="button" onClick={handleDecline}>
         Decline
       </button>
     </div>

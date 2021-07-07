@@ -182,7 +182,7 @@ const SideBar = () => {
       >
         <i className="fas fa-plus" />
       </div>
-      <Modal isOpen={call} onRequestClose={closeModal} closeTimeoutMS={120}>
+      <Modal className='inc-call' isOpen={call} onRequestClose={closeModal} closeTimeoutMS={120}>
         <CreateVC
           closeModal={closeModal}
           other_user={otherUser}
