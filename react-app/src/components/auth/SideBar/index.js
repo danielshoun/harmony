@@ -182,7 +182,12 @@ const SideBar = () => {
       >
         <i className="fas fa-plus" />
       </div>
-      <Modal className='inc-call' isOpen={call} onRequestClose={closeModal} closeTimeoutMS={120}>
+      <Modal
+        className="inc-call"
+        isOpen={call}
+        onRequestClose={closeModal}
+        closeTimeoutMS={120}
+      >
         <CreateVC
           closeModal={closeModal}
           other_user={otherUser}
@@ -196,7 +201,11 @@ const SideBar = () => {
         className="video-container"
       >
         <video autoPlay playsInline controls={false} id="videochat"></video>
-        <i onClick={handleDisconnect} className="fas fa-phone-slash"></i>
+        <i
+          style={{ color: "red" }}
+          onClick={handleDisconnect}
+          className="fas fa-phone-slash"
+        ></i>
       </div>
     </div>
   );
