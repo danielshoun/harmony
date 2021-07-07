@@ -11,6 +11,9 @@ import Modal from "react-modal";
 import CreateVC from "../../Modals/CreateVC";
 import VoiceChat from "../../Modals/VoiceChat";
 import { setPeerConn } from "../../../store/peerConnection";
+import createPeerConn from "../../../utils/createPeerConn";
+import createStream from "../../../utils/createStream";
+import { deletePeerConn } from "../../../store/peerConnection";
 
 const SideBar = () => {
   const user = useSelector((state) => state.session.user);
@@ -26,11 +29,10 @@ const SideBar = () => {
   const [acceptedCall, setAcceptedCall] = useState(true);
   const [otherUser, setotherUser] = useState("");
   const [offer, setOffer] = useState(undefined);
-  const [newPeerCon, setNewPeerCon] = useState(false)
-  const [acceptedOn, setAcceptedOn] = useState(false)
+  const [newPeerCon, setNewPeerCon] = useState(false);
+  const [acceptedOn, setAcceptedOn] = useState(false);
 
-  console.log(peerCon)
-
+  console.log(peerCon);
   useEffect(() => {
     dispatch(fetchNewMessages());
   }, [dispatch]);
@@ -56,54 +58,18 @@ const SideBar = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    peerCon = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun3.l.google.com:19302" }],
-    },);
+    // const peerCon = createPeerConn();
 
-    peerCon.onconnectionstatechange = async function(event){
-      const conState = event.target.connectionState
-      if (conState === 'disconnected'){
-        peerCon.close()
-        // peerCon.setLocalDescription(null)
-        // peerCon.setRemoteDescription(new RTCSessionDescription())
-        // peerCon.signalingState = "stable"
-        console.log(event.target)
-        const peerCon1 = new RTCPeerConnection({
-          iceServers: [{ urls: "stun:stun3.l.google.com:19302" }],
-        });
-        createStream(peerCon1)
-        peerCon = peerCon1
-        dispatch(setPeerConn(peerCon1));
-        
-      }
-    }
+    // peerCon.onconnectionstatechange = async function (event) {
+    //   const conState = event.target.connectionState;
+    //   if (conState === "disconnected") {
+    //     peerCon.close();
+    //     dispatch(deletePeerConn());
+    //   }
+    // };
 
-    async function createStream(peerCon) {
-      const localStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-
-      localStream.getTracks().forEach((track) => {
-        peerCon.addTrack(track, localStream);
-      });
-
-      const remoteStream = new MediaStream();
-      const remoteVideo = document.querySelector("#videochat");
-      remoteVideo.srcObject = remoteStream;
-      // console.log(remoteVideo);
-      peerCon.remoteStream = remoteStream
-
-      peerCon.addEventListener("track", async (e) => {
-        remoteStream.addTrack(e.track, remoteStream);
-      });
-
-      return peerCon;
-    }
-
-    createStream(peerCon);
-
-    dispatch(setPeerConn(peerCon));
+    // createStream(peerCon);
+    // dispatch(setPeerConn(peerCon));
     socket.emit("join_notifications");
     socket.emit("join_vc");
 
@@ -125,19 +91,22 @@ const SideBar = () => {
   }, [otherUser]);
 
   useEffect(() => {
-    if(peerCon && !acceptedOn){
-      setAcceptedOn(true)
-
-      socket.on("accepted_vc", async (data) => {
+    if (peerCon) {
+      socket.once("accepted_vc", async (data) => {
         console.log(peerCon);
-        await peerCon.setRemoteDescription(
-          new RTCSessionDescription(data["answer"])
-        );
-  
-        setAcceptedCall(true);
+        if (
+          peerCon.signalingState !== "closed" &&
+          peerCon.remoteDescription === null
+        ) {
+          await peerCon.setRemoteDescription(
+            new RTCSessionDescription(data["answer"])
+          );
+
+          setAcceptedCall(true);
+        }
       });
     }
-  }, [peerCon, socket, acceptedOn])
+  }, [peerCon, socket]);
 
   function handleActive(server) {
     setActiveServer(server);
@@ -233,8 +202,15 @@ const SideBar = () => {
         onRequestClose={closeModal}
         closeTimeoutMS={120}
       ></Modal> */}
+
       <div className="video-container">
-        <video autoPlay playsInline controls={false} id="videochat"></video>
+        <video
+          hidden={peerCon?.connectionState === undefined ? true : false}
+          autoPlay
+          playsInline
+          controls={false}
+          id="videochat"
+        ></video>
       </div>
     </div>
   );

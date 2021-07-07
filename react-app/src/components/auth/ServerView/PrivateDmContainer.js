@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./PrivateDmContainer.css";
 import createSocketUseEffect from "../../../utils/createSocketUseEffect";
 import Message from "./Message";
+import createPeerConn from "../../../utils/createPeerConn";
+import { deletePeerConn, setPeerConn } from "../../../store/peerConnection";
+import createStream from "../../../utils/createStream";
 
 function PrivateDmContainer() {
+  const dispatch = useDispatch();
   const { recipientId } = useParams();
   const user = useSelector((state) => state.session.user);
-  const peerCon = useSelector((state) => state.peerCon.peerCon);
+  // const peerCon = useSelector((state) => state.peerCon.peerCon);
   const socket = user.socket;
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
@@ -120,24 +124,40 @@ function PrivateDmContainer() {
   }
 
   async function handleCallUser() {
+    const peerCon = createPeerConn();
+
+    peerCon.onconnectionstatechange = async function (event) {
+      const conState = event.target.connectionState;
+      if (conState === "disconnected") {
+        peerCon.close();
+        dispatch(deletePeerConn());
+      }
+    };
+
+    await createStream(peerCon);
+    dispatch(setPeerConn(peerCon));
+
     const offer = await peerCon.createOffer();
     await peerCon.setLocalDescription(offer);
     // console.log(offer)
+    console.log(peerCon, "calling user");
+
     socket.emit("send_vc", {
       other_user: userCalled,
       offer: offer,
     });
-    // for some reason this is needed for the connection 
+    // for some reason this is needed for the connection
     // state to go from new to connected
-    setTimeout( async () => {
+
+    setTimeout(async () => {
       const offer = await peerCon.createOffer();
-      console.log(peerCon)
+      console.log(peerCon);
       await peerCon.setLocalDescription(offer);
       socket.emit("send_vc", {
         other_user: userCalled,
         offer: offer,
       });
-    }, 0)
+    }, 10);
   }
 
   return (
