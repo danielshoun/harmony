@@ -9,7 +9,6 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import Modal from "react-modal";
 import CreateVC from "../../Modals/CreateVC";
-import VoiceChat from "../../Modals/VoiceChat";
 import { setPeerConn } from "../../../store/peerConnection";
 import createPeerConn from "../../../utils/createPeerConn";
 import createStream from "../../../utils/createStream";
@@ -26,13 +25,11 @@ const SideBar = () => {
   const location = useLocation();
   const [activeServer, setActiveServer] = useState(null);
   const [call, setCall] = useState(false);
-  const [acceptedCall, setAcceptedCall] = useState(true);
+  const [acceptedCall, setAcceptedCall] = useState(false);
   const [otherUser, setotherUser] = useState("");
   const [offer, setOffer] = useState(undefined);
   const [newPeerCon, setNewPeerCon] = useState(false);
-  const [acceptedOn, setAcceptedOn] = useState(false);
-
-  console.log(peerCon);
+  console.log(peerCon?.signalingState);
   useEffect(() => {
     dispatch(fetchNewMessages());
   }, [dispatch]);
@@ -58,18 +55,6 @@ const SideBar = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // const peerCon = createPeerConn();
-
-    // peerCon.onconnectionstatechange = async function (event) {
-    //   const conState = event.target.connectionState;
-    //   if (conState === "disconnected") {
-    //     peerCon.close();
-    //     dispatch(deletePeerConn());
-    //   }
-    // };
-
-    // createStream(peerCon);
-    // dispatch(setPeerConn(peerCon));
     socket.emit("join_notifications");
     socket.emit("join_vc");
 
@@ -125,6 +110,12 @@ const SideBar = () => {
   function closeModal() {
     setCall(false);
     setAcceptedCall(false);
+  }
+
+  function handleDisconnect() {
+    peerCon.close();
+    setAcceptedCall(false);
+    dispatch(deletePeerConn());
   }
 
   return (
@@ -197,11 +188,6 @@ const SideBar = () => {
           offer={offer}
         />
       </Modal>
-      {/* <Modal
-        isOpen={acceptedCall}
-        onRequestClose={closeModal}
-        closeTimeoutMS={120}
-      ></Modal> */}
 
       <div className="video-container">
         <video
@@ -211,6 +197,9 @@ const SideBar = () => {
           controls={false}
           id="videochat"
         ></video>
+        <div hidden={peerCon?.remoteDescription ? false : true}>
+          <i onClick={handleDisconnect} class="fas fa-phone-slash"></i>
+        </div>
       </div>
     </div>
   );
