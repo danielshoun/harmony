@@ -29,7 +29,9 @@ const SideBar = () => {
   const [otherUser, setotherUser] = useState("");
   const [offer, setOffer] = useState(undefined);
   const [newPeerCon, setNewPeerCon] = useState(false);
-  console.log(peerCon?.signalingState);
+
+  console.log(peerCon);
+
   useEffect(() => {
     dispatch(fetchNewMessages());
   }, [dispatch]);
@@ -189,17 +191,12 @@ const SideBar = () => {
         />
       </Modal>
 
-      <div className="video-container">
-        <video
-          hidden={peerCon?.connectionState === undefined ? true : false}
-          autoPlay
-          playsInline
-          controls={false}
-          id="videochat"
-        ></video>
-        <div hidden={peerCon?.remoteDescription ? false : true}>
-          <i onClick={handleDisconnect} class="fas fa-phone-slash"></i>
-        </div>
+      <div
+        hidden={peerCon?.connectionState === undefined ? true : false}
+        className="video-container"
+      >
+        <video autoPlay playsInline controls={false} id="videochat"></video>
+        <i onClick={handleDisconnect} className="fas fa-phone-slash"></i>
       </div>
     </div>
   );
