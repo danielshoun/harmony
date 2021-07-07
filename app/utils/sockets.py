@@ -164,3 +164,28 @@ def on_leave(data):
     else:
         room = str(f'channel_{data["channel_id"]}')
     leave_room(room)
+
+
+@socketio.on('join_vc')
+def join_vc():
+    room = str(f'video_chat_{current_user.id}')
+    join_room(room)
+
+
+@socketio.on('send_vc')
+def send_vc(data):
+    other_user = data['other_user']
+
+    emit('receive_vc', {'call': 'join',
+                        'user': current_user.id,
+                        'offer': data['offer']},
+         to=f'video_chat_{other_user}')
+
+
+@socketio.on('send_accepted_vc')
+def send_accepted_vc(data):
+    other_user = data['other_user']
+    print('socket route works', other_user)
+
+    emit('accepted_vc', {'user': current_user.id,
+         'answer': data['answer']}, to=f'video_chat_{other_user}')
