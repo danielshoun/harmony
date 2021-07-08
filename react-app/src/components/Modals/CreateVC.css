@@ -1,0 +1,59 @@
+.inc-call{ 
+    /* background-color: white !important; */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inc-call-options{
+    text-align: center;
+    /* height: 15vh; */
+    width: 25vw;
+    background-color: #36393f;
+    color: white;
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+}
+
+.calling-user{
+    margin-bottom: 10px;
+}
+
+
+.ReactModal__Overlay--after-open{
+    background-color: rgba(0, 0, 0, 0.57) !important; 
+    z-index: 1;
+}
+
+.accept-call{
+    border: none;
+    border-radius: 3px;
+    padding: 2px 13px;
+    height: 24px;
+    color: white;
+    background-color: #378d53;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.accept-call:hover,.decline-call:hover{
+    opacity: 1;
+}
+
+.decline-call{
+    border: none;
+    border-radius: 3px;
+    padding: 2px 13px;
+    height: 24px;
+    color: white;
+    background-color: #c94044;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    font-size: 16px;
+}

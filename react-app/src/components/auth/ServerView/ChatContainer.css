@@ -12,7 +12,7 @@
 .channel-header {
   position: relative;
   flex: 0 0 auto;
-  z-index: 100;
+  z-index: 1;
   display: flex;
   align-items: center;
   min-width: 0;
