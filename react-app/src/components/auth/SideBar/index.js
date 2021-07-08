@@ -201,11 +201,9 @@ const SideBar = () => {
         className="video-container"
       >
         <video autoPlay playsInline controls={false} id="videochat"></video>
-        <i
-          style={{ color: "red" }}
-          onClick={handleDisconnect}
-          className="fas fa-phone-slash"
-        ></i>
+        <div className="video-end-block">
+          <i onClick={handleDisconnect} className="fas fa-phone-slash"></i>
+        </div>
       </div>
     </div>
   );

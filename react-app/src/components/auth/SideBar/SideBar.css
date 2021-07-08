@@ -85,14 +85,33 @@
 }
 
 #videochat {
-  height: 25vh;
-  width: 25vw;
+  height: 90%;
 }
 
 .video-container {
   overflow: visible;
   position: absolute;
   z-index: 1;
-  top: 10vh;
-  left: 50vw;
+  top: 48px;
+  left: 312px;
+  height: 20rem;
+  background-color: #202225;
+}
+
+.video-end-block {
+  background-color: #202225;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-right-radius: 8px;
+  padding-bottom: 5px;
+}
+.fa-phone-slash {
+  color: #ff0000;
+  opacity: 0.8;
+}
+.fa-phone-slash:hover {
+  opacity: 1;
+  cursor: pointer;
 }
