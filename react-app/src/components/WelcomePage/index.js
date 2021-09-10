@@ -27,63 +27,63 @@ const WelcomePage = () => {
   return (
     <div className="welcome-page-container">
       <div className="welcome-header">
-        <div className="background-image">
-          <img
-            className="bg-10"
-            src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"
-            alt='Header Banner Background Component'
-          />
-          <img
-            className="bg-11"
-            src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"
-            alt='Header Banner Background Component'
-          />
-          <img
-            className="bg-6"
-            src="https://discord.com/assets/690c2345bcaaaa50b71548231a26b696.svg"
-            alt='Header Banner Background Component'
-          />
-          <img
-            className="bg-5"
-            src="https://discord.com/assets/9c0629769616f9629689a0e68a2e57b7.svg"
-            alt='Header Banner Background Component'
-          />
-          <img
-            className="bg-7"
-            src="https://discord.com/assets/4bdac631250f5f9e8a4b928d5efa22c8.svg"
-            alt='Header Banner Background Component'
-          />
-          <img
-            className="bg-8"
-            src="https://discord.com/assets/94acf432b564660994742251c2a5f222.svg"
-            alt='Header Banner Background Component'
-          />
-          <img
-            className="bg-3"
-            src="https://discord.com/assets/1d9b04db64569bf18409a59a32ffd256.svg"
-            alt="background3"
-          />
-          <img
-            className="bg-9"
-            src="https://discord.com/assets/1d9b04db64569bf18409a59a32ffd256.svg"
-            alt="background3"
-          />
-          <img
-            className="bg-1"
-            src="https://discord.com/assets/7b01f72a2054561145b6dd04add417c0.svg"
-            alt="background1"
-          />
-          <img
-            className="bg-2"
-            src="https://discord.com/assets/e92fcc9ab6e63c1a17e954af347a1f1d.svg"
-            alt="background2"
-          />
-          <img
-            className="bg-4"
-            src="https://discord.com/assets/31fde13d3508b8ddb01cf817ad09c690.svg"
-            alt='Header Banner Background Component'
-          />
-        </div>
+        {/*<div className="background-image">*/}
+        {/*  <img*/}
+        {/*    className="bg-10"*/}
+        {/*    src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-11"*/}
+        {/*    src="https://discord.com/assets/5cc3db60569965c8bd92a05f6cb09b8d.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-6"*/}
+        {/*    src="https://discord.com/assets/690c2345bcaaaa50b71548231a26b696.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-5"*/}
+        {/*    src="https://discord.com/assets/9c0629769616f9629689a0e68a2e57b7.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-7"*/}
+        {/*    src="https://discord.com/assets/4bdac631250f5f9e8a4b928d5efa22c8.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-8"*/}
+        {/*    src="https://discord.com/assets/94acf432b564660994742251c2a5f222.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-3"*/}
+        {/*    src="https://discord.com/assets/1d9b04db64569bf18409a59a32ffd256.svg"*/}
+        {/*    alt="background3"*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-9"*/}
+        {/*    src="https://discord.com/assets/1d9b04db64569bf18409a59a32ffd256.svg"*/}
+        {/*    alt="background3"*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-1"*/}
+        {/*    src="https://discord.com/assets/7b01f72a2054561145b6dd04add417c0.svg"*/}
+        {/*    alt="background1"*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-2"*/}
+        {/*    src="https://discord.com/assets/e92fcc9ab6e63c1a17e954af347a1f1d.svg"*/}
+        {/*    alt="background2"*/}
+        {/*  />*/}
+        {/*  <img*/}
+        {/*    className="bg-4"*/}
+        {/*    src="https://discord.com/assets/31fde13d3508b8ddb01cf817ad09c690.svg"*/}
+        {/*    alt='Header Banner Background Component'*/}
+        {/*  />*/}
+        {/*</div>*/}
         <div className="welcome-content-container">
           <div className="logo-header">
             <i className="fas fa-peace header-logo" />
